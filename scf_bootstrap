@@ -1,0 +1,4 @@
+#!/bin/bash
+# https://cloud.tencent.com/act/pro/serverless-wordpress
+# https://cloud.tencent.com/act/pro/scf_pkg
+/var/lang/php7/bin/php -c /var/runtime/php7 -S 0.0.0.0:9000 main_handler.php;
