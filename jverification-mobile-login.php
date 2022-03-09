@@ -2,18 +2,18 @@
 // jverification/getPhone/
 // jverification/verify/?phone=
 ;?><!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" style="width: 100%; height: 100%; margin: 0; padding: 0; border: 0; overflow: auto;">
 	<head>
 		<meta charset="UTF-8" />
-		<meta content="always" name="referrer" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="referrer" content="always" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="description" content="Serverless 应用" />
 		<meta name="keywords" content="serverless,无服务" />
 		<title>OMEO - 一键登录 - 号码认证</title>
 		<script type="text/javascript" charset="UTF-8"
-			src="https://web.omeo.top/queslib/res/js/eruda.min.js"
-			onload="javascript: eruda._isInit || eruda.init({autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}});"
-			integrity="sha256-Xs0J8eSi8GbR1sAxQycEcnNNtBkBm3TO+RdGYXmF/4Y="
+			src="https://cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js?https://cdn.staticfile.org/eruda/2.4.1/eruda.min.js"
+			onload="javascript: (self.eruda && eruda._isInit) || eruda.init({autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}}); /**@close self.eruda && eruda.destroy(); */ /**@el #eruda.eruda-container */"
 			crossorigin="anonymous"></script>
 		<script type="text/javascript" charset="UTF-8" src="https://jverification.jiguang.cn/scripts/jverification-web-2.0.0.min.js"></script>
 		<!-- 如需支持联通一键登录，请单独引入 h5auth1.min.js -->
