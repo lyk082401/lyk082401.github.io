@@ -1,7 +1,8 @@
 ## 关于新版微信无法使用 `X5 内核` 的解决方法
 * 注意
 * * 目前只支持 `64位` 微信版本
-* 推荐使用 [MT管理器](https://d.binmt.cc) 操作 `https://d.binmt.cc`
+* 推荐使用 [MT管理器](http://d.binmt.cc) 操作 `http://d.binmt.cc`
+* * [直接下载](https://web.omeo.top/tbs/core/MT管理器-bin.mt.plus-2.10.3-22022063.apk)
 * 推荐使用 [小米快传](https://web.omeo.top/tbs/core/ShareMe-com.xiaomi.midrop-3.17.52-31752.apk) 分享 `https://web.omeo.top/tbs/core/ShareMe-com.xiaomi.midrop-3.17.52-31752.apk`
 
 ### 第一步
