@@ -1,0 +1,35 @@
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-size:13px;color:#666;font-family:'微软雅黑';}
+img{display:block;max-width:100%;border:0}
+ul, li{list-style:none}
+a{text-decoration:none;display:block;-webkit-tap-highlight-color:rgba(255, 255, 255, 0);-webkit-user-select:none;-moz-user-focus:none;-moz-user-select:none;}
+/*---------------------------------------------------------------------------------------------------------------手机站导航开始----------*/
+.sp_header{height:50px;overflow:hidden;background:#fff;position:fixed;z-index:10;width:100%;}
+.sp_logo{padding:10px;float:left;height:50px}
+.sp_logo img{margin:auto;max-height:30px;}
+.sp_nav{width:50px;float:right;position:relative;cursor:pointer;height:30px;margin-top:15px}
+.sp_nav span{display:block;background:#c9141e;width:30px;height:2px;position:absolute;left:10px;transition:all ease 0.35s}
+.sp_nav span:nth-of-type(1){top:0px}
+.sp_nav span:nth-of-type(2){top:10px}
+.sp_nav span:nth-of-type(3){top:20px}
+.sp_nav_se span:nth-of-type(1){top:10px;transform:rotate(45deg)}
+.sp_nav_se span:nth-of-type(2){width:0}
+.sp_nav_se span:nth-of-type(3){top:10px;transform:rotate(-45deg)}
+.sjj_nav{position:fixed;z-index:9;background:#eee;width:100%;height:calc(100% - 104px);font-size:14px;line-height:40px;top:-100%;left:0;overflow:auto;overflow-x:hidden;transition:top ease 0.35s;}
+.nav_show{top:50px}
+.sjj_nav>ul>li:first-child{overflow:hidden;border-top:0}
+.sjj_nav>ul>li:first-child>a{float:left;width:calc(100% - 70px)}
+.sjj_nav>ul>li:first-child .language{float:right;width:70px;overflow:hidden;line-height:30px;margin-top:5px}
+.sjj_nav>ul>li:first-child .language a{width:35px;float:left;border-left:1px #ddd solid;text-align:center;color:#999;}
+.sjj_nav ul li i{position:absolute;top:5px;right:0px;border-left:1px #ddd solid;height:30px;padding:0px 7px 0 7px;}
+.sjj_nav ul li i svg{transform:rotate(-90deg);transition:all ease 0.35s}
+.sjj_nav ul li .sjj_nav_i_se svg{transform:rotate(0deg)}
+.sjj_nav ul li{border-top:1px #ddd solid;margin-left:20px;position:relative;line-height:40px;font-size:14px}
+.sjj_nav>ul >li:last-child{border-bottom:1px #ddd solid;}
+.sjj_nav ul li ul{display:none}
+.sjj_nav ul li a{color:#666;width:80%}
+.sjj_nav ul li ul li a{color:#999;display:block;text-align:left;}
+.sjj_nav ul li i svg{width:20px;height:20px;fill:#555;}
+.sjj_nav ul li .sjj_nav_i_se svg{fill:#c9141e}
+.sjj_nav ul li ul li>ul{margin-left:10px}
+/*---------------------------------------------------------------------------------------------------------------手机站导航结束----------*/

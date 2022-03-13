@@ -1,0 +1,4102 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="width: 100%; height: 100%; margin: 0; padding: 0; border: 0; overflow: auto;">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="referrer" content="always" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>梧职院 | 护理专业 | 复习题库</title>
+		<!-- ("SRI Hash Generator")["https://www.srihash.org/"] -->
+		<script type="text/javascript">
+		try
+		{
+			window.onerror = (function($message, $url, $line, $column, $error)
+			{
+				console.warn($message, $url, $line, $column, $error);
+				$error && Object.getOwnPropertyNames($error).forEach(function($key, $index, $arrs)
+				{
+					$error["$" + $key] = $error[$key];
+				});
+				alert(JSON.stringify({message: $message, url: $url, line: $line, column: $column, error: $error}, null, "\t"));
+			});
+			(/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) && (document.title = "新版未适配苹果手机，如遇问题请访问旧版！");
+			window.onbeforeunload = window.onunload = (function($e)
+			{
+				return ($e || window.event || window.document.event).returnValue = "确定离开当前页面吗？";
+			});
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+		
+		function vc_feedbackPlugin()
+		{
+		// 首先，我们为vConsole添加一个“反馈”tab。
+		const feedbackPlugin = new VConsole.VConsolePlugin('tip_login', '问题反馈');
+
+feedbackPlugin.on('init', function () {
+    // do something
+});
+
+// 为了复现问题，我们需要页面的url、浏览器的UA、用户的uid、页面的cookie，同时为了快速发现问题，我们需要页面上发生的网络请求信息，以及用户的日志。
+// 获取页面信息
+const url = window.location.href;
+const uid = "app.tip_uid";
+const UA = navigator.userAgent;
+const { cookie } = document;
+
+// 获取网络请求信息
+const getNetworkInfo = function () {
+    const { reqList } = window.vConsole.pluginList.network;
+    const request = [];
+    Object.keys(reqList)
+      .forEach((key) => {
+        const item = reqList[key];
+        request.push({
+          url: item.url,
+          status: item.status,
+          getParam: item.getData,
+          postParam: item.postData,
+          costTime: item.costTime,
+          response: item.response,
+        });
+      });
+    return request;
+};
+
+// 获取日志信息
+const getLogInfo = function () {
+    return window.vConsole.pluginList.default.$tabbox.innerText;
+};
+
+// 为了方便测试人员理解，我们在vconsole的界面上，加一下提示文案。
+const html = `
+   <div class="vc-item vc-item-info"><p>点击下方【复制...】按钮，复制信息发送给开发人员</p>
+   <p>点击下方【一键反馈】按钮，发送当前环境日志给开发人员</p></div>
+   <div class="vc-item vc-item-log"><p>页面链接：${url}</p></div>
+   <div class="vc-item vc-item-log"><p>用户uid：${uid}</p></div>
+   <div class="vc-item vc-item-log"><p>浏览器UA：${UA}</p></div>`;
+
+feedbackPlugin.on('renderTab', (callback) => {
+    callback(html);
+});
+
+
+// 再给反馈tab，加一些复制信息的按钮。
+const btnList = [];
+btnList.push({
+    name: '复制用户信息',
+    global: false,
+    onClick() {
+      const userInfo = { url, uid, UA, cookie };
+      copyInfo(JSON.stringify(userInfo));
+    },
+});
+btnList.push({
+    name: '复制网络请求',
+    global: false,
+    onClick() {
+      const request = getNetworkInfo();
+      copyInfo(JSON.stringify(request));
+    },
+});
+btnList.push({
+    name: '复制日志',
+    global: false,
+    onClick() {
+      const log = getLogInfo();
+      copyInfo(log);
+    },
+});
+feedbackPlugin.on('addTool', (callback) => {
+    callback(btnList);
+});
+
+
+// 为了更方便地一次发送全部信息，我们加上一个“上报”按钮。reportFeedbackInfo上报接口，可以自己实现后台服务，也可以接入已经在用的日志系统。
+btnList.push({
+    name: '上报',
+    global: false,
+    onClick() {
+      reportFeedbackInfo({
+        uid,
+        UA,
+        url,
+        cookie,
+        log: getLogInfo(),
+        request: getNetworkInfo(),
+      }).then(() => {
+        alert('上报成功，请通知开发人员查看');
+      });
+    },
+});
+return feedbackPlugin;
+}
+
+function vc_envPlugin()
+{
+// 通过vConsole切换sessionStorage里面tip_debug_cgi_env的值，CGI请求的时候，根据该值来切换测试和现网环境。
+const envPlugin = new VConsole.VConsolePlugin('tip_tool', '切换环境');
+
+const html = '<div>请点击下方按钮，切换测试/正式环境</div>';
+envPlugin.on('renderTab', (callback) => {
+    callback(html);
+});
+
+envPlugin.on('addTool', (callback) => {
+    const toolList = [];
+    toolList.push({
+      name: '测试环境',
+      global: false,
+      onClick() {
+        console.log('已切换为测试CGI，即将刷新页面......');
+        window.sessionStorage.setItem('tip_debug_cgi_env', 'test');
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      },
+});
+toolList.push({
+      name: '现网环境',
+      global: false,
+      onClick() {
+        console.log('已切换为正式CGI，即将刷新页面......');
+        window.sessionStorage.setItem('tip_debug_cgi_env', 'prod');
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      },
+    });
+    callback(toolList);
+});
+return envPlugin;
+
+		}
+		function vcPlugins()
+		{
+		
+		// window.vConsole = new VConsole();
+window.vConsole.addPlugin(feedbackPlugin);
+window.vConsole.addPlugin(envPlugin);
+
+		}
+
+		</script>
+		<!--^ Dexie JS -->
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/dexie/3.2.1/dexie.min.js"
+			href="https://cdn.staticfile.org/dexie/3.2.1/dexie.min.js"
+			crossorigin="anonymous"></script>
+		<!-- Dexie JS $-->
+		<!--^ Console -->
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js"
+			href="https://cdn.staticfile.org/eruda/2.4.1/eruda.min.js"
+			onload="javascript: self.eruda && (eruda._isInit || eruda.init({tool: [], autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (document.location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"
+			x-doc="https://eruda.liriliri.io/, https://github.com/liriliri/eruda/blob/master/doc/API.md, https://unpkg.com/browse/eruda@2.4.1/"
+			crossorigin="anonymous"></script>
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/vConsole/3.12.1/vconsole.min.js"
+			href="https://cdn.staticfile.org/vConsole/3.12.1/vconsole.min.js"
+			onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({defaultPlugins: ['system', 'network', 'element', 'storage'], 'storage.defaultStorages': ['cookies', 'localStorage', 'sessionStorage'], theme: 'dark', disableLogScrolling: true, 'log.showTimestamps': true, onReady: function(){}}))); /**@close (document.location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"
+			x-doc="http://wechatfe.github.io/vconsole/demo.html, https://github.com/Tencent/vConsole/blob/dev/README_CN.md, https://unpkg.com/browse/vconsole@3.11.0/"
+			crossorigin="anonymous"></script>
+		<!-- Console $-->
+		<!--^ Vue -->
+		<!--script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/vue/2.6.14/vue.min.js"
+			href="https://cdn.staticfile.org/vue/2.6.14/vue.min.js"
+			crossorigin="anonymous"></script>
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdn.jsdelivr.net/npm/vue-vconsole-devtools@1.0.5/dist/vue_plugin.js"
+			onload="javascript: self.vueVconsoleDevtools.initPlugin(self.vConsole); self.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('init', self.Vue);"
+			crossorigin="anonymous" defer></script-->
+		<!-- Vue $-->
+		<!--^ JSON Minify -->
+		<script type="text/javascript" charset="UTF-8"
+			src="https://web.omeo.top/JSON.minify/minify.json.js"
+			x-doc="https://github.com/fkei/JSON.minify/, https://github.com/getify/JSON.minify/tree/javascript/"
+			crossorigin="anonymous"></script>
+		<!-- JSON Minify $-->
+		<!--^ JSZip -->
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/jszip/3.6.0/jszip.min.js"
+			href="https://cdn.staticfile.org/jszip/3.6.0/jszip.min.js"
+			x-doc="https://stuk.github.io/jszip/, sync-mode@https://github.com/Stuk/jszip/issues/375#issuecomment-258969023"
+			crossorigin="anonymous"></script>
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js"
+			href="https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils.min.js"
+			x-doc="http://stuk.github.io/jszip-utils/"
+			crossorigin="anonymous"></script>
+		<!--[if IE]>
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils-ie.min.js"
+			href="https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils-ie.min.js"
+			x-doc="http://stuk.github.io/jszip-utils/"
+			crossorigin="anonymous"></script>
+		<![endif]-->
+		<!-- JSZip $-->
+		<!--^ jQuery -->
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.js"
+			href="https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js"
+			onload="javascript: self.jQuery && jQuery(document).ready(function(){ parser.api.init.apply(this, arguments); eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\/\\*\\*@close(.+?)\\*\\/'))[1].trim()); });"
+			x-doc="https://www.jquery123.com/"
+			crossorigin="anonymous"></script>
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"
+			href="https://cdn.staticfile.org/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"
+			x-doc="https://gasparesganga.com/labs/jquery-loading-overlay/"
+			crossorigin="anonymous"></script>
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js"
+			href="https://cdn.staticfile.org/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js"
+			x-doc="https://carlosbonetti.github.io/jquery-loading/"
+			crossorigin="anonymous"></script>
+		<!-- jQuery $-->
+		<!--^ Zepto JS -->
+		<!--script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/zepto/1.2.0/zepto.min.js"
+			href="https://cdn.staticfile.org/zepto/1.2.0/zepto.min.js"
+			x-doc="https://zeptojs.bootcss.com/"
+			crossorigin="anonymous"></script-->
+		<!-- Zepto JS $-->
+		<!--^ Lodash JS -->
+		<!--script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+			href="https://cdn.staticfile.org/lodash.js/4.17.21/lodash.min.js"
+			x-doc="https://www.lodashjs.com/"
+			crossorigin="anonymous"></script-->
+		<!-- Lodash JS $-->
+		<!--^ Zebra Dialog -->
+		<script type="text/javascript" charset="UTF-8"
+			src="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/zebra_dialog.src.min.js"
+			href="https://cdn.staticfile.org/zebra_dialog/3.0.5/zebra_dialog.src.min.js"
+			x-doc="https://stefangabos.github.io/Zebra_Dialog/index.html"
+			crossorigin="anonymous"></script>
+		<link rel="stylesheet" charset="UTF-8"
+			href="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css"
+			src="https://cdn.staticfile.org/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css"
+			x-doc="https://stefangabos.github.io/Zebra_Dialog/index.html"
+			crossorigin="anonymous" />
+		<!--link rel="stylesheet" charset="UTF-8"
+			href="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css"
+			src="https://cdn.staticfile.org/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css"
+			x-doc="https://stefangabos.github.io/Zebra_Dialog/materialize.html"
+			crossorigin="anonymous" /-->
+		<!--link rel="stylesheet" charset="UTF-8"
+			href="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css"
+			src="https://cdn.staticfile.org/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css"
+			x-doc="https://stefangabos.github.io/Zebra_Dialog/flat.html"
+			crossorigin="anonymous" /-->
+		<!-- Zebra Dialog $-->
+		<script type="text/javascript" charset="UTF-8"
+			src="tools.js"
+			x-crossorigin="anonymous"></script>
+	</head>
+	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 12px; opacity: 0.50;">
+		<fieldset name="queslib">
+			<style type="text/css">
+			/** --- 复选框 */
+			[name="queslib"] [type=checkbox]
+			{
+				margin-right: 5px;
+				cursor: pointer;
+				font-size: 14px;
+				width: 15px;
+				height: 12px;
+				position: relative;
+			}
+			[name="queslib"] input[type=checkbox]::after
+			{
+				position: absolute;
+				width: 10px;
+				height: 15px;
+				top: 0;
+				content: " ";
+				background-color: #555555;
+				color: #fff;
+				display: inline-block;
+				visibility: visible;
+				padding: 0px 3px;
+				border-radius: 3px;
+			}
+			[name="queslib"] .option input[type=checkbox]:checked::after
+			{
+				content: "✔︎";
+				font-size: 12px;
+			}
+			/** 复选框 --- */
+			/** --- 单选框 */
+			[name="queslib"] input[type=radio]
+			{
+				margin-right: 5px;
+				cursor: pointer;
+				font-size: 14px;
+				width: 15px;
+				height: 12px;
+				position: relative;
+			}
+			[name="queslib"] input[type=radio]::after
+			{
+				position: absolute;
+				width: 10px;
+				height: 15px;
+				top: 0;
+				content: " ";
+				background-color: #555555;
+				color: #fff;
+				display: inline-block;
+				visibility: visible;
+				padding: 0px 3px;
+				border-radius: 50%;
+			}
+			[name="queslib"] .option input[type=radio]:checked::before
+			{
+				content: "✔︎";
+				display: block;
+				position: relative;
+				top: -2px;
+				left: 3px;
+				width: 6px;
+				height: 6px;
+				color: #fff;
+				font-weight: 400;
+				z-index: 1;
+			}
+			/** 单选框 --- */
+			/** 改变选中之后的背景颜色
+			* 红d9534f
+			* 蓝337ab7
+			* 浅蓝5bc0de
+			* 黄f0ad4e
+			* 橙皮黄fca104
+			* 绿5cb85c
+			* 深红ff0000
+			* 灰白eeeeee
+			* 深灰白cccccc
+			* 深深灰白555555 */
+			[name="queslib"] input[type=checkbox]:checked::after, [name="queslib"] input[type=radio]:checked::after
+			{
+				background-color: #5cb85c;
+			}
+			[name="queslib"] .option-right input[type=radio]::after, [name="queslib"] .option-right input[type=checkbox]::after
+			{
+				content: "✔︎";
+				background-color: #5cb85c;
+			}
+			[name="queslib"] .option-error input[type=radio]::after, [name="queslib"] .option-error input[type=checkbox]::after
+			{
+				content: "✘";
+				background-color: #d9534f;
+			}
+			[name="queslib"] .option-notdo input[type=radio]::after, [name="queslib"] .option-notdo input[type=checkbox]::after
+			{
+				content: "﹅";
+				background-color: #fca104;
+			}
+			</style>
+			<style type="text/css">
+			/** 滚动条 */
+			[name="queslib"]::-webkit-scrollbar
+			{
+				width: 3px;
+			}
+			/** 轨道 */
+			[name="queslib"]::-webkit-scrollbar-track
+			{
+				background-color: #5cb85c;
+				border-radius: 5px;
+			}
+			/** 滑块 */
+			[name="queslib"]::-webkit-scrollbar-thumb
+			{
+				background-color: #5bc0de;
+				background-image: linear-gradient(180deg, #D0368A 0%, #708AD4 99%);
+				box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+				border-radius: 5px;
+				height: 30px;
+			}
+			/** 长按含有 title 属性的元素时弹出 title 里的内容 */
+			[title]:after
+			{
+				content: attr(title);
+				position: absolute;
+				left: 50%;
+				/** 正数显示在上方，负数显示在下方 */
+				bottom: -100%;
+				transform: translate(-50%, 0);
+				color: #fff;
+				text-shadow: 0 -1px 0px black;
+				box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+				background: #383838;
+				border-radius: 2px;
+				padding: 3px 10px;
+				font-size: 12px;
+				white-space: nowrap;
+				transition: all .3s;
+				opacity: 0;
+				visibility: hidden;
+			}
+			[title]:hover:after
+			{
+				transition-delay: 100ms;
+				visibility: visible;
+				transform: translate(-50%, -6px);
+				opacity: 1;
+			}
+			</style>
+			<style type="text/css">
+			[name="queslib"]
+			{
+				position: absolute;
+				/**
+				width: 88vw;
+				height: 95vh;*/
+				bottom: 0;
+				top: 0;
+				left: 0;
+				right: 0;
+				overflow: auto;
+				/** 禁用浏览器文字大小调整功能 */
+				-webkit-text-size-adjust: none;
+				/** 平滑文字 */
+				-webkit-text-stroke: 1px transparent;
+			}
+			[name="queslib"] textarea
+			{
+				/** 大小可调整 */
+				resize: both;
+			}
+			[name="queslib"] section u, [name="queslib"] section b
+			{
+				color: #ffffff;
+				/** 红色镂空字体 */
+				-webkit-text-stroke: 0.8px rgba(255, 0, 0, 1);
+			}
+			[name="queslib"] aside[name="todo"]
+			{
+				display: block;
+				position: -webkit-sticky;
+				position: sticky;
+				top: -5px;
+			}
+			[name="queslib"] aside[name="todo"] table
+			{
+				border: 0 solid black;
+				border-spacing: 10px 0;
+			}
+			[name="queslib"] aside[name="todo"] b, [name="queslib"] summary, [name="queslib"] select
+			{
+				/** 禁止页面文字长按选择 */
+				-webkit-user-select: none;
+			}
+			[name="queslib"] aside[name="todo"] button
+			{
+				background-color: transparent;
+				color: #337ab7;
+				/** 禁止页面文字长按选择 */
+				-webkit-user-select: none;
+			}
+			[name="queslib"] dl, [name="queslib"] ul
+			{
+				padding: 0;
+				margin: 0;
+			}
+			[name="queslib"] dl
+			{
+				margin-top: 10px;
+				margin-bottom: 25px;
+			}
+			[name="queslib"] ul
+			{
+				padding-top: 10px;
+				padding-bottom: 25px;
+			}
+			[name="queslib"] dl dd, [name="queslib"] ul li
+			{
+				margin-left: 25px;
+			}
+			[name="queslib"] dl dd
+			{
+				margin-top: 10px;
+			}
+			[name="queslib"] ul li
+			{
+				float: left;
+				list-style: none;
+				padding-top: 5px;
+				padding-bottom: 10px;
+			}
+			[name="queslib"] legend, [name="queslib"] summary, [name="queslib"] dt, [name="queslib"] dd
+			{
+				word-break: break-all;
+				text-align: left;
+			}
+			[name="queslib"] legend
+			{
+				text-align: center;
+			}
+			[name="queslib"] summary
+			{
+				text-align: left;
+			}
+			[name="queslib"] article, [name="queslib"] details, [name="queslib"] aside, [name="queslib"] section, [name="queslib"] dl, [name="queslib"] dt, [name="queslib"] ul, [name="queslib"] hr
+			{
+				clear: both;
+			}
+			[name="queslib"] [name="question"] [name="child"] [name="option"]
+			{
+				line-height: 30px;
+				word-spacing: 1.5px;
+				letter-spacing: 1.5px;
+			}
+			</style>
+			<style type="text/css">
+			/** ZebraDialog 按钮样式 */
+			.ZebraDialog_Title .dialog-bg-right, .ZebraDialog_Body .dialog-bg-right, .ZebraDialog_Buttons .dialog-bg-right
+			{
+				background: #5cb85c;
+			}
+			.ZebraDialog_Title .dialog-bg-error, .ZebraDialog_Body .dialog-bg-error, .ZebraDialog_Buttons .dialog-bg-error
+			{
+				background: #d9534f;
+			}
+			.ZebraDialog_Title .dialog-bg-notdo, .ZebraDialog_Body .dialog-bg-notdo, .ZebraDialog_Buttons .dialog-bg-notdo
+			{
+				background: #fca104;
+			}
+			/** iOS Safari 浏览器样式测试适配 */
+			[name="queslib"]
+			{
+				-webkit-overflow-scrolling: touch;
+				/** 禁用点击出现半透明灰色背景 */
+				-webkit-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+				/** 禁用长按页面时的弹出菜单 */
+				webkit-touch-callout: none;
+			}
+			[name="queslib"] select, [name="queslib"] input, [name="queslib"] textarea
+			{
+				/** 去除默认样式 */
+				-webkit-appearance: none;
+			}
+			[name="queslib"] [name="question"] [name="child"] [name="option"]
+			{
+				cursor: pointer;
+			}
+			</style>
+			<script type="text/javascript">
+			(typeof(Element.prototype.matches) !== "function") && (Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function(s)
+			{
+				let matches = (this.document || this.ownerDocument).querySelectorAll(s),
+				i = matches.length;
+				while((--i >= 0) && (matches.item(i) !== this)){}
+				return i > -1;
+			});
+			(typeof(Element.prototype.closest) !== "function") && (Element.prototype.closest = function(selector)
+			{
+				let el = this;
+				while(el)
+				{
+					if(this.matches.call(el, selector))
+					{
+						break;
+					}
+					el = el.parentElement;
+				}
+				return el;
+			});
+			</script>
+			<script type="text/javascript">
+			/**
+			http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginByH5?userName=${username}&userPwd=${password}&appVersion=2.8.25")
+			http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginOut?newToken=${newToken}&userId=${userId}")
+			http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/getUserInfo?newToken=${newToken}&userId=${userId}")
+			http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/student/getCourseList?newToken=${newToken}&stuId=${userId}&isPass=1")
+			http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/student/getCourseList?newToken=${newToken}&stuId=${userId}&isPass=0")
+			*/
+			/**
+			IE11 IE.png https://support.microsoft.com/zh-cn/help/17621/internet-explorer-downloads
+			Microsoft Edge edge.png https://www.microsoft.com/en-us/edge/business/download
+			Google Chrome chrome.png https://www.google.cn/chrome/
+			Firefox firefox.png https://www.firefox.com.cn/download/
+			Safari safari.png https://support.apple.com/zh-cn/guide/safari/sfri40598/mac
+			360安全浏览器 360.png https://browser.360.cn/
+			*/
+			let parser = {
+				api: {}, txt: {}, xml: {}, json: {},
+				type: {
+					// 单选题 isSCQ
+					// 多选题 isMCQ
+					// 判断题 isTFQ
+					// 填空题 isFBQ
+					// 作答题 isWAQ
+					// 默认题型
+					default: "单选题",
+					all: ["单选题", "多选题", "共用题干单选题", "共用答案单选题", "填空题", "名词解释", "名词解析", "简答题", "问答题", "论述题", "病例分析", "案例分析", "写作", "思考题", "常用术语"],
+					// 选择题
+					choices: {
+						alone: ["单选题", "多选题"],
+						share: {
+							title: ["共用题干单选题"],
+							answer: ["共用答案单选题"]
+						}
+					},
+					// 文字作答题
+					answers: {
+						fill: ["填空题"],
+						word: ["名词解释", "名词解析", "简答题", "问答题", "论述题", "病例分析", "案例分析", "写作", "思考题", "常用术语"]
+					}
+				},
+				re: {
+					// 题号匹配 ["1) ", "1)", "1. ", "1.", "1．", "1 ", "（1）", "(1)"]
+					quesnum: /(^[0-9]{1,}\)\u0020)|(^[0-9]{1,}\))|(^[0-9]{1,}\.\u0020)|(^[0-9]{1,}\.)|(^[0-9]{1,}．)|(^[0-9]{1,}\u0020)|(^（[0-9]{1,}）)|(^\([0-9]{1,}\))/,
+					// 选项号匹配 ["A) ", "A)", "A. ", "A.", "A．", "A ", "（A）", "(A)"]
+					optsnum: /(^[A-Z]{1}\)\u0020)|(^[A-Z]{1}\))|(^[A-Z]{1}\.\u0020)|(^[A-Z]{1}\.)|(^[A-Z]{1}．)|(^[A-Z]{1}\u0020)|(^（[A-Z]{1}）)|(^\([A-Z]{1}\))/i,
+					// 选项名
+					_optname: /^([A-Z])\./,
+					// 注释 [![注释]!]
+					_note: /\[\!\[(.*?)\]\!\]/,
+					// 章节 [#[章节]#]
+					_chapter: /\[\#\[(.*?)\]\#\]/,
+					// 题型 [=[题型]=]
+					_type: /\[\=\[(.*?)\]\=\]/,
+					// 资源 [$[资源]$]
+					_res: /\[\$\[(.*?)\]\$\]/,
+					// 答案 {@{答案\n答案}@}
+					_answer: /\{\@\{([\s\S]*?)\}\@\}/,
+					_answer_begin: /^(参考答案：)(.*)/,
+					_answer_ended: /(\u3164√|√)$/,
+					_answer_aline: /^([A-Z]+)$/,
+					// 难度 {%{难度}%}
+					_coeffic: /\{\%\{(.*?)\}\%\}/,
+					_coeffic_begin: /^(难度系数：)(.*)/,
+					// 解析 {?{解析\n解析}?}
+					_analysis: /\{\?\{([\s\S]*?)\}\?\}/,
+					_analysis_begin: /^(参考解析：)(.*)/
+				},
+				const: {
+					optionNames: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+					optionIndex: {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7, "I": 8, "J": 9, "K": 10, "L": 11, "M": 12, "N": 13, "O": 14, "P": 15, "Q": 16, "R": 17, "S": 18, "T": 19, "U": 20, "V": 21, "W": 22, "X": 23, "Y": 24, "Z": 25, 0: "A", 1: "B", 2: "C", 3: "D", 4: "E", 5: "F", 6: "G", 7: "H", 8: "I", 9: "J", 10: "K", 11: "L", 12: "M", 13: "N", 14: "O", 15: "P", 16: "Q", 17: "R", 18: "S", 19: "T", 20: "U", 21: "V", 22: "W", 23: "X", 24: "Y", 25: "Z"},
+					quesnumCNs: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "二十一", "二十二", "二十三", "二十四"]
+				}
+			};
+			/**
+			* 数字转成汉字
+			* @params num === 要转换的数字
+			* @return 汉字
+			* */
+			parser.api.toChineseNum = (function(num)
+			{
+				let changeNum = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+				let unit = ["", "十", "百", "千", "万"];
+				num = parseInt(num, 10);
+				let getWan = (function(temp)
+				{
+					let strArr = temp.toString().split("").reverse();
+					let newNum = "";
+					let newArr = [];
+					strArr.forEach(function(item, index)
+					{
+						newArr.unshift((item === "0") ? changeNum[item] : (changeNum[item] + unit[index]));
+					});
+					let numArr = [];
+					newArr.forEach(function(m, n)
+					{
+						if(m !== "零")
+						{
+							numArr.push(n);
+						}
+					});
+					if(newArr.length > 1)
+					{
+						newArr.forEach(function(m, n)
+						{
+							if(newArr[newArr.length - 1] === "零")
+							{
+								if(n <= numArr[numArr.length - 1])
+								{
+									newNum += m;
+								}
+							}
+							else
+							{
+								newNum += m;
+							}
+						});
+					}
+					else
+					{
+						newNum = newArr[0];
+					}
+					return newNum;
+				});
+				let overWan = Math.floor(num / 10000);
+				let noWan = num % 10000;
+				if(noWan.toString().length < 4)
+				{
+					noWan = "0" + noWan;
+				}
+				return (overWan ? (getWan(overWan) + "万" + getWan(noWan)) : getWan(num)).replace(/^一十/, "十");
+			});
+			parser.api.toChineseBig = (function(num)
+			{
+				function numToChinese(n)
+				{
+					// let chineseBigNum = "零壹贰叁肆伍陆柒捌玖";
+					let chineseBigNum = "零一二三四五六七八九";
+					return chineseBigNum[n];
+				}
+				// 将接收到的num转换为字符串
+				let strNum = String(num);
+				// 定义单位
+				// let unit = ["拾", "佰", "仟", "万", "拾", "佰", "仟", "亿", "拾", "佰", "仟"];
+				let unit = ["十", "百", "千", "万", "十", "百", "千", "亿", "十", "百", "千"];
+				// 结果中放一个符号，用来解决最后的零去不掉的问题
+				let result = ["@"];
+				// 单位下标
+				let unitNo = 0;
+				// 从后往前遍历接收到的数据，省略结束条件
+				for(let i = strNum.length - 1;; i--)
+				{
+					// 调用转大写函数，将每一个数字转换成中文大写，一次放入一个到结果数组中
+					result.unshift(numToChinese(strNum[i]));
+					// 如果不大于0
+					if(i <= 0)
+					{
+						// 结束循环
+						break;
+					}
+					// 放入一个数字，放入一个单位
+					result.unshift(unit[unitNo]);
+					// 单位下标加1
+					unitNo++;
+				}
+				// 将结果数组转换成字符串，并使用正则替换一些关键位置，让结果符合语法
+				// return result.join("").replace(/(零[仟佰拾]){1,3}/g, "零").replace(/零{2,}/g, "零").replace(/零([万亿])/g, "$1").replace(/亿万/g, "亿").replace(/零*@/g, "");
+				return (result.join("").replace(/(零[千百十]){1,3}/g, "零").replace(/零{2,}/g, "零").replace(/零([万亿])/g, "$1").replace(/亿万/g, "亿").replace(/零*@/g, "")).replace(/^一十/, "十") || "零";
+			});
+			(function()
+			{
+				for(let i = 0; i < 1000; i++)
+				{
+					parser.const.quesnumCNs[i] = parser.api.toChineseNum(i + 1);
+				}
+			})();
+			parser.api.init = (function()
+			{
+				/**
+				if(prompt("请输入密码：", "") !== localStorage.getItem("queslib-access-pwd"))
+				{
+					return;
+				}*/
+				if(typeof(eruda) !== "object")
+				{
+					return alert("Eruda 未加载");
+				}
+				if(typeof(jQuery) !== "function")
+				{
+					return alert("jQuery 未加载");
+				}
+				if(typeof(JSZip) !== "function")
+				{
+					return alert("JSZip 未加载");
+				}
+				let queslib = $(document).find("[name='queslib']").get(0),
+				select = $(queslib).find("select").get(0),
+				cloneSelect = null,
+				initIndex = select.selectedIndex,
+				savedIndex = (function($d)
+				{
+					if(arguments.length > 0)
+					{
+						localStorage.setItem("queslib-selected-index", String($d));
+					}
+					return parseInt(localStorage.getItem("queslib-selected-index"), 10);
+				}),
+				urlIndex = parseInt(parser.api.getUrlParam("i"), 10),
+				queslibCompressRes = (function($d)
+				{
+					if(arguments.length > 0)
+					{
+						localStorage.setItem("queslib-compress-res", $d);
+					}
+					return localStorage.getItem("queslib-compress-res");
+				});
+				$.LoadingOverlay("show");
+				try
+				{
+					let pwd = parser.api.getUrlParam("pwd");
+					if(pwd && ((pwd = pwd.split(",")).length > 0))
+					{
+						$("[data-pwd]").each(function($index, $opt)
+						{
+							if(pwd.includes($($opt).attr("data-pwd")))
+							{
+								parser.api.tipmsg(`${$opt.text}<font color="red">已解锁</font>`, "info");
+								$($opt).removeAttr("disabled").prop("disabled", false);
+							}
+						});
+					}
+					$("[data-ifsite]").each(function($i, $og)
+					{
+						if($($og).attr("data-ifsite"))
+						{
+							let rm = true;
+							$($($og).attr("data-ifsite").split("|").concat("/storage/emulated/0")).each(function($$i, $s)
+							{
+								if((/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) || document.location.href.includes($s))
+								{
+									rm = false;
+								}
+							});
+							rm && $($og).remove();
+						}
+					});
+					initIndex = select.selectedIndex;
+				}
+				catch(e)
+				{
+					console.warn(e);
+				}
+				try
+				{
+					// eruda.util.$ eruda._$el eruda._devTools._tools eruda._devTools._tools.network._requests
+					eruda.add(
+					{
+						name: "题库菜单",
+						init: (function($el)
+						{
+							$el.html((`<center><hr />
+								<p name="cloneSelect_container">${select.outerHTML.replace(/eruda\.util\.\$\.cloneSelect/, "$(document).find('[name=\\'queslib\\'] select').get(0)")}</p><hr />
+								<button name="autoread" style="color: grey;">自动浏览</button><hr />
+								<button name="changebg" style="color: grey;">日间模式</button><hr />
+								<!--button name="assignto" style="color: grey;">${(/indexnew\.html/).test(document.location.pathname) ? "访问旧版" : "访问新版"}</button><hr /-->
+								每章题量&nbsp;&nbsp;&nbsp;
+								<button name="quesnum">➖</button>
+								<input name="quesnum" type="range" min="10" max="200" step="5" value="${localStorage.getItem('queslib-question-num') ? localStorage.getItem('queslib-question-num') : '50'}" />
+								<button name="quesnum">➕</button>
+								&nbsp;&nbsp;&nbsp;<span name="quesnum">${localStorage.getItem("queslib-question-num") ? localStorage.getItem("queslib-question-num") : "50"}题</span>
+								<hr />
+								显示模式&nbsp;&nbsp;&nbsp;
+								<button name="showmode" style="color: grey;">按<font color="red">题型</font>显示</button><hr />
+							</center>`).replace(/^\s+/g, ""));
+							// 设置每章题量
+							(function()
+							{
+								$el.find("input[name='quesnum']").get(0).oninput = (function()
+								{
+									let intxt = this.parentElement.querySelector("span[name='quesnum']");
+									intxt.innerText = this.value + "题";
+								});
+								$el.find("input[name='quesnum']").get(0).onchange = (function()
+								{
+									this.oninput();
+									localStorage.setItem("queslib-question-num", this.value);
+									select.onchange();
+								});
+								$el.find("button[name='quesnum']").on("click", function()
+								{
+									let input = this.parentElement.querySelector("input[name='quesnum']");
+									input.value = (this.innerText === "➖") ? (parseInt(input.value, 10) - parseInt(input.step)) : (parseInt(input.value, 10) + parseInt(input.step));
+									input.onchange();
+								});
+							})();
+							// 克隆的副本
+							cloneSelect = eruda.util.$.cloneSelect = $el.find("[name='cloneSelect_container'] select").get(0);
+							$el.find("button[name='autoread']").get(0).onclick = (function($e)
+							{
+								let btn = this;
+								if(btn.start)
+								{
+									return btn.start = false, $(btn).text("自动浏览"), btn.timer = clearInterval(btn.timer);
+								}
+								// 判断向上或向下移动
+								let jus = btn.jus || -1,
+								// 向上或向下移动的距离
+								num = queslib.scrollTop || window.scrollY || 0;
+								btn.start = true, $(btn).text("手动浏览"), btn.timer = setInterval(function()
+								{
+									let y = queslib.scrollTop || window.scrollY;
+									if(y == 0)
+									{
+										num++;
+										// 位于顶部时向下移动
+										jus = -1;
+									}
+									if(y > jus)
+									{
+										num++;
+									}
+									else
+									{
+										num--;
+									}
+									(queslib || window).scroll(0, num);
+									// 记录上次的距离位置用来判断是否是折返方向
+									btn.jus = jus = y;
+								}, 25);
+							});
+							$(document).on("dblclick", function($e)
+							{
+								$el.find("button[name='autoread']").get(0).onclick();
+							});
+							// 显示方式
+							(function()
+							{
+								$el.find("button[name='showmode']").get(0).innerHTML = '按<font color="red">' + (localStorage.getItem("queslib-display-mode") || "题型") + "</font>显示";
+								$el.find("button[name='showmode']").get(0).onclick = (function($e)
+								{
+									let btn = this;
+									if(localStorage.getItem("queslib-display-mode") === "章节")
+									{
+										btn.innerHTML = '按<font color="red">题型</font>显示';
+										localStorage.setItem("queslib-display-mode", "题型");
+									}
+									else
+									{
+										btn.innerHTML = '按<font color="red">章节</font>显示';
+										localStorage.setItem("queslib-display-mode", "章节");
+									}
+									select.onchange();
+								});
+							})();
+							// 设置网页背景色
+							(function()
+							{
+								let light = "background-color: #cccccc; color: black; font-size: 12px; opacity: 0.75;", dark = "background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 12px; opacity: 0.50;";
+								if(localStorage.getItem("queslib-background-theme") === "日间模式")
+								{
+									document.body.style = light;
+									select.style.backgroundColor = cloneSelect.style.backgroundColor = "#ffffff";
+									$el.find("button[name='changebg']").get(0).innerText = "日间模式";
+								}
+								else if(localStorage.getItem("queslib-background-theme") === "夜间模式")
+								{
+									document.body.style = dark;
+									select.style.backgroundColor = cloneSelect.style.backgroundColor = "#000000";
+									$el.find("button[name='changebg']").get(0).innerText = "夜间模式";
+								}
+								else if((7 <= new Date().getHours()) && (new Date().getHours() <= 22))
+								{
+									document.body.style = light;
+									select.style.backgroundColor = cloneSelect.style.backgroundColor = "#ffffff";
+									$el.find("button[name='changebg']").get(0).innerText = "日间模式";
+								}
+								else
+								{
+									document.body.style = dark;
+									select.style.backgroundColor = cloneSelect.style.backgroundColor = "#000000";
+									$el.find("button[name='changebg']").get(0).innerText = "夜间模式";
+								}
+								$el.find("button[name='changebg']").get(0).onclick = (function($e)
+								{
+									let btn = this;
+									if(btn.innerText === "日间模式")
+									{
+										document.body.style = dark;
+										select.style.backgroundColor = cloneSelect.style.backgroundColor = "#000000";
+										btn.innerText = "夜间模式";
+										localStorage.setItem("queslib-background-theme", "夜间模式");
+									}
+									else
+									{
+										document.body.style = light;
+										select.style.backgroundColor = cloneSelect.style.backgroundColor = "#ffffff";
+										btn.innerText = "日间模式";
+										localStorage.setItem("queslib-background-theme", "日间模式");
+									}
+								});
+							})();
+							/**
+							$el.find("button[name='assignto']").get(0).onclick = (function($e)
+							{
+								(/indexnew\.html/).test(document.location.pathname) ? document.location.assign("index.html") : document.location.assign("indexnew.html");
+							});
+							*/
+							$el.css("position", "absolute");
+							$el.css("overflow", "auto");
+							this._$el = $el;
+						}),
+						show: (function()
+						{
+							this._$el.show();
+						}),
+						hide: (function()
+						{
+							this._$el.hide();
+						}),
+						destroy: (function(){})
+					});
+					eruda.add(
+					{
+						name: "试题切换",
+						init: (function($el)
+						{
+							eruda.util.$.switchques = (function($i)
+							{
+								select.selectedIndex = $i;
+								select.onchange();
+							});
+							let html = `<aside name="switchques">`;
+							html += `\n${"\t".repeat(1)}<hr />`;
+							let plen = $(select).find("optgroup").length;
+							$(select).find("optgroup").each(function($index, $optgroup)
+							{
+								html += `\n${"\t".repeat(1)}<details${$optgroup.disabled ? "" : " open"}>`;
+								html += `\n${"\t".repeat(2)}<summary name="optgroup" style="padding: 10px 5px; color: #2983bb;">●${$optgroup.disabled ? "<s>" : ""}${$optgroup.label}${$optgroup.disabled ? "</s>" : ""}</summary>`;
+								html += `\n${"\t".repeat(2)}<hr />`;
+								let clen = $($optgroup).find("option").length;
+								$($optgroup).find("option").each(function($$index, $option)
+								{
+									let disabled = $optgroup.disabled || $option.disabled;
+									disabled || (html += `\n${"\t".repeat(2)}<span name="option" style="padding: 5px;">○○<button style="color: ${disabled ? '#474b4c' : '#68b88e'}; background-color: transparent;" onclick="javascript: eruda.util.$.switchques(${$option.index});"${disabled ? " disabled" : ""}>${disabled ? "<s>" : ""}${$option.label || $option.text}${disabled ? "</s>" : ""}</button></span>`);
+									if($$index < (clen - 1))
+									{
+										disabled || (html += `\n${"\t".repeat(2)}<hr />`);
+									}
+								});
+								html += `\n${"\t".repeat(1)}</details>`;
+								if($index < (plen - 1))
+								{
+									html += `\n${"\t".repeat(1)}<hr />`;
+								}
+							});
+							html += `\n${"\t".repeat(1)}<hr />`;
+							html += `\n</aside>`;
+							$el.html(html);
+							$el.css("position", "absolute");
+							$el.css("overflow", "auto");
+							this._$el = $el;
+						}),
+						show: (function()
+						{
+							this._$el.show();
+						}),
+						hide: (function()
+						{
+							this._$el.hide();
+						}),
+						destroy: (function(){})
+					});
+					eruda.add(
+					{
+						name: "距离考试",
+						init: (function($el)
+						{
+							let remain = (function($range, $year, $month, $day, $hour, $minute, $second)
+							{
+								let sec = Math.round((new Date($year, $month - 1, $day, $hour, $minute, $second).getTime() - Date.now()) / 1000),
+								d = Math.floor(sec / (60 * 60 * 24)),
+								h = Math.floor((sec / (60 * 60)) % 24),
+								m = Math.floor((sec / 60) % 60),
+								s = Math.floor(sec % 60);
+								return (sec < 0) ? ((Date.now() < new Date(`${$year}-${$month}-${$day} ${$range[1]}:${$second}`).getTime()) ? "进行中" : "已结束") : `还剩 ${d} 天 ${h} 时 ${m} 分 ${s} 秒`;
+							}), exams = [
+								{
+									name: "健康评估",
+									time: [2021, 12, 16, 16, 10, 00],
+									date: {
+										day: ["2021-12-16", "星期四"],
+										range: ["16:10", "17:40"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "心理护理",
+									time: [2021, 12, 23, 16, 10, 00],
+									date: {
+										day: ["2021-12-23", "星期四"],
+										range: ["16:10", "17:40"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "护理管理",
+									time: [2021, 12, 24, 16, 10, 00],
+									date: {
+										day: ["2021-12-24", "星期五"],
+										range: ["16:10", "17:40"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "五官科护理",
+									time: [2021, 12, 30, 16, 10, 00],
+									date: {
+										day: ["2021-12-30", "星期四"],
+										range: ["16:10", "17:40"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "精神科护理",
+									time: [2021, 12, 31, 16, 10, 00],
+									date: {
+										day: ["2021-12-31", "星期五"],
+										range: ["16:10", "17:40"]
+									},
+									type: "开卷",
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "护理学基础",
+									time: [2022, 01, 02, 14, 30, 00],
+									date: {
+										day: ["2022-01-02", "星期日"],
+										range: ["14:30", "16:30"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "内科护理学",
+									time: [2022, 01, 03, 14, 30, 00],
+									date: {
+										day: ["2022-01-03", "星期一"],
+										range: ["14:30", "16:30"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "妇产科护理",
+									time: [2022, 01, 04, 08, 10, 00],
+									date: {
+										day: ["2022-01-04", "星期二"],
+										range: ["08:10", "10:10"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								},
+								{
+									name: "外科护理学",
+									time: [2022, 01, 05, 08, 10, 00],
+									date: {
+										day: ["2022-01-05", "星期三"],
+										range: ["08:10", "10:10"]
+									},
+									place: ["三期2号楼301", "三期2号楼202"]
+								}/**,
+								{
+									name: "外科护理学",
+									date: ["2022-01-05", "星期五"],
+									time: ["08:10", "10:10"],
+									place: ["三期2号楼301", "三期2号楼202"]
+								}*/
+							];
+							$el.timer_func = (function()
+							{
+								$el.html("<center><hr />" + exams.map(function($val, $index, $arrs)
+								{
+									/**let args = [];
+									$val.date[0].split("-").forEach(function($v, $i, $arrs)
+									{
+										args.push(parseInt($v, 10));
+									});
+									$val.time[0].split(":").forEach(function($v, $i, $arrs)
+									{
+										args.push(parseInt($v, 10));
+									});
+									args.push(00);
+									remain.apply(null, [$val.time].concat(args));
+									*/
+									return (`<h1>${$val.name}
+											<b>（${remain.apply(null, [$val.date.range].concat($val.time))}）</b>
+										</h1>
+										<h3>
+											<b style="color: blue;">${$val.date.day[0]}（${$val.date.day[1]}）<br />
+												<b style="color: #bec936;">${$val.date.range.join("～")}</b>
+												${$val.type ? ('<br /><b style="color: #9eccab;">' + $val.type + "</b>") : ""}
+											</b>
+										</h3>
+										<h6>
+											<b style="color: green;">${$val.place.join(" / ")}</b>
+										</h6>`).replace(/^\s+/g, "");
+								}).join("<hr />") + "<hr /></center>");
+							});
+							$el.css("position", "absolute");
+							$el.css("overflow", "auto");
+							this._$el = $el;
+						}),
+						show: (function()
+						{
+							this._$el.timer_func();
+							this._$el.timer = setInterval(this._$el.timer_func, 1000);
+							this._$el.show();
+						}),
+						hide: (function()
+						{
+							this._$el.timer = clearInterval(this._$el.timer);
+							this._$el.hide();
+						}),
+						destroy: (function()
+						{
+							this._$el.timer = clearInterval(this._$el.timer);
+						})
+					});
+					// 添加其他剩余工具
+					((document.location.protocol === "file:") ? ["console", "network", "resources", "info", "elements", "sources", "snippets"] : ["console", "snippets"]).forEach(function($val, $index, $arrs)
+					{
+						if(eruda[eruda.util.upperFirst($val)])
+						{
+							eruda.add(new eruda[eruda.util.upperFirst($val)]());
+						}
+					});
+					// 优先显示
+					eruda.show("题库菜单");
+				}
+				catch(e)
+				{
+					console.warn(e);
+				}
+				try
+				{
+					/**
+					get(i) 返回 DOM 对象
+					eq(i) 返回 jQuery 对象
+					指定元素内围
+					prepend prependTo
+					append appendTo
+					dom.insertAdjacentHTML("afterbegin", "")
+					dom.insertAdjacentHTML("beforeend", "")
+					指定元素外围
+					before insertBefore
+					after insertAfter
+					dom.insertAdjacentHTML("beforebegin", "")
+					dom.insertAdjacentHTML("afterend", "")
+					*/
+					// 让 jQuery 支持二进制数据格式解析返回
+					(function($, undefined)
+					{
+						"use strict";
+						// use this transport for "binary" data type
+						$.ajaxTransport("+binary", function($options, $originalOptions, $jqXHR)
+						{
+							// check for conditions and support for blob / arraybuffer response type
+							if((typeof(FormData) !== "undefined") && (($options.dataType && ($options.dataType === "binary")) || ($options.data && (((typeof(ArrayBuffer) !== "undefined") && ($options.data instanceof ArrayBuffer)) || ((typeof(Blob) !== "undefined") && ($options.data instanceof Blob))))))
+							{
+								return {
+									// create new XMLHttpRequest
+									send: (function(headers, callback)
+									{
+										// setup all variables
+										let xhr = (typeof(XMLHttpRequest) !== "undefined") ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"),
+										url = $options.url,
+										type = $options.type,
+										async = $options.async || true,
+										// blob or arraybuffer. Default is blob
+										dataType = $options.responseType || "blob",
+										data = $options.data || null,
+										username = $options.username || null,
+										password = $options.password || null;
+										xhr.addEventListener("load", function()
+										{
+											let data = {};
+											data[$options.dataType] = $options.response = $jqXHR.response = xhr.response;
+											// make callback and send data
+											callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+										});
+										xhr.addEventListener("error", function()
+										{
+											let data = {};
+											data[$options.dataType] = $options.response = $jqXHR.response = xhr.response;
+											// make callback and send data
+											callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+										});
+										xhr.open(type, url, async, username, password);
+										// setup custom headers
+										for(let i in headers)
+										{
+											xhr.setRequestHeader(i, headers[i]);
+										}
+										xhr.responseType = dataType;
+										xhr.send(data);
+									}),
+									abort: (function()
+									{
+										console.warn("二进制数据解析中断", arguments);
+									})
+								};
+							}
+							else
+							{
+								console.warn("浏览器不支持解析二进制数据", arguments);
+							}
+						});
+					})(jQuery);
+					$(window).one("error", function()
+					{
+						console.warn("加载出错了", arguments);
+						parser.api.tipmsg("加载出错了，即将刷新页面…", "error", function()
+						{
+							confirm("是否刷新页面？") && document.location.reload(false);
+						});
+					});
+					parser.onToggleDetails = (function($el)
+					{
+						// 触发 DOM 元素宽高自适应事件
+						$el.open && $.each($($el).find("textarea[onclick][oninput][readonly]"), function(i, n)
+						{
+							if((n.style.display !== "none") && !n.onclickok)
+							{
+								n.onclick && n.onclick();
+								n.onclickok = true;
+							}
+						});
+					});
+					$(queslib || window).scroll(function()
+					{
+						// 触发 DOM 元素宽高自适应事件
+						$.each($(queslib).find("textarea[onclick][oninput][readonly]"), function(i, n)
+						{
+							if((n.style.display !== "none") && !n.onclickok && this.closest("details").open)
+							{
+								n.onclick && n.onclick();
+								n.onclickok = true;
+							}
+						});
+					});
+					setTimeout(function()
+					{
+						(document.location.protocol === "file:") ? console.log("网页最后更新时间", parser.api.parseTimeToDateStr(document.lastModified, false)) : $.ajax(
+						{
+							url: document.location.href,
+							type: "HEAD",
+							async: true,
+							cache: false,
+							success: (function($data, $status, $xhr)
+							{
+								console.log("网页最后更新时间", parser.api.parseTimeToDateStr($xhr.getResponseHeader("Last-Modified"), $xhr.getResponseHeader("Expires") ? false : true));
+							}),
+							error: (function($xhr, $status, $e)
+							{
+								console.warn("获取网页更新时间失败", arguments);
+								console.log("网页最后更新时间", parser.api.parseTimeToDateStr(document.lastModified, false))
+							})
+						});
+					}, 0);
+					if(savedIndex() && !isNaN(savedIndex()) && (savedIndex() >= 0))
+					{
+						initIndex = savedIndex();
+					}
+					else if(urlIndex && !isNaN(urlIndex) && (urlIndex >= 0))
+					{
+						initIndex = urlIndex;
+					}
+					// 健康评估
+					else if(Date.now() <= (new Date("2021-12-16 16:10:00")).getTime())
+					{
+						initIndex = 11;
+					}
+					// 心理护理
+					else if(Date.now() <= (new Date("2021-12-23 16:10:00")).getTime())
+					{
+						initIndex = 10;
+					}
+					// 五官科护理
+					else if(Date.now() <= (new Date("2021-12-30 16:10:00")).getTime())
+					{
+						initIndex = 19;
+					}
+					// 精神科护理
+					else if(Date.now() <= (new Date("2021-12-31 16:10:00")).getTime())
+					{
+						initIndex = 12;
+					}
+					// 护理学基础
+					else if(Date.now() <= (new Date("2022-01-02 14:30:00")).getTime())
+					{
+						initIndex = 8;
+					}
+					// 内科护理学
+					else if(Date.now() <= (new Date("2022-01-03 14:30:00")).getTime())
+					{
+						initIndex = 14;
+					}
+					// 妇产科护理
+					else if(Date.now() <= (new Date("2022-01-04 08:10:00")).getTime())
+					{
+						initIndex = 9;
+					}
+					// 外科护理学
+					else if(Date.now() <= (new Date("2022-01-05 08:10:00")).getTime())
+					{
+						initIndex = 17;
+					}
+					select.selectedIndex = cloneSelect.selectedIndex = initIndex;
+					$([select, cloneSelect]).each(function($index, $val)
+					{
+						// 禁用
+						$($val).attr("disabled", "disabled").prop("disabled", true);
+					});
+					let url = ["https://web.omeo.top/queslib/queslib.bin", `https://hn-1252239881.${["file", "cos.ap-guangzhou", "cos.accelerate"][0]}.myqcloud.com/res/html/queslib/queslib.bin`][1],
+					initdata = (function($obj)
+					{
+						console.log("本地题库数据信息", $obj.date);
+						JSZip.loadAsync(new Blob([parser.api.base64ToUint8Array($obj.data)], {type: "application/octet-stream"})).then(function($zip)
+						{
+							parser.queslib = $zip;
+							$([select, cloneSelect]).each(function($index, $val)
+							{
+								// 启用
+								$($val).removeAttr("disabled").prop("disabled", false);
+							});
+							select.onchange();
+							$.LoadingOverlay("hide");
+						}, console.warn);
+					}),
+					config = (function($xhr)
+					{
+						return {
+							date: $xhr.getResponseHeader("Last-Modified") && (function()
+							{
+								let d = new Date();
+								if($xhr.getResponseHeader("Expires"))
+								{
+									d.setTime((new Date($xhr.getResponseHeader("Last-Modified"))).getTime());
+								}
+								else
+								{
+									d.setTime((new Date($xhr.getResponseHeader("Last-Modified"))).getTime() + ((new Date()).getTimezoneOffset() * 60 * 1000));
+								}
+								return d.toGMTString();
+							})(),
+							etag: $xhr.getResponseHeader("Etag") && $xhr.getResponseHeader("Etag").match(/"(.+)"/)[1],
+							size: $xhr.getResponseHeader("Content-Length") && parseInt($xhr.getResponseHeader("Content-Length"), 10)
+						};
+					}),
+					update = (
+					{
+						url: url,
+						type: "GET",
+						async: true,
+						cache: false,
+						processData: false,
+						// crossDomain: true,
+						xhrFields: {
+							// withCredentials: true,
+							overrideMimeType: "text/plain; charset=x-user-defined"
+						},
+						dataType: "binary",
+						responseType: "arraybuffer",
+						// contentType: false,
+						beforeSend: (function($xhr, $options){}),
+						dataFilter: (function($data, $type)
+						{
+							return $data;
+						}),
+						success: (function($data, $status, $xhr)
+						{
+							let old = queslibCompressRes() ? JSON.parse(queslibCompressRes()) : {},
+							refresh = (function()
+							{
+								let obj = {
+									date: {
+										source: config($xhr).date,
+										string: new Date(config($xhr).date).toString(),
+										format: parser.api.parseTimeToDateStr($xhr.getResponseHeader("Last-Modified"), $xhr.getResponseHeader("Expires") ? false : true)
+									},
+									etag: config($xhr).etag,
+									size: config($xhr).size,
+									data: parser.api.arrayBufferToBase64($data)
+								};
+								queslibCompressRes(JSON.stringify(obj));
+								parser.api.tipmsg("题库数据已被更新", "log", function()
+								{
+									console.log("题库数据已被更新", obj.date.format);
+								});
+								return old = obj;
+							});
+							if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag))
+							{
+								old = refresh();
+							}
+							initdata(old);
+						}),
+						error: (function($xhr, $status, $e)
+						{
+							console.warn("题库数据更新失败", arguments);
+							queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+						}),
+						complete: (function($xhr, $status){})
+					});
+					$.ajax(
+					{
+						url: url,
+						type: "HEAD",
+						async: true,
+						cache: false,
+						success: function($data, $status, $xhr)
+						{
+							let old = queslibCompressRes() ? JSON.parse(queslibCompressRes()) : {};
+							if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag))
+							{
+								$.ajax(update);
+							}
+							else
+							{
+								initdata(old);
+							}
+						},
+						error: function($xhr, $status, $e)
+						{
+							console.warn("无法获取题库数据更新信息", arguments);
+							queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+						}
+					});
+					/**
+					if(typeof(JSZipUtils) !== "object")
+					{
+						return alert("JSZipUtils 未加载");
+					}
+					JSZipUtils.getBinaryContent(url, (function($err, $data)
+					{
+						if(typeof(JSZip) !== "function")
+						{
+							return alert("JSZip 未加载");
+						}
+						$err ? console.warn("题库数据获取失败", $err) : JSZip.loadAsync($data).then(function($zip)
+						{
+							$zip.file("index.html").async("string", console.log).then(console.log, console.warn);
+						}, console.warn);
+					}));
+					*/
+				}
+				catch(e)
+				{
+					console.warn(e);
+				}
+				if((typeof(_cz_account) != "undefined") && (typeof(_cz_loaded) != "undefined") && _cz_loaded[_cz_account])
+				{
+					// 每隔15秒刷新访问数据的显示
+					setInterval(function()
+					{
+						try
+						{
+							let s = document.createElement("script");
+							s.type = "text/javascript";
+							s.src = "https://online.cnzz.com/online/online_v3.php?id=" + _cz_account + "&h=z13.cnzz.com&on=1&s=line&_=" + Date.now();
+							s.onload = s.onerror = s.onabort = (function($$e)
+							{
+								this.remove();
+								if($$e.type === "load")
+								{
+									let onlineMatch = $("#cnzz_stat_icon_" + _cz_account).text().match(/当前在线\[(\d+)\]/);
+									if(onlineMatch && onlineMatch[1])
+									{
+										(sessionStorage.getItem("queslib-online-num") !== onlineMatch[1]) && parser.api.tipmsg("当前有 " + onlineMatch[1] + " 人在线", null, null, 3000);
+										sessionStorage.setItem("queslib-online-num", onlineMatch[1]);
+									}
+								}
+							});
+							document.body.appendChild(s);
+						}
+						catch(e)
+						{
+							console.warn(e);
+						}
+						try
+						{
+							let s = document.createElement("script");
+							s.type = "text/javascript";
+							s.src = "online-msg.js?_=" + Date.now();
+							s.onload = s.onerror = s.onabort = (function($$e)
+							{
+								this.remove();
+							});
+							document.body.appendChild(s);
+						}
+						catch(e)
+						{
+							console.warn(e);
+						}
+					}, 15000);
+				}
+			});
+			parser.api.cnzzPush = (function($arrs)
+			{
+				this.cnzzPush.datas = this.cnzzPush.datas || [];
+				this.cnzzPush.datas.push($arrs.slice(0));
+				(typeof(_czc) !== "undefined") && _czc.push && _czc.push($arrs.slice(0));
+				return this.cnzzPush.datas;
+			});
+			parser.api.getUrlParam = (function($name)
+			{
+				let reg = new RegExp("(^|&)" + $name + "=([^&]*)(&|$)"), r = document.location.search.substr(1).match(reg);
+				return (r && r[2]) || null;
+			});
+			parser.api.dump = (function($obj)
+			{
+				if(document.location.protocol === "file:")
+				{
+					if($("textarea[name='dump']").length == 0)
+					{
+						$(`<textarea name="dump" wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="display: none; overflow: auto; float: center; margin: 0 auto; border: 0; width: 100%; white-space: pre;" readonly><pre style="word-break: normal; word-wrap: normal; white-space: pre-wrap;" contenteditable>${document.documentElement.outerHTML.replace(/\</g, "&lt;").replace(/\>/g, "&gt;")}</pre></textarea>`).prependTo("main");
+					}
+					let cache = [];
+					return $("textarea[name='dump']").eq(0).val((typeof($obj) !== "string") ? JSON.stringify($obj, function($key, $value)
+					{
+						if((typeof($value) === "object") && ($value !== null))
+						{
+							// 避免递归引用异常
+							if(cache.includes($value))
+							{
+								return "*" + $key + "*";
+							}
+							cache.push($value);
+						}
+						// 避免网页卡死
+						if($value instanceof Uint8Array)
+						{
+							return "new Uint8Array([" + $value + "])";
+						}
+						return $value;
+					}, "\t") : $obj).show().click();
+				}
+			});
+			parser.api.download = (function($data, $name, $type)
+			{
+				let d = (URL || webkitURL).createObjectURL(new Blob([$data || document.documentElement.outerHTML], {type: $type || "application/octet-stream"})),
+				a = document.createElement("a");
+				// IE 浏览器
+				if(navigator.msSaveOrOpenBlob)
+				{
+					a = navigator.msSaveOrOpenBlob(d, $name || (parser.api.uuid() + ".bin"));
+				}
+				else
+				{
+					a.href = d;
+					a.download = $name || (d.toString().match(/([^:\/]+)/g).reverse()[0] + ".bin");
+					a.target = "_self";
+					a.style.display = "none";
+					document.body.appendChild(a);
+					a.click();
+					document.body.removeChild(a);
+				}
+				(URL || webkitURL).revokeObjectURL(d);
+				return a;
+			});
+			parser.api.check_answers = (function(_answer_text)
+			{
+				// 纯选择题答案检查
+				var chapters = _answer_text.split("\n\n"), answers = [];
+				$(chapters).each((_index, _val) => {
+					answers[_index] = [];
+					_val.replace(/([0-9]{1,})\.([A-Z]{1,})/ig, function(_match, capture_1, capture_2)
+					{
+						answers[_index].push(capture_2);
+					});
+				});
+				/** 遍历章节元素 */
+				$("center[name='chapter']").each((_index, _val) => {
+					/** 遍历题目数据 */
+					$(JSON.parse(_val.querySelector("button").value)).each(function(_index2, _val2)
+					{
+						var answer = "";
+						/** 遍历每个选项 */
+						$("[name=\"" + _val2.name + "\"]").each(function(_index3, _val3)
+						{
+							if(_val3.checked)
+							{
+								answer += ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"][_index3];
+							}
+						});
+						if(answer != answers[_index][_index2])
+						{
+							console.log(`第 ${["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "二十一", "二十二", "二十三", "二十四"][_index]} 章第 ${_index2 + 1} 题答案有误，正确答案为 ${answers[_index][_index2]}，错误选择为 ${answer/** $(_val3).parent().text()*/}`);
+						}
+					});
+				});
+			});
+			parser.api.parseTimeToDateStr = (function(_st, _isUTC)
+			{
+				var date = new Date(_st),
+				v = (function(_s)
+				{
+					return (_s < 10) ? ("0" + _s) : _s;
+				}),
+				str = _isUTC ? (date.getUTCFullYear() + "-" + v(date.getUTCMonth() + 1) + "-" + v(date.getUTCDate()) + " " + v(date.getUTCHours()) + ":" + v(date.getUTCMinutes()) + ":" + v(date.getUTCSeconds()) + ((date.getUTCMilliseconds() == 0) ? "" : (" " + date.getUTCMilliseconds()))) : (date.getFullYear() + "-" + v(date.getMonth() + 1) + "-" + v(date.getDate()) + " " + v(date.getHours()) + ":" + v(date.getMinutes()) + ":" + v(date.getSeconds()) + ((date.getMilliseconds() == 0) ? "" : (" " + date.getMilliseconds())));
+				return str;
+			});
+			parser.api.tipmsg = (function($msg, $type, $callback, $timeout)
+			{
+				let colors = {log: "MediumSeaGreen", info: "DodgerBlue", debug: "LightSlateGray", warn: "LightGoldenRodYellow", error: "OrangeRed"};
+				this.tipmsg.queues = this.tipmsg.queues || [];
+				let el = $(`<strong id="tip-msg-${parser.api.uuid()}" style="display: none; position: fixed; top: ${50 * (this.tipmsg.queues.length + 1) / 2}px; left: -5px; right: -5px; width: 100%; z-index: 9999; float: center; margin: 0 auto; text-align: center;"></strong>`).appendTo("body");
+				this.tipmsg.queues.push(el.get(0));
+				el.html($msg)
+				.css("color", ($type && colors[$type]) || colors["log"])
+				.stop(true, true)
+				.fadeIn(500)
+				.delay($timeout || 2000)
+				.fadeOut(500, function()
+				{
+					$callback && $callback();
+					el.remove();
+					parser.api.tipmsg.queues.shift();
+				});
+			});
+			parser.api.sleep = (function(_time)
+			{
+				var start = (new Date()).getTime();
+				while(((new Date()).getTime() - start) <= _time)
+				{
+					continue;
+				}
+			});
+			parser.api.delay = (function(_delay)
+			{
+				return new Promise((_resolve, _reject) => {
+					setTimeout(_resolve, _delay);
+				});
+			});
+			parser.api.translateToBinaryString = (function(_text)
+			{
+				var out;
+				out = "";
+				for(i = 0; i < _text.length; i++)
+				{
+					out += String.fromCharCode(_text.charCodeAt(i) & 0xff);
+				}
+				return out;
+			});
+			parser.api.base64ToUint8Array = (function(_str)
+			{
+				var padding = "=".repeat((4 - _str.length % 4) % 4);
+				var base64 = (_str + padding).replace(/\-/g, "+").replace(/_/g, "/");
+				var rawData = atob(base64);
+				var bytes = new Uint8Array(rawData.length);
+				for(var i = 0; i < rawData.length; ++i)
+				{
+					bytes[i] = rawData.charCodeAt(i);
+				}
+				return bytes;
+			});
+			parser.api.arrayBufferToBase64 = (function(_ab)
+			{
+				return btoa(parser.api.uint8ArrayToString(new Uint8Array(_ab)));
+				/**
+				var reader = new FileReader();
+				reader.onload = (function(e)
+				{
+					var base64 = reader.result || e.target.result;
+					console.log(base64 = base64.split(",").slice(-1)[0]);
+				});
+				reader.readAsDataURL(new Blob([_ab]));
+				*/
+			});
+			parser.api.uint8ArrayToString = (function(_u8a)
+			{
+				var str = "";
+				for(var i = 0; i < _u8a.byteLength; i++)
+				{
+					str += String.fromCharCode(_u8a[i]);
+				}
+				return str;
+			});
+			parser.api.uuid = (function()
+			{
+				var S4 = (function()
+				{
+					return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+				});
+				return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+			});
+			// 文本相似度计算 parser.api.dump((parser.api.similar("", "", 2) * 100) + "%");
+			parser.api.similar = (function(s, t, f)
+			{
+				if(!s || !t)
+				{
+					return 0;
+				}
+				var l = (s.length > t.length) ? s.length : t.length;
+				var n = s.length;
+				var m = t.length;
+				var d = [];
+				f = f || 3;
+				var min = (function(a, b, c)
+				{
+					return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+				});
+				var i, j, si, tj, cost;
+				if(n === 0)
+				{
+					return m;
+				}
+				if(m === 0)
+				{
+					return n;
+				}
+				for(i = 0; i <= n; i++)
+				{
+					d[i] = [];
+					d[i][0] = i;
+				}
+				for(j = 0; j <= m; j++)
+				{
+					d[0][j] = j;
+				}
+				for(i = 1; i <= n; i++)
+				{
+					si = s.charAt(i - 1);
+					for(j = 1; j <= m; j++)
+					{
+						tj = t.charAt(j - 1);
+						if(si === tj)
+						{
+							cost = 0;
+						}
+						else
+						{
+							cost = 1;
+						}
+						d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+					}
+				}
+				let res = (1 - (d[n][m] / l));
+				return res.toFixed(f);
+			});
+			// Changes XML to JSON https://davidwalsh.name/convert-xml-json
+			parser.api.xmlToJson = (function(_xml)
+			{
+				var obj = {};
+				if(_xml.nodeType == 1)
+				{
+					// ELEMENT_NODE
+					if(_xml.attributes)
+					{
+						if(_xml.attributes.length > 0)
+						{
+							obj["@attributes"] = {};
+							for(var j = 0; j < _xml.attributes.length; j++)
+							{
+								var attribute = _xml.attributes.item(j);
+								obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+							}
+						}
+					}
+				}
+				else if(_xml.nodeType == 3)
+				{
+					// TEXT_NODE #text
+					return obj = ((_xml.nodeValue == "\n") || (_xml.nodeValue == "\r\n")) ? undefined : _xml.nodeValue;
+				}
+				else if(_xml.nodeType == 4)
+				{
+					// DOCUMENT_POSITION_FOLLOWING #cdata-section
+					return obj = _xml.data;
+				}
+				else if(_xml.nodeType == 9)
+				{
+					// DOCUMENT_NODE
+					obj["@attributes"] = {version: _xml.xmlVersion, encoding: _xml.xmlEncoding};
+				}
+				else
+				{
+					console.warn("存在未处理的XML节点类型", _xml.nodeType);
+				}
+				// do children
+				if(_xml.hasChildNodes())
+				{
+					for(var i = 0; i < _xml.childNodes.length; i++)
+					{
+						var item = _xml.childNodes.item(i);
+						var nodeName = item.nodeName;
+						if(typeof(obj[nodeName]) == "undefined")
+						{
+							obj[nodeName] = parser.api.xmlToJson(item);
+						}
+						else
+						{
+							if(typeof(obj[nodeName].push) == "undefined")
+							{
+								var old = obj[nodeName];
+								obj[nodeName] = [];
+								obj[nodeName].push(old);
+							}
+							obj[nodeName].push(parser.api.xmlToJson(item));
+						}
+					}
+				}
+				return obj;
+			});
+			parser.api.xmlToJsonNoAttrs = (function(_xml)
+			{
+				var obj = {};
+				if(_xml.children.length > 0)
+				{
+					for(var i = 0; i < _xml.children.length; i++)
+					{
+						var item = _xml.children.item(i);
+						var nodeName = item.nodeName;
+						if(typeof(obj[nodeName]) == "undefined")
+						{
+							obj[nodeName] = parser.api.xmlToJsonNoAttrs(item);
+						}
+						else
+						{
+							if(typeof(obj[nodeName].push) == "undefined")
+							{
+								var old = obj[nodeName];
+								obj[nodeName] = [];
+								obj[nodeName].push(old);
+							}
+							obj[nodeName].push(parser.api.xmlToJsonNoAttrs(item));
+						}
+					}
+				}
+				else
+				{
+					obj = _xml.textContent;
+				}
+				return obj;
+			});
+			parser.api.getMatchValOr = (function($match, $index, $default)
+			{
+				if($match)
+				{
+					return $match[$index];
+				}
+				return $default;
+			});
+			// 简单文本试题解析
+			parser.txt.simple = (function($title, $data)
+			{
+				function matchValueOr($$match, $$index, $$default)
+				{
+					if($$match)
+					{
+						return $$match[$$index];
+					}
+					return $$default;
+				}
+				function addOtherMatch($$type, $$line, $$obj)
+				{
+					if(!$$obj || !$$line)
+					{
+						return;
+					}
+					if(parser.re._answer_begin.test($$line))
+					{
+						$$obj.answer = String($$line.match(parser.re._answer_begin)[2]).trim();
+					}
+					else if(parser.re._coeffic_begin.test($$line))
+					{
+						$$obj.coeffic = String($$line.match(parser.re._coeffic_begin)[2]).trim();
+					}
+					else if(parser.re._analysis_begin.test($$line))
+					{
+						$$obj.analysis = String($$line.match(parser.re._analysis_begin)[2]).trim();
+					}
+					else
+					{
+						console.warn("文本解析", $$type, "未知选项", $$line);
+					}
+				}
+				function choicesParser($$type, $$questr, $$arrs, $$logtype)
+				{
+					let arrs = [];
+					if(!$$questr)
+					{
+						return arrs;
+					}
+					let ques = Array.isArray($$questr) ? $$questr : $$questr.trim().split("\n\n");
+					for(let q = 0; q < ques.length; q++)
+					{
+						let lines = ques[q].trim().split("\n");
+						let title = (function()
+						{
+							// 兼容答案在单独第一行的特殊情况
+							if(parser.re._answer_aline.test(lines[0].trim()))
+							{
+								lines.push("参考答案：" + lines[0].trim());
+								lines = lines.slice(1);
+							}
+							return lines[0].trim().replace(parser.re.quesnum, "").trim();
+						})();
+						lines = lines.slice(1);
+						let opts = [];
+						let que = {
+							type: $$type ? $$type : undefined,
+							title: title,
+							options: [],
+							answer: undefined,
+							coeffic: undefined,
+							analysis: undefined
+						};
+						let hasAnswer = false;
+						for(let l = 0; l < lines.length; l++)
+						{
+							// 以字母开头为选项
+							if(parser.re._optname.test(lines[l].trim()))
+							{
+								que.options.push(
+								{
+									name: String(lines[l].trim().match(parser.re._optname)[1]).trim(),
+									title: lines[l].trim().replace(parser.re._optname, "").trim().replace(parser.re._answer_ended, "").trim(),
+									right: parser.re._answer_ended.test(lines[l].trim())
+								});
+								// 其他标注答案方法
+								if(parser.re._answer_ended.test(lines[l].trim()))
+								{
+									hasAnswer = true;
+								}
+							}
+							else
+							{
+								addOtherMatch($$type, lines[l].trim(), que);
+							}
+						}
+						if(que.answer)
+						{
+							for(let o = 0; o < que.options.length; o++)
+							{
+								if(que.answer.split("").includes(que.options[o].name))
+								{
+									que.options[o].right = true;
+								}
+							}
+						}
+						else if(hasAnswer)
+						{
+							for(let o = 0; o < que.options.length; o++)
+							{
+								if(que.options[o].right)
+								{
+									if(!que.answer)
+									{
+										que.answer = "";
+									}
+									que.answer += que.options[o].name;
+								}
+							}
+						}
+						else
+						{
+							console.warn("文本解析", $$type || $$logtype, "答案未知", ques[q].trim());
+						}
+						$$arrs && $$arrs.push(que);
+						arrs.push(que);
+					}
+					return arrs;
+				}
+				let all = {};
+				all["name"] = $title && decodeURIComponent($title);
+				all["questions"] = [];
+				if(!$data || ($data.trim() === ""))
+				{
+					return all;
+				}
+				let data = $data.split("\n\n\n");
+				for(let i = 0; i < data.length; i++)
+				{
+					let type = parser.type.default;
+					let questr = data[i].trim().replace(parser.re._type, function($$match, $$type, $$offset, $$str)
+					{
+						// 题型
+						type = $$type;
+						return "";
+					}).replace(parser.re._chapter, function($$match, $$chapter, $$offset, $$str)
+					{
+						// 章节描述
+						console.log("章节", all["name"], $$chapter);
+						return "";
+					}).replace(parser.re._note, function($$match, $$note, $$offset, $$str)
+					{
+						// 注释信息
+						console.log("注释", all["name"], $$note);
+						return "";
+					}).trim();
+					if(questr !== "")
+					{
+						// 单选题 多选题
+						if(parser.type.choices.alone.includes(type))
+						{
+							choicesParser(type, questr, all["questions"]);
+						}
+						// 共用题干单选题
+						else if(parser.type.choices.share.title.includes(type))
+						{
+							let ques = questr.split("\n\n");
+							let title = ques[0].trim().replace(parser.re.quesnum, "").trim();
+							ques = ques.slice(1);
+							all["questions"].push(
+							{
+								type: type,
+								title: title,
+								children: choicesParser(null, ques, null, type)
+							});
+						}
+						// 共用答案单选题
+						else if(parser.type.choices.share.answer.includes(type))
+						{
+							let ques = questr.split("\n\n");
+							let title = ques[0].trim().replace(parser.re.quesnum, "").trim();
+							ques = ques.slice(1);
+							let options = [];
+							let children = [];
+							title.split("\n").forEach(function($$line, $$index, $$lines)
+							{
+								options.push(
+								{
+									name: String($$line.trim().match(parser.re._optname)[1]).trim(),
+									title: $$line.trim().replace(parser.re._optname, "").trim()
+								});
+							});
+							ques.forEach(function($$que, $$index, $$ques)
+							{
+								let q = $$que.trim().split("\n");
+								let t = (function()
+								{
+									// 兼容答案在单独第一行的特殊情况
+									if(parser.re._answer_aline.test(q[0].trim()))
+									{
+										lines.push("参考答案：" + q[0].trim());
+										q = q.slice(1);
+									}
+									return q[0].trim().replace(parser.re.quesnum, "").trim();
+								})();
+								q = q.slice(1);
+								let o = {
+									type: undefined,
+									title: t,
+									answer: undefined,
+									coeffic: undefined,
+									analysis: undefined
+								};
+								q.forEach(function($$$line, $$$index, $$$lines)
+								{
+									addOtherMatch(type, $$$line.trim(), o);
+								});
+								children.push(o);
+							});
+							all["questions"].push(
+							{
+								type: type,
+								options: options,
+								children: children
+							});
+						}
+						// 文字-填空题 文字-作答题
+						else if(parser.type.answers.fill.includes(type) || parser.type.answers.word.includes(type))
+						{
+							questr.split("\n\n").forEach(function($$line, $$index, $$lines)
+							{
+								$$line = $$line.trim().replace(parser.re._note, function($$$match, $$$note, $$$offset, $$$str)
+								{
+									// 注释信息
+									console.log("注释", all["name"], $$$note);
+									return "";
+								}).trim();
+								let o = {
+									type: type,
+									title: $$line.trim().replace(parser.re.quesnum, "").trim().replace(parser.re._answer, "").trim().replace(parser.re._coeffic, "").trim().replace(parser.re._analysis, "").trim(),
+									coeffic: matchValueOr($$line.trim().match(parser.re._coeffic), 1),
+									analysis: matchValueOr($$line.trim().match(parser.re._analysis), 1)
+								};
+								let answer = matchValueOr($$line.trim().match(parser.re._answer), 1);
+								// 文字-填空题
+								if(parser.type.answers.fill.includes(type))
+								{
+									o.answers = (function()
+									{
+										let answers = [];
+										answer && answer.trim().split("\n").forEach(function($$$line, $$$index, $$$lines)
+										{
+											answers.push($$$line.trim());
+										});
+										return answers;
+									})();
+								}
+								// 文字-作答题
+								else
+								{
+									o.answer = answer;
+								}
+								all["questions"].push(o);
+							});
+						}
+						else
+						{
+							console.warn("文本解析", "未知题型", type);
+						}
+					}
+				}
+				(document.location.protocol === "file:") && console.log("›plain-txt", all);
+				return all;
+			});
+			parser.json.forceToObj = (function($json, $default)
+			{
+				// 可能返回 Object{} 或 Array[]
+				let obj = $default || {};
+				if(typeof($json) !== "object")
+				{
+					try
+					{
+						obj = JSON.parse($json);
+					}
+					catch(e)
+					{
+						try
+						{
+							obj = (new Function("return " + $json + ";")).apply(null);
+						}
+						catch(ee)
+						{
+							try
+							{
+								obj = eval("(" + $json + ")");
+							}
+							catch(eee)
+							{
+								console.warn(e, ee, eee);
+							}
+						}
+					}
+					if(!obj || (typeof(obj) !== "object"))
+					{
+						return $default || {};
+					}
+				}
+				return obj;
+			});
+			// 云课堂智慧职教APP-职教云JSON试题解析
+			parser.json.icveappzjy2 = (function($title, $json)
+			{
+				let all = {};
+				all["name"] = $title && decodeURIComponent($title);
+				all["questions"] = [];
+				$json = parser.json.forceToObj($json, {});
+				if($json.data)
+				{
+					if($json.data.homeworkTitle || $json.data.examTitle)
+					{
+						all["name"] = $json.data.homeworkTitle || $json.data.examTitle;
+						$json.data.questions.forEach(function($$que, $$i, $$ques)
+						{
+							let dataJson = parser.json.forceToObj($$que.dataJson, []);
+							if($$que.queTypeName === "单选题")
+							{
+								all["questions"].push(
+								{
+									type: $$que.queTypeName,
+									title: $$que.title,
+									options: (function()
+									{
+										let opts = [];
+										dataJson.forEach(function($$$opt, $$$i, $$$opts)
+										{
+											opts.push(
+											{
+												name: parser.const.optionNames[$$$opt.SortOrder],
+												title: $$$opt.Content && $$$opt.Content.trim(),
+												right: $$$opt.IsAnswer
+											});
+										});
+										return opts;
+									})(),
+									answer: $$que.answer ? parser.const.optionIndex[$$que.answer] : undefined,
+									coeffic: undefined,
+									analysis: ($$que.resultAnalysis && ($$que.resultAnalysis.trim() !== "")) ? $$que.resultAnalysis.trim() : undefined
+								});
+							}
+							else
+							{
+								console.warn("JSON解析", "未知题型", $$que.queTypeName);
+							}
+						});
+					}
+					else
+					{
+						console.warn("JSON解析", "未处理子数据", $json.data);
+					}
+				}
+				else
+				{
+					console.warn("JSON解析", "未处理数据", $json);
+				}
+				(document.location.protocol === "file:") && console.log("›icveappzjy2-json", all);
+				return all;
+			});
+			// 云课堂智慧职教APP-MOOC学院JSON试题解析
+			parser.json.icveappmooc = (function($title, $json)
+			{
+				let all = {};
+				all["name"] = $title && decodeURIComponent($title);
+				all["questions"] = [];
+				$json = parser.json.forceToObj($json, {});
+				return all;
+			});
+			// 人卫图书增值XML试题解析
+			parser.xml.pmph = (function(_title, _xml)
+			{
+				var parseQue = (function(_que, _typedesc)
+				{
+					var func = {
+						"单选题": (function()
+						{
+							return (
+							{
+								type: "单选题",
+								title: _que.desc.trim().replace(parser.re.quesnum, "").trim(),
+								options: (function()
+								{
+									var opts = [];
+									_que.options && _que.options.option && Array.from(_que.options.option).forEach(function(_opt, _index, _opts)
+									{
+										opts.push(
+										{
+											name: _opt.id,
+											title: _opt.desc.trim(),
+											right: (_opt.id == _que.answers)
+										});
+									});
+									(_que.options && _que.options.option) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
+									return opts;
+								})(),
+								answer: (_que.answers && (_que.answers.trim() !== "")) ? _que.answers.trim() : undefined,
+								analysis: _que.keypoints ? _que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
+							});
+						}),
+						"共用题干单选题": (function()
+						{
+							return (
+							{
+								type: "共用题干单选题",
+								title: _que.desc.trim().replace(parser.re.quesnum, "").trim(),
+								children: (function()
+								{
+									var arrs = [];
+									_que.children && _que.children.question && Array.from(_que.children.question).forEach(function(__que, _index, _ques)
+									{
+										arrs.push(
+										{
+											title: __que.desc.trim().replace(/(（[0-9]{1,}）)|(\([0-9]{1,}\))/, "").trim(),
+											options: (function()
+											{
+												var opts = [];
+												Array.from(__que.options.option).forEach(function(_opt, __index, _opts)
+												{
+													opts.push(
+													{
+														name: _opt.id,
+														title: _opt.desc.trim(),
+														right: (_opt.id == __que.answers)
+													});
+												});
+												return opts;
+											})(),
+											answer: (__que.answers && (__que.answers.trim() !== "")) ? __que.answers.trim() : undefined,
+											analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
+										});
+									});
+									(_que.children && _que.children.question) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
+									return arrs;
+								})()
+							});
+						}),
+						"共用答案单选题": (function()
+						{
+							return (
+							{
+								type: "共用答案单选题",
+								options: (function()
+								{
+									var opts = [], allopts = _que.desc.trim().replace(parser.re.quesnum, "").trim().split(/\r\n|\r|\n/).slice(1);
+									Array.from(allopts).forEach(function(_opt, _index, _opts)
+									{
+										opts.push(
+										{
+											name: parser.const.optionNames[_index],
+											title: _opt.trim().replace(parser.re.optsnum, "").trim()
+										});
+									});
+									return opts;
+								})(),
+								children: (function()
+								{
+									var arrs = [];
+									_que.children && _que.children.question && Array.from(_que.children.question).forEach(function(__que, _index, _ques)
+									{
+										arrs.push(
+										{
+											title: __que.desc.trim().replace(/(（[0-9]{1,}）|(\([0-9]{1,}\)))/, "").trim(),
+											answer: (__que.answers && (__que.answers.trim() !== "")) ? __que.answers.trim() : undefined,
+											analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
+										});
+									});
+									(_que.children && _que.children.question) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
+									return arrs;
+								})()
+							});
+						})
+					};
+					switch(_que.type)
+					{
+						case("1"):
+						case("2"):
+						{
+							return (_typedesc.trim().toUpperCase().startsWith("A3") || _typedesc.trim().toUpperCase().startsWith("A4")) ? func["共用题干单选题"]() : func["单选题"]();
+						}
+						case("3"):
+						{
+							return func["共用题干单选题"]();
+						}
+						case("4"):
+						{
+							return func["共用答案单选题"]();
+						}
+						default:
+						{
+							console.warn("XML存在未处理题型", _que, _que.type, _typedesc);
+							break;
+						}
+					}
+					return {};
+				}), pushQues = (function(_arrs, _ques, _typedesc)
+				{
+					// 2小题及以上
+					if(Array.isArray(_ques))
+					{
+						return Array.from(_ques).forEach(function(_que, _index, __ques)
+						{
+							_arrs.push(parseQue(_que, _typedesc));
+						});
+					}
+					else
+					{
+						// 只有1小题
+						return _arrs.push(parseQue(_ques, _typedesc));
+					}
+				});
+				var all = {};
+				all["name"] = decodeURIComponent(_title);
+				all["questions"] = [];
+				var xmldoc = null;
+				if(typeof(_xml) == "string")
+				{
+					var xmler = new DOMParser();
+					xmldoc = xmler.parseFromString(_xml.trim(), "text/xml");
+				}
+				else
+				{
+					xmldoc = _xml;
+				}
+				var data = parser.api.xmlToJsonNoAttrs(xmldoc);
+				// 2大题及以上
+				if(Array.isArray(data.exam.questions))
+				{
+					Array.from(data.exam.questions).forEach(function(_val, _index, _vals)
+					{
+						pushQues(all["questions"], _val.question, _val.instructions);
+					});
+				}
+				else
+				{
+					// 只有1大题
+					pushQues(all["questions"], data.exam.questions.question, data.exam.questions.instructions);
+				}
+				(document.location.protocol == "file:") && console.log("›pmph-xml", all);
+				return all;
+			});
+			parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
+			{
+				if(!(_el || _el.value))
+				{
+					return alert("糟糕，数据丢失了，请刷新页面再重试");
+				}
+				var formatSeconds = (function(_second)
+				{
+					var s = parseInt(_second);
+					var ms = ((_second - s) * 1000).toFixed(0);
+					var m = 0;
+					var h = 0;
+					if(s > 60)
+					{
+						m = parseInt(s / 60);
+						s = parseInt(s % 60);
+						if(m > 60)
+						{
+							h = parseInt(m / 60);
+							m = parseInt(m % 60);
+						}
+					}
+					var result = parseInt(ms) + "ms";
+					if(s > 0)
+					{
+						result = parseInt(s) + /** "″" */"s" + result;
+					}
+					if(m > 0)
+					{
+						result = parseInt(m) + /** "′" */"m" + result;
+					}
+					if(h > 0)
+					{
+						result = parseInt(h) + "h" + result;
+					}
+					return result;
+				});
+				var data = (new Function("return " + _el.value + ";")).apply(null);
+				if(!data.length)
+				{
+					return alert("本章节没有可供作答的" + (_ischoice ? "选择" : "文字") + "题");
+				}
+				if(_ischoice)
+				{
+					if(_isdo)
+					{
+						_el.innerText = _endstr, _el.right = {}, _el.error = {}, _el.notdo = {}, _el.starttime = Date.now();
+						$(data).each(function(_index, _val)
+						{
+							$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+							{
+								$(_val2).removeAttr("disabled checked").prop("disabled", false).prop("checked", false)
+								.parent().css({"color": ""}).addClass("option").removeClass("option-right option-error option-notdo");
+							});
+						});
+						parser.api.cnzzPush(["_trackEvent", "题库", _startstr, (new Date(_el.starttime)).toString(), 0, "queslib"]);
+					}
+					else
+					{
+						_el.innerText = _startstr, _el.endedtime = Date.now();
+						$(data).each(function(_index, _val)
+						{
+							$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+							{
+								$(_val2).attr("disabled", "disabled").prop("disabled", true);
+								// 此题还没选出正确答案
+								if($('[name="' + _val2.name + '"]:checked').length == 0)
+								{
+									_el.notdo[_val2.name] = null;
+									$('[name="' + _val2.name + '"][value="true"]').each(function(_index3, _val3)
+									{
+										$(_val3).parent().css({"color": "#fca104"}).addClass("option-notdo");
+									});
+								}
+								else
+								{
+									if(_val.type.endsWith("多选题"))
+									{
+										if(_val2.checked)
+										{
+											if(_val2.value == "false")
+											{
+												_el.error[_val2.name] = false;
+												$(_val2).parent().css({"color": "#d9534f"}).removeClass("option").addClass("option-error");
+											}
+											else
+											{
+												_el.right[_val2.name] = true;
+											}
+										}
+										else
+										{
+											if(_val2.value == "true")
+											{
+												_el.error[_val2.name] = false;
+												$(_val2).parent().css({"color": "#fca104"}).addClass("option-notdo");
+											}
+										}
+										// 最后判断，只要错一题均不计分
+										if(_index2 == ($('[name="' + _val2.name + '"]').size() - 1))
+										{
+											if((_el.error[_val2.name] != null) && (_el.right[_val2.name] != null))
+											{
+												Reflect.deleteProperty(_el.right, _val2.name);
+											}
+										}
+									}
+									else
+									{
+										if(_val2.checked)
+										{
+											if((_val2.checked ? "true" : "false") == _val2.value)
+											{
+												_el.right[_val2.name] = true;
+											}
+											else
+											{
+												_el.error[_val2.name] = false;
+												// 选择错误
+												$(_val2).parent().css({"color": "#d9534f"}).removeClass("option").addClass("option-error");
+												// 高亮正确选项
+												$('[name="' + _val2.name + '"][value="true"]').each(function(_index3, _val3)
+												{
+													$(_val3).parent().css({"color": "#5cb85c"}).addClass("option-right");
+												});
+											}
+										}
+									}
+								}
+							});
+						});
+						let rightNum = Object.keys(_el.right).length,
+						errorNum = Object.keys(_el.error).length,
+						notdoNum = Object.keys(_el.notdo).length,
+						scoreRate  = ((rightNum / data.length) * 100).toFixed(2);
+						let msg = ("作答时间：" + parser.api.parseTimeToDateStr(_el.starttime) + "\n提交时间：" + parser.api.parseTimeToDateStr(_el.endedtime) + "\n\n〔单选题〕\n\n\t题数：" + data.length
+						+ "\n\n\t做对：" + ((rightNum == 0) ? /** "一题没对哦" */0 : rightNum)
+						+ "\n\n\t做错：" + ((errorNum == 0) ? /** "全都做对啦" */0 : errorNum)
+						+ ((notdoNum == 0) ? "" : ("\n\n\t未做：" + notdoNum))
+						+ "\n\n得分率：" + scoreRate + "%"
+						+ "\n\n失分率：" + (100 - scoreRate).toFixed(2) + "%"
+						+ "\n\n错题率：" + ((errorNum / data.length) * 100).toFixed(2) + "%"
+						+ ((notdoNum == 0) ? "" : ("\n\n未做率：" + ((notdoNum / data.length) * 100).toFixed(2) + "%"))
+						+ "\n\n答题用时：" + formatSeconds((_el.endedtime - _el.starttime) / 1000));
+						console.log(msg);
+						let btns = [];
+						rightNum && btns.push(
+							{
+								caption: "对题", custom_class: "dialog-bg-right", callback: function()
+								{
+									new $.Zebra_Dialog("功能开发中……", {
+										auto_close: 500,
+										buttons: false,
+										modal: false
+									});
+								}
+						});
+						errorNum && btns.push(
+							{
+								caption: "错题", custom_class: "dialog-bg-error", callback: function()
+								{
+									new $.Zebra_Dialog("功能开发中……", {
+										auto_close: 500,
+										buttons: false,
+										modal: false
+									});
+								}
+						});
+						notdoNum && btns.push(
+							{
+								caption: "未做", custom_class: "dialog-bg-notdo", callback: function()
+								{
+									new $.Zebra_Dialog("功能开发中……", {
+										auto_close: 500,
+										buttons: false,
+										modal: false
+									});
+								}
+						});
+						new $.Zebra_Dialog(msg.replace(/\n/g, "<br />"), {
+							type: "information",
+							title: "作答情况",
+							buttons: btns,
+							center_buttons: true
+						});
+						parser.api.cnzzPush(["_trackEvent", "题库", _endstr, (new Date(_el.endedtime)).toString(), 0, "queslib"]);
+					}
+				}
+				else
+				{
+					if(_isdo)
+					{
+						_el.innerText = _endstr, _el.right = {}, _el.error = {}, _el.notdo = {}, _el.textScore = [], _el.starttime = Date.now();
+						$(data).each(function(_index, _val)
+						{
+							$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+							{
+								$(_val2).removeAttr("readonly").prop("readonly", false).css({"color": "#ffffff"}).val("");
+								if(_val.type == "填空题")
+								{
+									$(_val2)[0].nextElementSibling.style.display = "none";
+								}
+								else
+								{
+									$(_val2)[0].nextElementSibling.style.display = "none";
+									$(_val2)[0].nextElementSibling.nextElementSibling.style.display = "none";
+								}
+							});
+						});
+						parser.api.cnzzPush(["_trackEvent", "题库", _startstr, (new Date(_el.starttime)).toString(), 0, "queslib"]);
+					}
+					else
+					{
+						_el.innerText = _startstr, _el.endedtime = Date.now();
+						$(data).each(function(_index, _val)
+						{
+							$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+							{
+								$(_val2).attr("readonly", "readonly").prop("readonly", true);
+								var titleno = 0;
+								$(_val2).parent()[0].previousElementSibling.innerText.trim().replace(/^([0-9]{1,})\./, function(_match, _titleno){titleno = _titleno;});
+								if(_val.type == "填空题")
+								{
+									if($(_val2).val() != "")
+									{
+										if($(_val2).val() == $(_val2)[0].nextElementSibling.value)
+										{
+											_el.right[_val2.name] = true;
+										}
+										else
+										{
+											_el.error[_val2.name] = false;
+											$(_val2).css({"color": "#d9534f"});
+											$(_val2)[0].nextElementSibling.style.display = "inline";
+										}
+									}
+									else
+									{
+										_el.notdo[_val2.name] = null;
+										$(_val2).val($(_val2)[0].nextElementSibling.value);
+										$(_val2).css({"color": "yellow"});
+									}
+								}
+								else
+								{
+									if($(_val2).val() != "")
+									{
+										_el.right[_val2.name] = true;
+										var rate = (parser.api.similar($(_val2).val(), $(_val2)[0].defaultValue, 2) * 100) + "%";
+										_el.textScore.push(titleno + ".〔" + _val.type + "〕答案匹配度	" + rate);
+										$(_val2)[0].nextElementSibling.nextElementSibling.style.display = "inline";
+										$(_val2)[0].nextElementSibling.nextElementSibling.value = $(_val2)[0].defaultValue;
+										
+										$(_val2)[0].nextElementSibling.style.display = "inline";
+										$(_val2)[0].nextElementSibling.value = _el.textScore[_el.textScore.length - 1];
+									}
+									else
+									{
+										_el.notdo[_val2.name] = null;
+										$(_val2)[0].value = $(_val2)[0].defaultValue;
+										$(_val2).css({"color": "yellow"});
+									}
+								}
+							});
+						});
+						let rightNum = Object.keys(_el.right).length,
+						errorNum = Object.keys(_el.error).length,
+						notdoNum = Object.keys(_el.notdo).length,
+						scoreRate  = ((rightNum / data.length) * 100).toFixed(2);
+						let msg = ("作答时间：" + parser.api.parseTimeToDateStr(_el.starttime) + "\n提交时间：" + parser.api.parseTimeToDateStr(_el.endedtime) + "\n\n题数：" + data.length
+						+ "\n\n\t〔填空题〕\n\n\t做对：" + ((rightNum == 0) ? /** "一题没对哦" */0 : rightNum)
+						+ "\n\n\t做错：" + ((errorNum == 0) ? /** "全都做对啦" */0 : errorNum)
+						+ ((notdoNum == 0) ? "" : ("\n\n\t未做：" + notdoNum))
+						+ "\n\n得分率：" + scoreRate + "%"
+						+ "\n\n失分率：" + (100 - scoreRate).toFixed(2) + "%"
+						+ "\n\n错题率：" + ((errorNum / data.length) * 100).toFixed(2) + "%"
+						+ ((notdoNum == 0) ? "" : ("\n\n未做率：" + ((notdoNum / data.length) * 100).toFixed(2) + "%"))
+						
+						+ "\n\n文字作答题得分率参考：\n\n" + _el.textScore.join("\n")
+						
+						+ "\n\n\n答题用时：" + formatSeconds((_el.endedtime - _el.starttime) / 1000));
+						console.log(msg);
+						alert(msg);
+						parser.api.cnzzPush(["_trackEvent", "题库", _endstr, (new Date(_el.endedtime)).toString(), 0, "queslib"]);
+					}
+				}
+				return;
+			});
+			parser.api.tohtml = (function(_data, _cacheObj)
+			{
+				// (document.location.protocol === "file:") && parser.api.dump(_data);
+				(document.location.protocol === "file:") && console.log("››tohtml", _data);
+				if(_cacheObj)
+				{
+					_cacheObj.cachedata = _data;
+				}
+				let allhtml = "",
+				// 此章节每道题中选项的 name 值，目前只包括单/多选题型
+				choice_quesnames = [], answer_quesnames = [], parse = (function(__data, _isOpen)
+				{
+					choice_quesnames[choice_quesnames.length] = [];
+					answer_quesnames[answer_quesnames.length] = [];
+					let htmls = [], html = "";
+					html = `${"\t".repeat(4)}<article name="chapter">`;
+					html += `\n${"\t".repeat(5)}<details ontoggle="javascript: parser.onToggleDetails(this);"${_isOpen ? " open" : ""}>`;
+					html += `\n${"\t".repeat(6)}<summary name="name" oncopy="javascript: return false;">${__data.name}{{chapter_total_quesnum}}</summary>`;
+					html += `\n${"\t".repeat(6)}<aside name="todo">`;
+					html += `\n${"\t".repeat(7)}<center>`;
+					html += `\n${"\t".repeat(8)}<table>`;
+					html += `\n${"\t".repeat(9)}<thead>`;
+					html += `\n${"\t".repeat(10)}<tr>`;
+					html += `\n${"\t".repeat(11)}<th colspan="5"><b name="txt-title-collapse" title="收起章节" onclick="javascript: confirm(this.title + '？') && this.closest('article').querySelector('details summary').click();">${__data.name}</b></th>`;
+					html += `\n${"\t".repeat(10)}</tr>`;
+					html += `\n${"\t".repeat(9)}</thead>`;
+					html += `\n${"\t".repeat(9)}<tfoot>`;
+					html += `\n${"\t".repeat(10)}<tr>`;
+					html += `\n${"\t".repeat(11)}<th><button name="btn-choices" type="button" value="{{chapter_choice_data}}" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">选择题练习</button></th>`;
+					html += `\n${"\t".repeat(11)}<th><button name="btn-backfirst" title="返回首题" type="button" onclick="javascript: this.closest('article').scrollIntoView(true);" oncopy="javascript: return false;">⇧</button></th>`;
+					html += `\n${"\t".repeat(11)}<th><button name="btn-backlast" title="返回尾题" type="button" onclick="javascript: this.closest('article').scrollIntoView(false);" oncopy="javascript: return false;">⇩</button></th>`;
+					html += `\n${"\t".repeat(11)}<th><button name="btn-answers" type="button" value="{{chapter_answer_data}}" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题作答', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">文字题作答</button></th>`;
+					html += `\n${"\t".repeat(10)}</tr>`;
+					html += `\n${"\t".repeat(9)}</tfoot>`;
+					html += `\n${"\t".repeat(8)}</table>`;
+					html += `\n${"\t".repeat(7)}</center>`;
+					html += `\n${"\t".repeat(6)}</aside>`;
+					html += `\n${"\t".repeat(6)}<aside name="questions">`;
+					htmls.push(html);
+					for(let i = 0; i < __data.questions.length; i++)
+					{
+						let child = __data.questions[i], uuid = parser.api.uuid();
+						if(parser.type.choices.alone.includes(child.type))
+						{
+							html = `${"\t".repeat(7)}<section name="question">`;
+							html += `\n${"\t".repeat(8)}<dl name="child">`;
+							html += `\n${"\t".repeat(9)}<dt name="desc"><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></dt>`;
+							for(let k = 0; k < child.options.length; k++)
+							{
+								html += `\n${"\t".repeat(9)}<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="${child.type.includes('多') ? 'checkbox' : 'radio'}" name="${uuid}" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="${child.options[k].right ? 'true' : 'false'}"${child.options[k].right ? " checked" : ""} disabled />${child.options[k].name}.${child.options[k].title}</span></dd>`;
+							}
+							html += `\n${"\t".repeat(8)}</dl>`;
+							html += `\n${"\t".repeat(7)}</section>`;
+							htmls.push(html);
+							choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+						}
+						if(parser.type.choices.share.title.includes(child.type))
+						{
+							html = `${"\t".repeat(7)}<section name="question">`;
+							html += `\n${"\t".repeat(8)}<dl name="title">`;
+							html += `\n${"\t".repeat(9)}<dt name="desc"><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></dt>`;
+							html += `\n${"\t".repeat(8)}</dl>`;
+							for(let k = 0; k < child.children.length; k++)
+							{
+								html += `\n${"\t".repeat(8)}<dl name="child">`;
+								html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></dt>`;
+								for(let j = 0; j < child.children[k].options.length; j++)
+								{
+									html += `\n${"\t".repeat(9)}<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="${uuid}" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="${child.children[k].options[j].right ? 'true' : 'false'}"${child.children[k].options[j].right ? " checked" : ""} disabled />${child.children[k].options[j].name}.${child.children[k].options[j].title}</span></dd>`;
+								}
+								html += `\n${"\t".repeat(8)}</dl>`;
+								choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+								uuid = parser.api.uuid();
+							}
+							html += `\n${"\t".repeat(7)}</section>`;
+							htmls.push(html);
+						}
+						if(parser.type.choices.share.answer.includes(child.type))
+						{
+							html = `${"\t".repeat(7)}<section name="question">`;
+							html += `\n${"\t".repeat(8)}<dl name="title">`;
+							html += `\n${"\t".repeat(9)}<dt name="desc"><span>{{quesnum}}.<small>〔${child.type}〕</small><big><small>（${parser.const.quesnumCNs[0]}）～（${parser.const.quesnumCNs[child.children.length - 1]}）共用答案</small></big></span></dt>`;
+							for(let k = 0; k < child.options.length; k++)
+							{
+								html += `\n${"\t".repeat(9)}<dd name="option">${child.options[k].name}.${child.options[k].title}</dd>`;
+							}
+							html += `\n${"\t".repeat(8)}</dl>`;
+							for(let k = 0; k < child.children.length; k++)
+							{
+								html += `\n${"\t".repeat(8)}<dl name="child">`;
+								html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></dt>`;
+								html += `\n${"\t".repeat(9)}<ul>`;
+								for(let j = 0; j < child.options.length; j++)
+								{
+									html += `\n${"\t".repeat(10)}<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="${uuid}" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="${(child.options[j].name === child.children[k].answer) ? 'true' : 'false'}"${(child.options[j].name === child.children[k].answer) ? " checked" : ""} disabled />${child.options[j].name}</span></li>`;
+								}
+								html += `\n${"\t".repeat(9)}</ul>`;
+								html += `\n${"\t".repeat(8)}</dl>`;
+								choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+								uuid = parser.api.uuid();
+							}
+							html += `\n${"\t".repeat(7)}</section>`;
+							htmls.push(html);
+						}
+						if(parser.type.answers.fill.includes(child.type))
+						{
+							if(child.answers && child.answers.length)
+							{
+								html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+								for(var k = 0; k < child.answers.length; k++)
+								{
+									html += `<span onclick="javascript: this.querySelector('input').click();" style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;"><small>（${parser.const.quesnumCNs[k]}）</small><input type="text" name="${uuid}" value="${child.answers[k] ? child.answers[k] : ''}" style="text-align: center; width: 80%; opacity: 0.8; border: 0; background-color: #33B5E5; color: #ffffff;" readonly /><input type="text" value="${child.answers[k] ? child.answers[k] : ''}" style="display: none; text-align: center; width: 80%; opacity: 0.8; border: 0; background-color: #5cb85c; color: #ffffff;" readonly /></span>`;
+									html += (k < (child.answers.length - 1)) ? "<br />" : "";
+								}
+								answer_quesnames[answer_quesnames.length - 1].push({name: uuid, type: child.type});
+								htmls.push(html);
+							}
+						}
+						if(parser.type.answers.word.includes(child.type))
+						{
+							if(child.answer && (child.answer.trim() != ""))
+							{
+								html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big style="word-break: normal; word-wrap: normal; white-space: pre-wrap;">${child.title}</big></span></p>`;
+								html += `<span onclick="javascript: this.querySelector('textarea').click();" style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;"><textarea name="${uuid}" wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="width: 90%; opacity: 0.8; border: 0; background-color: #33B5E5; color: #ffffff;" readonly>${child.answer ? child.answer.replace(/\<([\/]{0,})([A-Za-z]{1,})([0-9]{0,})([ \/]{0,})\>/g, "") : ""}</textarea><input type="text" value="" style="display: none; text-align: center; width: 90%; opacity: 0.8; border: 0; background-color: #337ab7; color: #ffffff;" readonly /><textarea wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="display: none; width: 90%; opacity: 0.8; border: 0; background-color: #5cb85c; color: #ffffff;" readonly></textarea></span>`;
+								answer_quesnames[answer_quesnames.length - 1].push({name: uuid, type: child.type});
+								htmls.push(html);
+							}
+						}
+					}
+					html = `${"\t".repeat(6)}</aside>`;
+					html += `\n${"\t".repeat(5)}</details>`;
+					html += `\n${"\t".repeat(4)}</article>`;
+					htmls.push(html);
+					return htmls.join("\n");
+				});
+				// 多章节
+				if(Array.isArray(_data.data))
+				{
+					for(let i = 0; i < _data.data.length; i++)
+					{
+						let d = parse(_data.data[i], i == 0);
+						allhtml += d ? ("\n" + d) : "";
+						allhtml += (i < _data.data.length - 1) ? `\n${"\t".repeat(4)}<hr />` : "";
+					}
+				}
+				// 单章节
+				if(Array.isArray(_data.questions))
+				{
+					let d = parse(_data, true);
+					allhtml += d ? ("\n" + d) : "";
+				}
+				allhtml += `\n${"\t".repeat(3)}`;
+				document.title = _data.name;
+				let quesnum = 0, choice_chaptersnum = 0, answer_chaptersnum = 0, chapter_total_quesnum = 0;
+				allhtml = allhtml.replace(/\{\{quesnum\}\}/g, function(_match, _offset, _string)
+				{
+					return (quesnum = quesnum + 1);
+				}).replace(/\{\{chapter_choice_data\}\}/g, function(_match, _offset, _string)
+				{
+					let data = JSON.stringify(choice_quesnames[choice_chaptersnum]).replace(/"/g, "'");
+					choice_chaptersnum = choice_chaptersnum + 1;
+					return data;
+				}).replace(/\{\{chapter_answer_data\}\}/g, function(_match, _offset, _string)
+				{
+					let data = JSON.stringify(answer_quesnames[answer_chaptersnum]).replace(/"/g, "'");
+					answer_chaptersnum = answer_chaptersnum + 1;
+					return data;
+				}).replace(/\{\{chapter_total_quesnum\}\}/g, function(_match, _offset, _string)
+				{
+					let c = choice_quesnames[chapter_total_quesnum] ? choice_quesnames[chapter_total_quesnum].length : 0;
+					let a = answer_quesnames[chapter_total_quesnum] ? answer_quesnames[chapter_total_quesnum].length : 0;
+					chapter_total_quesnum = chapter_total_quesnum + 1;
+					return "〔共" + (c + a) + "题〕";
+				});
+				let totalquesnum = 0;
+				Array.from(choice_quesnames).forEach(function(_arr, _index, _arrs)
+				{
+					totalquesnum = totalquesnum + _arr.length;
+				});
+				Array.from(answer_quesnames).forEach(function(_arr, _index, _arrs)
+				{
+					totalquesnum = totalquesnum + _arr.length;
+				});
+				document.title = "〔总" + totalquesnum + "题〕" + document.title;
+				return allhtml/*.trim().replace(/^\s+/g, "")*/;
+			});
+			// 按题型整理数据
+			parser.api.adjust = (function(_alldata)
+			{
+				if(localStorage.getItem("queslib-display-mode") === "章节")
+				{
+					return _alldata;
+				}
+				// 以指定个数分割数组，默认以 100 为等分单位
+				function chunk_array(arrs, size)
+				{
+					if(!arrs.length || (size < 1))
+					{
+						return [];
+					}
+					if(!size)
+					{
+						size = 100;
+					}
+					let start = null, end = null, result = [];
+					for(let i = 0; i < Math.ceil(arrs.length / size); i++)
+					{
+						start = i * size;
+						end = start + size;
+						result.push(arrs.slice(start, end));
+					}
+					return result;
+				}
+				let newdata = {
+					name: _alldata.name,
+					data: []
+				}, types = {};
+				Array.from(_alldata.data).forEach(function(_chapter, _index, _chapters)
+				{
+					Array.from(_chapter.questions).forEach(function(_question, __index, _questions)
+					{
+						if(!types[_question.type])
+						{
+							types[_question.type] = [];
+						}
+						types[_question.type].push(_question);
+					});
+				});
+				let quesnum = localStorage.getItem("queslib-question-num") ? parseInt(localStorage.getItem("queslib-question-num"), 10) : 50;
+				Array.from(Object.keys(types).sort(function(a, b)
+				{
+					// 按题名称排序，短的在前，长的在后，相等则根据字母表排序
+					return [a.length, b.length].includes("undefined") ? (a - b) : ((a.length == b.length) ? (a - b) : (a.length - b.length));
+				})).forEach(function(_type, _index, _types)
+				{
+					Array.from(chunk_array(types[_type], quesnum)).forEach(function(_split, __index, _splits)
+					{
+						let isTest = false;
+						isTest ? ((__index == 0) && newdata.data.push({name: _type, questions: [_split[__index]]})) : newdata.data.push({name: _type + ((_splits.length > 1) ? ("（" + parser.const.quesnumCNs[__index] + "）") : ""), questions: _split});
+					});
+				});
+				return newdata;
+			});
+			parser.api.get = (function(_el, _data)
+			{
+				$.LoadingOverlay("show");
+				localStorage.setItem("queslib-selected-index", _el.selectedIndex);
+				let fragment = document.createDocumentFragment();
+				let tpl = document.createElement("template");
+				// .html(document.createRange().createContextualFragment(html));
+				// 优先使用对象缓存数据，以免频繁从网络拉取数据
+				if(!localStorage.getItem("queslib-display-mode") && _el.item(_el.selectedIndex).cachedata)
+				{
+					tpl.innerHTML = parser.api.tohtml(parser.api.adjust(_el.item(_el.selectedIndex).cachedata), _el.item(_el.selectedIndex));
+					fragment.appendChild(tpl.content);
+					$(document).find("[name='queslib'] main").html(fragment);
+				}
+				else
+				{
+					if(typeof(parser.queslib) !== "object")
+					{
+						return alert("题库数据还未初始化");
+					}
+					if(typeof(parser.queslib.file) !== "function")
+					{
+						return alert("题库数据加载器错误");
+					}
+					if(Array.isArray(_data))
+					{
+						// 全部满足指定条件即反转数组顺序
+						_data.every(function($$val, $$i, $$arrs)
+						{
+							return $$val.type === "icveappzjy2-json";
+						}) && _data.reverse();
+						var obj = {};
+						obj.name = _el.item(_el.selectedIndex).innerText;
+						obj.data = [];
+						(_data.length != 0) && Promise.allSettled(_data.map(function(_val, _index, _arr)
+						{
+							return new Promise(function(_resolve, _reject)
+							{
+								parser.queslib.file(_val.file) ? parser.queslib.file(_val.file).async("string").then(function(_str)
+								{
+									// 截取文件名作为章节名称
+									var filename = _val.file.substring(_val.file.lastIndexOf("/") + 1);
+									filename = filename.substring(0, filename.lastIndexOf("."));
+									_resolve({index: _index, type: _val.type, name: filename, data: _str});
+								}, _reject) : _reject([_index, "文件不存在", _val]);
+							});
+						})).then(function(_results)
+						{
+							Array.from(_results).forEach(function(_val, _index, _vals)
+							{
+								if(_val.status === "fulfilled")
+								{
+									let func = null;
+									if(_val.value.type === "plain-txt")
+									{
+										func = parser.txt.simple;
+									}
+									else if(_val.value.type === "pmph-xml")
+									{
+										func = parser.xml.pmph;
+									}
+									else if(_val.value.type === "icveappzjy2-json")
+									{
+										func = parser.json.icveappzjy2;
+									}
+									else
+									{
+										func = parser.txt.simple;
+									}
+									// 添加章节数据
+									obj.data.push(func(_val.value.name, _val.value.data));
+								}
+								else
+								{
+									console.warn("allSettled", _index, _val);
+								}
+							});
+							tpl.innerHTML = parser.api.tohtml(parser.api.adjust(obj), _el.item(_el.selectedIndex));
+							fragment.appendChild(tpl.content);
+							$(document).find("[name='queslib'] main").html(fragment);
+						}, console.warn);
+					}
+				}
+				$.LoadingOverlay("hide");
+				parser.api.cnzzPush(["_trackEvent", "题库", "试题切换", _el.selectedOptions.item(0).parentElement.label + "@" + (_el.selectedOptions.item(0).text || _el.selectedOptions.item(0).label), _el.selectedIndex, "queslib"]);
+			});
+			</script>
+			<legend>
+				<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; height: 20px;" onchange="javascript: eruda.util.$.cloneSelect.selectedIndex = this.selectedIndex; parser.api.get(this, (new Function('return ' + this.value + ';')).apply(null));" oncopy="javascript: return false;">
+					<optgroup label="人卫图书增值（扫一扫，测一测）">
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第一章 礼仪及护理礼仪.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第二章 日常社交礼仪.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第三章 护士实用礼仪.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第四章 人际关系.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第五章 人际沟通.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第六章 护理工作中的语言沟通.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第七章 护理工作中的非语言沟通.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第八章 护理实践礼仪.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第九章 求职礼仪.xml'}
+						]">第一学期-护理礼仪与人际沟通（第2版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第二章 健康与疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第三章 护士与病人.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第四章 护理支持性理论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第五章 护理理论与模式.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第六章 评判性思维与临床护理决策.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第七章 护理程序.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/护理学导论（第4版）/第八章 护理安全与职业防护.xml'}
+						]">第一学期-护理学导论（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第一章 运动系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第二章 消化系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第三章 呼吸系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第四章 泌尿系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第五章 生殖系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第六章 脉管系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第七章 感觉器.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第八章 神经系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第九章 内分泌系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第十章 基本组织.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第十一章 器官微细结构.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第十二章 人体胚胎发育概要.xml'}
+						]">第一学期-人体解剖学与组织胚胎学</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第一章 疾病概论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二章 应激.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第三章 缺氧.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第四章 细胞和组织的适应、损伤与修复.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第五章 局部血液循环障碍.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第六章 水、电解质代谢紊乱.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第七章 酸碱平衡紊乱.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第八章 发热.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第九章 炎症.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十章 休克.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十一章 弥散性血管内凝血.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十二章 肿瘤.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十三章 呼吸系统疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十四章 呼吸功能不全.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十五章 心血管系统疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十六章 心功能不全.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十七章 消化系统疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十八章 肝性脑病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十九章 泌尿系统疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十章 肾功能不全.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十一章 生殖系统和乳腺疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十二章 内分泌系统疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十三章 传染病及寄生虫病.xml'}
+						]">第二学期-病理学与病理生理学（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第二章 细胞的基本功能.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第三章 血液.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第四章 血液循环.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第五章 呼吸.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第六章 消化和吸收.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第七章 能量代谢与体温.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第八章 尿的生成与排出.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第九章 感觉器官.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第十章 神经系统.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第十一章 内分泌.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/生理学（第2版）/第十二章 生殖.xml'}
+						]">第二学期-生理学（第2版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第一章 绪言.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二章 药物效应动力学.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三章 药物代谢动力学.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第四章 影响药物作用的因素.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第五章 传出神经系统药理概论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第六章 胆碱受体激动药和胆碱酯酶抑制药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第七章 胆碱受体阻断药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第八章 肾上腺素受体激动药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第九章 肾上腺素受体阻断药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十章 局部麻醉药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十一章 镇静催眠药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十二章 抗癫痫药和抗惊厥药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十三章 治疗中枢神经系统退行性疾病药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十四章 抗精神失常药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十五章 镇痛药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十六章 解热镇痛抗炎药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十七章 中枢兴奋药和改善脑代谢药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十八章 利尿药和脱水药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第十九章 抗高血压药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十章 抗充血性心力衰竭药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十一章 抗心律失常药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十二章 抗心绞痛药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十三章 调血脂药和抗动脉粥样硬化药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十四章 肾上腺皮质激素类药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十五章 甲状腺激素和抗甲状腺药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十六章 胰岛素和口服降血糖药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十七章 性激素类药和避孕药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十八章 作用于子宫药物.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第二十九章 抗过敏药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十章 作用于血液和造血系统药物.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十一章 作用于呼吸系统药物.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十二章 作用于消化系统药物.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十三章 抗菌药物概述.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十四章 β-内酰胺类抗生素.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十五章 大环内酯类、林可霉素类、多肽类及多磷类抗生素.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十六章 氨基糖苷类抗生素.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十七章 四环素类和氯霉素类抗生素.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十八章 人工合成抗菌药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第三十九章 抗真菌药和抗病毒药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第四十章 抗结核病药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第四十一章 抗寄生虫病药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第四十二章 消毒防腐药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第四十三章 抗恶性肿瘤药.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第四十四章 影响免疫功能药物.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/护用药理学（第4版）/第四十五章 特效解毒药.xml'}
+						]">第二学期-护用药理学（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第一章 医院和住院环境.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第二章 入院和出院护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第三章 舒适与安全.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第四章 医院感染的预防和控制.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第五章 清洁护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第六章 生命体征的观察与护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第七章 饮食护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第八章 排泄护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第九章 药物疗法与过敏试验法.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十章 静脉输液和输血.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十一章 冷热疗法.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十二章 标本采集.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十三章 病情观察和危重病人的抢救.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十四章 临终病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十五章 医疗与护理文件记录.xml'}
+						]">第二学期-基础护理学（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第一章 医院和住院环境.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第二章 入院和出院护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第三章 舒适与安全.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第四章 医院感染的预防和控制.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第五章 清洁护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第六章 生命体征的观察与护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第七章 饮食护理.xml'}
+						]">第二学期-基础护理学（第4版）-第一至七章</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第八章 排泄护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第九章 药物疗法与过敏试验法.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十章 静脉输液和输血.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十一章 冷热疗法.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十二章 标本采集.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十三章 病情观察和危重病人的抢救.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十四章 临终病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第二学期/基础护理学（第4版）/第十五章 医疗与护理文件记录.xml'}
+						]">第三学期-基础护理学（第4版）-第八至十五章</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第一章 女性生殖系统解剖与生理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二章 妊娠期妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第三章 分娩期妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第四章 产褥期母婴的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第五章 高危妊娠的管理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第六章 异常妊娠妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第七章 妊娠期特有疾病妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第八章 妊娠合并症妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第九章 异常分娩妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十章 分娩期并发症妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十一章 产褥期并发症妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十二章 妇科疾病患者护理计划的制订.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十三章 女性生殖系统炎症患者的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十四章 妇科手术患者的围术期护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十五章 女性生殖系统肿瘤患者的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十六章 女性生殖系统创伤性疾病患者的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十七章 妊娠滋养细胞疾病患者的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十八章 女性生殖内分泌疾病患者的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十九章 子宫内膜异位症与子宫腺肌病患者的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二十章 不孕症妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二十一章 计划生育妇女的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二十二章 妇产科护理操作技术.xml'}
+						]">第三学期-妇产科护理学（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第二章 心理过程.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第三章 人格.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第四章 心理健康与发展心理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第五章 心理应激.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第六章 心身疾病.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第七章 心理评估.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第八章 心理干预.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第九章 病人心理与护患沟通.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/护理心理学基础（第3版）/第十章 心理护理.xml'}
+						]">第三学期-护理心理学基础（第3版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第一章 健康资料.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第二章 健康史评估.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第三章 常见症状评估.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第四章 身体评估.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第五章 心理评估.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第六章 社会评估.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第七章 实验室检查.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第八章 心电图检查.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第九章 影像学检查.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第十章 护理诊断的思维方法.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/健康评估（第4版）/第十一章 健康评估记录.xml'}
+						]">第三学期-健康评估（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第二章 精神疾病的病因及症状学.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第三章 精神障碍病人的治疗环境.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第四章 精神疾病治疗过程的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第五章 神经症病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第六章 应激相关障碍病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第七章 情感性精神障碍病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第八章 精神分裂症病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第九章 器质性精神障碍病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第十章 人格障碍病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第十一章 心理因素相关生理障碍病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第十二章 精神活性物质所致精神障碍病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/精神科护理学（第4版）/第十三章 儿童少年期精神障碍病人的护理.xml'}
+						]">第三学期-精神科护理学（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第七节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第八节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第九节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第十节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第十一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第七节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第八节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第九节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第七节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第八节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第九节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第十节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第五节.xml'}
+						]">第三学期-内科护理学（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第七节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第八节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第九节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第十节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第十一节.xml'}
+						]">第三学期-内科护理学（第4版）-第一至二章</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第七节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第八节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第九节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第七节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第八节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第九节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第十节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第五节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第六节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第一节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第二节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第三节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第四节.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第五节.xml'}
+						]">第四学期-内科护理学（第4版）-第三至九章</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二章 水、电解质及酸碱平衡失调病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三章 营养支持病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四章 外科休克病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第五章 麻醉病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第六章 手术室护理工作.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第七章 手术前后病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第八章 外科感染病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第九章 损伤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十章 肿瘤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十一章 颅脑疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十二章 颈部疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十三章 胸部疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十四章 乳房疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十五章 腹外疝病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十六章 急性化脓性腹膜炎与腹部损伤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十七章 胃十二指肠疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十八章 肠疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十九章 肛管疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十章 肝胆疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十一章 胰腺疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十二章 急腹症病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十三章 周围血管疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十四章 泌尿、男性生殖系疾病的主要症状和检查.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十五章 泌尿系统损伤疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十六章 尿石症病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十七章 泌尿、男性生殖系结核病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十八章 泌尿、男生殖系统肿瘤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十九章 良性前列腺增生病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十章 肾移植病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十一章 骨折病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十二章 关节脱位病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十三章 骨与关节感染病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十四章 颈肩痛与腰腿痛病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十五章 常见骨肿瘤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十六章 断肢（指）再植病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十七章 关节置换病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十八章 皮肤性病学总论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十九章 变态反应性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十章 感染性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十一章 动物性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十二章 红斑鳞屑性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十三章 性传播疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十四章 大疱性皮肤病病人的护理.xml'}
+						]">第三学期-外科护理学（第4版）</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第一章 绪论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二章 水、电解质及酸碱平衡失调病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三章 营养支持病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四章 外科休克病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第五章 麻醉病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第六章 手术室护理工作.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第七章 手术前后病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第八章 外科感染病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第九章 损伤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十章 肿瘤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十一章 颅脑疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十二章 颈部疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十三章 胸部疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十四章 乳房疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十五章 腹外疝病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十六章 急性化脓性腹膜炎与腹部损伤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十七章 胃十二指肠疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十八章 肠疾病病人的护理.xml'}
+						]">第三学期-外科护理学（第4版）-第一至十八章</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第十九章 肛管疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十章 肝胆疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十一章 胰腺疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十二章 急腹症病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十三章 周围血管疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十四章 泌尿、男性生殖系疾病的主要症状和检查.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十五章 泌尿系统损伤疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十六章 尿石症病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十七章 泌尿、男性生殖系结核病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十八章 泌尿、男生殖系统肿瘤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第二十九章 良性前列腺增生病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十章 肾移植病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十一章 骨折病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十二章 关节脱位病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十三章 骨与关节感染病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十四章 颈肩痛与腰腿痛病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十五章 常见骨肿瘤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十六章 断肢（指）再植病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十七章 关节置换病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十八章 皮肤性病学总论.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第三十九章 变态反应性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十章 感染性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十一章 动物性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十二章 红斑鳞屑性皮肤病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十三章 性传播疾病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/外科护理学（第4版）/第四十四章 大疱性皮肤病病人的护理.xml'}
+						]">第四学期-外科护理学（第4版）-第十九至四十四章</option>
+						<option value="[
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第一章 眼的应用解剖生理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二章 眼科病人的护理概述.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第三章 眼睑及泪器病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第四章 结膜病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第五章 角膜病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第六章 白内障病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第七章 青光眼病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第八章 葡萄膜、视网膜和玻璃体病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第九章 眼外伤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十章 斜视与弱视病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十一章 屈光不正病人和老视的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十二章 盲和低视力病人的康复及护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十三章 耳鼻咽喉的应用解剖生理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十四章 耳鼻咽喉科病人的护理概述.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十五章 耳科病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十六章 鼻科病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十七章 咽科病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十八章 喉科病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十九章 气管、支气管及食管异物病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十章 口腔颌面部的应用解剖生理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十一章 口腔科病人的护理概述.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十二章 牙体、牙髓病和根尖周围组织病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十三章 牙周组织病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十四章 口腔黏膜病病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十五章 口腔修复病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十六章 口腔颌面部感染病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十七章 口腔颌面部损伤病人的护理.xml'},
+							{'type': 'pmph-xml', 'file': 'res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十八章 先天性唇裂与腭裂病人的护理.xml'}
+						]">第三学期-眼耳鼻咽喉口腔科护理学（第4版）</option>
+					</optgroup>
+					<optgroup label="综合题库">
+						<option value="[{'type': 'plain-txt', 'file': 'res/其他/第三学期/2021年12月-护理心理学复习题.txt'}]">第三学期-护理心理学-复习题</option>
+						<option value="[{'type': 'plain-txt', 'file': 'res/其他/第三学期/2021年12月-护理管理学复习题.txt'}]">第三学期-护理管理学-复习题</option>
+						<option value="[{'type': 'plain-txt', 'file': 'res/其他/第三学期/2021年12月-五官科护理复习题.txt'}]">第三学期-五官科护理-复习题</option>
+						<option value="[{'type': 'plain-txt', 'file': 'res/其他/第三学期/2021年12月-精神科护理练习题.txt'}]">第三学期-精神科护理-练习题</option>
+						<option value="[{'type': 'plain-txt', 'file': 'res/其他/第三学期/2021年12月-精神科护理复习题.txt'}]">第三学期-精神科护理-复习题</option>
+						<option value="[{'type': 'plain-txt', 'file': 'res/其他/第三学期/2021年12月-妇产疾病防治补充练习题.txt'}]">第三学期-妇产疾病防治补充练习题</option>
+						<option value="[
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第3章 妊娠并发症妇女的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第4章 妊娠合并症妇女的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第6章 异常分娩妇女的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第7章 分娩期并发症妇女的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第8章 产褥期妇女的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第9章 异常产褥妇女的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第10章 妇科护理病历.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第11章 女性生殖系统炎症患者的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第12章 生殖内分泌疾病患者的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第13章 妊娠滋养细胞疾病患者的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第15章 妇科肿瘤患者的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第18章 计划生育及妇女保健.txt'},
+							{'type': 'plain-txt', 'file': 'res/妇产科护理学笔记（第四版）/第19章 妇产科常用护理技术.txt'}
+						]">第三学期-妇产科护理-复习题</option>
+					</optgroup>
+					<optgroup label="云课堂智慧职教">
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/梁英梅--病原生物与免疫学（护理专业）/考试/病面前8章知识测验.json'}
+						]">第一学期-梁英梅--病原生物与免疫学（护理专业）</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/周芳乐--2020级大学英语线上学习/考试/大学英语1线上学习测试.json'}
+						]">第一学期-周芳乐--2020级大学英语线上学习</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/周芳乐--2020级大学英语线上学习/作业1.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/周芳乐--2020级大学英语线上学习/考试/大学英语线上学习总结测试.json'}
+						]">第二学期-周芳乐--2020级大学英语线上学习</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/2020—2021—2学期《毛概》期中随堂测验.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第八章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第七章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第六章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第五章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第四章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第三章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第二章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第一章.json'}
+						]">第二学期-黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》</option>
+						<!--option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json'}
+						]">第二学期-关小丽--药理学</option-->
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/蔡姗珊--大学英语2/英译中.json'}
+						]">第二学期-蔡姗珊--大学英语2</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/车少冬--2020级，人体解剖补考/人体解剖学练习.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/车少冬--2020级，人体解剖补考/考试/2020级护理专业 人体解剖学与组织胚胎学.json'}
+						]">第二学期-车少冬--2020级，人体解剖补考</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/梁英梅--病免补考/2020级护理病免复习题.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/梁英梅--病免补考/考试/2020级护理病免补考试题.json'}
+						]">第二学期-梁英梅--病免补考</option>
+						<!--option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/陆海帆--护理学导论/.json'}
+						]">第一学期-陆海帆--护理学导论</option-->
+						<!--option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/陆海帆--基础护理学课程/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/陆海帆--基础护理学课程/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/陆海帆--基础护理学课程/.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/陆海帆--基础护理学课程/.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/陆海帆--基础护理学课程/考试/.json'}
+						]">第二学期-陆海帆--基础护理学课程</option-->
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/车少冬--20级生理学/作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/车少冬--20级生理学/第五章1.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/车少冬--20级生理学/第四章.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/车少冬--20级生理学/考试/练习考试.json'}
+						]">第二学期-车少冬--20级生理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/车少冬--20级护理专业 5.12基础知识竞赛/考试/20级护理专业基础理论知识竞赛.json'}
+						]">第二学期-车少冬--20级护理专业 5.12基础知识竞赛</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/黄新若--健康评估/第三章 常见症状评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/黄新若--健康评估/绪论、健康资料.json'}
+						]">第三学期-黄新若--健康评估</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/于美虹--病理学与病理生理学补考/考试/20级护理 《病理学与病理生理学》补考.json'}
+						]">第三学期-于美虹--病理学与病理生理学补考</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/陆海帆--基础护理学/20级护理《基础护理学1》补考复习作业.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/陆海帆--基础护理学/考试/20级护理《基础护理学1》补考.json'}
+						]">第三学期-陆海帆--基础护理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十七章 胃十二指肠疾病病人的护理.2.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十八章 肠疾病病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十七章 胃十二指肠疾病病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十六章 急性化脓性腹膜炎和腹部损伤病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十五章 腹外疝病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十四章  乳房疾病病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十三章 胸部疾病病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十二章 颈部疾病病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第十一章 颅脑疾病病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第九章 损伤病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第07章 手术前后病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第三至五章  营养支持病人的护理、 外科休克病人的护理、麻醉病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第2章 水、电解质及酸碱平衡失调病人的护理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/冯博--外科护理学/第二章  水、电解质及酸碱平衡失调病人的护理.json'}
+						]">第三学期-冯博--外科护理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第八章  护理安全与职业防护.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第七章  护理程序.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第六章  评判性思维与临床护理决策.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第五章  护理理论与模式.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第四章  护理支持性理论.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第三章  护士与病人.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第二章  健康与疾病.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陆海帆--护理学导论/第一章  绪论.json'}
+						]">第一学期-⑥陆海帆--护理学导论</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥陈韵--20护理《病原生物学与免疫学》/考试/第一部分  免疫学基础测验.json'}
+						]">第一学期-⑥陈韵--20护理《病原生物学与免疫学》</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第一学期/⑥周芳乐--2020级大学英语线上学习/考试/大学英语1线上学习测试.json'}
+						]">第一学期-⑥周芳乐--2020级大学英语线上学习</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥周芳乐--2020级大学英语线上学习/作业1.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥周芳乐--2020级大学英语线上学习/考试/大学英语线上学习总结测试.json'}
+						]">第二学期-⑥周芳乐--2020级大学英语线上学习</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第十章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第九章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第八章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第七章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第三章作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第四章作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第一章作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第五章作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第二章作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥李明运--毛泽东思想和中国特色社会主义理论体系概论/第六章作业.json'}
+						]">第二学期-⑥李明运--毛泽东思想和中国特色社会主义理论体系概论</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥陈兰--药理学/第10~17章作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥陈兰--药理学/第5-9章练习题.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥陈兰--药理学/第1-4章练习.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥陈兰--药理学/第二十四章  肾上腺皮质激素类药.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥陈兰--药理学/第十三章 第十四章课后作业.json'}
+						]">第二学期-⑥陈兰--药理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥蔡姗珊--大学英语2/英译中.json'}
+						]">第二学期-⑥蔡姗珊--大学英语2</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥莫巧芳--生理学/第十一章内分泌.json'}
+						]">第二学期-⑥莫巧芳--生理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥车少冬--20级护理专业 5.12基础知识竞赛/考试/20级护理专业基础理论知识竞赛.json'}
+						]">第二学期-⑥车少冬--20级护理专业 5.12基础知识竞赛</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥车少冬--20级生理学/作业.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥车少冬--20级生理学/第四章.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第二学期/⑥车少冬--20级生理学/考试/练习考试.json'}
+						]">第二学期-⑥车少冬--20级生理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第七章 08脑脊液检查.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第七章 06肾功能检查.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第七章 01血液一般检查.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第四章 10脊柱与四肢评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 08腹部评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 07心脏和血管评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 06肺脏评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 05胸壁和胸廓评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 04头部和颈部评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 03节皮肤和淋巴结评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 02一般状态评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第4章 01节身体评估的基本方法.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第三章 16抽搐与惊厥17意识障碍18情感障碍.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第三章 13便血14腹泻与黑便15排尿异常.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第三章 10黄疸11恶心与呕吐12呕血与黑便.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第三章 06心悸07发绀08水肿09皮肤黏膜出血.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第三章 03呼吸困难04咳嗽与咳痰05咯血.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第一章 健康资料 第二章 健康史评估.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/第三章 01发热、02疼痛.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/考试/健康评估第01-03章测验.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/考试/第07-09章.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--健康评估（第4版）/考试/第04-06章.json'}
+						]">第三学期-⑥施秋桃--健康评估（第4版）</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥陆雯--2020级妇产科护理学/二. 妊娠期妇女护理  5.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥陆雯--2020级妇产科护理学/二. 妊娠期妇女护理  4.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥陆雯--2020级妇产科护理学/二. 妊娠期妇女护理  3.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥陆雯--2020级妇产科护理学/二 .妊娠期妇女护理  2.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥陆雯--2020级妇产科护理学/二. 妊娠期妇女护理  1.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥陆雯--2020级妇产科护理学/2.女性生殖系统生理.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥陆雯--2020级妇产科护理学/1.女性生殖系统解剖.json'}
+						]">第三学期-⑥陆雯--2020级妇产科护理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥吴小燕--外科护理学/水电解质酸碱平衡.json'}
+						]">第三学期-⑥吴小燕--外科护理学</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥李明运--《形势与政策》/考试/形势与政策 测试题.json'}
+						]">第三学期-⑥李明运--《形势与政策》</option>
+						<option value="[
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第十一节呼吸衰竭.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第十节自发性气胸.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第九节支气管肺癌.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第八节肺结核.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第七节肺炎.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第六节支气管扩张.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第五节慢性肺源性心脏病.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第四节慢性支气管炎和慢阻肺.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第三节支气管哮喘.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第二节急性呼吸道感染.json'},
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/第二章第一节常见症状体征的护理.json'},
+							
+							{'type': 'icveappzjy2-json', 'file': 'res/云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/考试/第2章 呼吸系统.json'}
+						]">第三学期-⑥施秋桃--内科护理学</option>
+					</optgroup>
+					<optgroup label="《基础护理学实训与学习指导》">
+						<option value="[
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第一章 医院和住院环境.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第二章 入院和出院护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第三章 舒适与安全.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第四章 医院感染的预防和控制.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第五章 清洁护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第六章 休息与活动.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第七章 生命体征的观察与护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第八章 饮食护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第九章 排泄护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十章 药物疗法与过敏试验法.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十一章 静脉输液和输血.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十二章 冷热疗法.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十三章 标本采集.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十四章 病情观察和危重病人的抢救技术.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十五章 临终病人的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十六章 医疗和护理文件记录.txt'}
+						]">第二学期-基础护理学-全章习题</option>
+						<option value="[
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第一章 医院和住院环境.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第二章 入院和出院护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第三章 舒适与安全.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第四章 医院感染的预防和控制.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第五章 清洁护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第六章 休息与活动.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第七章 生命体征的观察与护理.txt'}
+						]">第二学期-基础护理学-第一至七章</option>
+						<option value="[
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第八章 饮食护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第九章 排泄护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十章 药物疗法与过敏试验法.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十一章 静脉输液和输血.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十二章 冷热疗法.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十三章 标本采集.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十四章 病情观察和危重病人的抢救技术.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十五章 临终病人的护理.txt'},
+							{'type': 'plain-txt', 'file': 'res/基础护理学实训与学习指导/第十六章 医疗和护理文件记录.txt'}
+						]">第三学期-基础护理学-第八至十六章</option>
+					</optgroup>
+					<optgroup label="《健康评估实训与学习指导》">
+						<option value="[
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第一章 健康资料与健康史评估.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第二章 常见症状评估.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第三章 身体评估.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第四章 心理评估与社会评估.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第五章 实验室检查.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第六章 心电图检查.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第七章 影像学检查.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第八章 护理诊断的思维方法.txt'},
+							{'type': 'plain-txt', 'file': 'res/健康评估实训与学习指导/第九章 健康评估记录.txt'}
+						]">第三学期-健康评估-全章习题</option>
+					</optgroup>
+					<optgroup label="《护理管理学（第二版）》">
+						<option value="[
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第1章 绪论.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第2章 管理理论概述.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第3章 计划与目标.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第4章 组织与组织管理.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第5章 领导与决策.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第6章 护理风险管理与危机管理.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第7章 护理人力资源管理.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第8章 护理法律法规与制度.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第9章 护理质量管理.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第10章 护理质量管理实践.txt'},
+							{'type': 'plain-txt', 'file': 'res/护理管理学（第二版）/第11章 护理信息管理.txt'}
+						]">第三学期-护理管理学-全章习题</option>
+					</optgroup>
+					<optgroup label="《内科护理学学习与实训指导》">
+						<option value="[
+							{'type': 'plain-txt', 'file': 'res/内科护理学学习与实训指导/第一章 绪论.txt'},
+							{'type': 'plain-txt', 'file': 'res/内科护理学学习与实训指导/第二章 呼吸系统疾病病人的护理.txt'}
+						]">第三学期-内科护理学-第一至二章</option>
+					</optgroup>
+				</select>
+			</legend>
+			<hr />
+			<main oncopy="javascript: window.clipboardData && setTimeout(function()
+			{
+				let text = clipboardData.getData('text');
+				if(text)
+				{
+					text = text.replace(/^([0-9]{1,})\./g, '\n$1');
+					clipboardData.setData('text', text);
+				}
+			}, 100);">
+				<!--article name="chapter">
+					<details open="">
+						<summary name="name" oncopy="javascript: return false;">单选题〔共1题〕</summary>
+						<aside name="todo">
+							<center>
+								<table>
+									<thead>
+										<tr>
+											<th colspan="5"><b name="txt-title-collapse" title="收起章节" onclick="javascript: confirm(this.title + '？') &amp;&amp; this.closest('article').querySelector('details summary').click();">单选题</b></th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th><button name="btn-choices" type="button" value="[{'name':'b7ed39f9-6df8-9ca5-1bda-e07f4f455ca3','type':'单选题'}]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">选择题练习</button></th>
+											<th><button name="btn-backfirst" title="返回首题" type="button" onclick="javascript: this.closest('article').scrollIntoView(true);" oncopy="javascript: return false;">⇧</button></th>
+											<th><button name="btn-backlast" title="返回尾题" type="button" onclick="javascript: this.closest('article').scrollIntoView(false);" oncopy="javascript: return false;">⇩</button></th>
+											<th><button name="btn-answers" type="button" value="[]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题作答', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">文字题作答</button></th>
+										</tr>
+									</tfoot>
+								</table>
+							</center>
+						</aside>
+						<aside name="questions">
+							<section name="question">
+								<dl name="child">
+									<dt name="desc"><span>1.<small>〔单选题〕</small><big>病人最重要的主观资料是</big></span></dt>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="b7ed39f9-6df8-9ca5-1bda-e07f4f455ca3" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">A.症状</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="b7ed39f9-6df8-9ca5-1bda-e07f4f455ca3" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">B.身体评估</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="b7ed39f9-6df8-9ca5-1bda-e07f4f455ca3" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">C.健康评估记录</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="b7ed39f9-6df8-9ca5-1bda-e07f4f455ca3" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">D.超声检查</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="b7ed39f9-6df8-9ca5-1bda-e07f4f455ca3" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">E.实验室检查</span></dd>
+								</dl>
+							</section>
+						</aside>
+					</details>
+				</article>
+				<hr>
+				<article name="chapter">
+					<details>
+						<summary name="name" oncopy="javascript: return false;">多选题〔共1题〕</summary>
+						<aside name="todo">
+							<center>
+								<table>
+									<thead>
+										<tr>
+											<th colspan="5"><b name="txt-title-collapse" title="收起章节" onclick="javascript: confirm(this.title + '？') &amp;&amp; this.closest('article').querySelector('details summary').click();">多选题</b></th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th><button name="btn-choices" type="button" value="[{'name':'2f6c6258-d8bb-6660-b3d0-4968ee26b29a','type':'多选题'}]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">选择题练习</button></th>
+											<th><button name="btn-backfirst" title="返回首题" type="button" onclick="javascript: this.closest('article').scrollIntoView(true);" oncopy="javascript: return false;">⇧</button></th>
+											<th><button name="btn-backlast" title="返回尾题" type="button" onclick="javascript: this.closest('article').scrollIntoView(false);" oncopy="javascript: return false;">⇩</button></th>
+											<th><button name="btn-answers" type="button" value="[]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题作答', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">文字题作答</button></th>
+										</tr>
+									</tfoot>
+								</table>
+							</center>
+						</aside>
+						<aside name="questions">
+							<section name="question">
+								<dl name="child">
+									<dt name="desc"><span>2.<small>〔多选题〕</small><big>关于主诉，正确的是</big></span></dt>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="checkbox" name="2f6c6258-d8bb-6660-b3d0-4968ee26b29a" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">A.咽痛，发热2天</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="checkbox" name="2f6c6258-d8bb-6660-b3d0-4968ee26b29a" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">B.畏寒、发热、右胸痛、咳嗽、食欲减退、头晕、乏力3天</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="checkbox" name="2f6c6258-d8bb-6660-b3d0-4968ee26b29a" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">C.活动后心悸、气促2年，下肢水肿10天</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="checkbox" name="2f6c6258-d8bb-6660-b3d0-4968ee26b29a" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">D.患糖尿病10年，多饮、多食、多尿、消瘦明显2个月</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="checkbox" name="2f6c6258-d8bb-6660-b3d0-4968ee26b29a" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">E.经检查白血病复发，要求入院化疗</span></dd>
+								</dl>
+							</section>
+						</aside>
+					</details>
+				</article>
+				<hr>
+				<article name="chapter">
+					<details>
+						<summary name="name" oncopy="javascript: return false;">共用题干单选题〔共2题〕</summary>
+						<aside name="todo">
+							<center>
+								<table>
+									<thead>
+										<tr>
+											<th colspan="5"><b name="txt-title-collapse" title="收起章节" onclick="javascript: confirm(this.title + '？') &amp;&amp; this.closest('article').querySelector('details summary').click();">共用题干单选题</b></th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th><button name="btn-choices" type="button" value="[{'name':'da1290aa-3e4f-6b79-3537-83a40fd1f935','type':'共用题干单选题'},{'name':'4c1ac854-c8d9-7e7d-9502-124a682964f7','type':'共用题干单选题'}]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">选择题练习</button></th>
+											<th><button name="btn-backfirst" title="返回首题" type="button" onclick="javascript: this.closest('article').scrollIntoView(true);" oncopy="javascript: return false;">⇧</button></th>
+											<th><button name="btn-backlast" title="返回尾题" type="button" onclick="javascript: this.closest('article').scrollIntoView(false);" oncopy="javascript: return false;">⇩</button></th>
+											<th><button name="btn-answers" type="button" value="[]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题作答', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">文字题作答</button></th>
+										</tr>
+									</tfoot>
+								</table>
+							</center>
+						</aside>
+						<aside name="questions">
+							<section name="question">
+								<dl name="title">
+									<dt name="desc"><span>3.<small>〔共用题干单选题〕</small><big>病人，女性，36岁。因腰痛10天、双下肢水肿3天入院。</big></span></dt>
+								</dl>
+								<dl name="child">
+									<dt name="desc"><span><small>（一）</small><big>评估该病人时，首先应采取的方法为</big></span></dt>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="da1290aa-3e4f-6b79-3537-83a40fd1f935" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">A.问诊</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="da1290aa-3e4f-6b79-3537-83a40fd1f935" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">B.胸腹部评估</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="da1290aa-3e4f-6b79-3537-83a40fd1f935" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">C.肾脏评估</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="da1290aa-3e4f-6b79-3537-83a40fd1f935" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">D.X线检查</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="da1290aa-3e4f-6b79-3537-83a40fd1f935" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">E.尿常规检查</span></dd>
+								</dl>
+								<dl name="child">
+									<dt name="desc"><span><small>（二）</small><big>该病人的主诉最合适的是</big></span></dt>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="4c1ac854-c8d9-7e7d-9502-124a682964f7" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">A.腰痛10天、双下肢水肿3天</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="4c1ac854-c8d9-7e7d-9502-124a682964f7" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">B.腰痛及双下肢水肿3天</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="4c1ac854-c8d9-7e7d-9502-124a682964f7" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">C.腰痛10天并双下肢水肿3天</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="4c1ac854-c8d9-7e7d-9502-124a682964f7" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">D.腰痛10天及双下肢水肿</span></dd>
+									<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="4c1ac854-c8d9-7e7d-9502-124a682964f7" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">E.双下肢水肿3天、腰痛10天</span></dd>
+								</dl>
+							</section>
+						</aside>
+					</details>
+				</article>
+				<hr>
+				<article name="chapter">
+					<details>
+						<summary name="name" oncopy="javascript: return false;">共用答案单选题〔共2题〕</summary>
+						<aside name="todo">
+							<center>
+								<table>
+									<thead>
+										<tr>
+											<th colspan="5"><b name="txt-title-collapse" title="收起章节" onclick="javascript: confirm(this.title + '？') &amp;&amp; this.closest('article').querySelector('details summary').click();">共用答案单选题</b></th>
+										</tr>
+									</thead>
+									<tfoot>
+										<tr>
+											<th><button name="btn-choices" type="button" value="[{'name':'135ce3e0-3ec0-1020-2276-771842abf5e5','type':'共用答案单选题'},{'name':'e7e01679-1dc2-3be5-9dd5-3d6f971a6a52','type':'共用答案单选题'}]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">选择题练习</button></th>
+											<th><button name="btn-backfirst" title="返回首题" type="button" onclick="javascript: this.closest('article').scrollIntoView(true);" oncopy="javascript: return false;">⇧</button></th>
+											<th><button name="btn-backlast" title="返回尾题" type="button" onclick="javascript: this.closest('article').scrollIntoView(false);" oncopy="javascript: return false;">⇩</button></th>
+											<th><button name="btn-answers" type="button" value="[]" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题作答', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">文字题作答</button></th>
+										</tr>
+									</tfoot>
+								</table>
+							</center>
+						</aside>
+						<aside name="questions">
+							<section name="question">
+								<dl name="title">
+									<dt name="desc"><span>4.<small>〔共用答案单选题〕</small><big><small>（一）～（二）共用答案</small></big></span></dt>
+									<dd name="option">A.弛张热</dd>
+									<dd name="option">B.波状热</dd>
+									<dd name="option">C.稽留热</dd>
+									<dd name="option">D.间歇热</dd>
+									<dd name="option">E.不规则热</dd>
+								</dl>
+								<dl name="child">
+									<dt name="desc"><span><small>（一）</small><big>伤寒病人的热型为</big></span></dt>
+									<ul>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="135ce3e0-3ec0-1020-2276-771842abf5e5" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">A</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="135ce3e0-3ec0-1020-2276-771842abf5e5" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">B</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="135ce3e0-3ec0-1020-2276-771842abf5e5" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">C</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="135ce3e0-3ec0-1020-2276-771842abf5e5" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">D</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="135ce3e0-3ec0-1020-2276-771842abf5e5" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">E</span></li>
+									</ul>
+								</dl>
+								<dl name="child">
+									<dt name="desc"><span><small>（二）</small><big>败血症病人的热型为</big></span></dt>
+									<ul>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="e7e01679-1dc2-3be5-9dd5-3d6f971a6a52" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="true" checked="" disabled="">A</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="e7e01679-1dc2-3be5-9dd5-3d6f971a6a52" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">B</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="e7e01679-1dc2-3be5-9dd5-3d6f971a6a52" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">C</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="e7e01679-1dc2-3be5-9dd5-3d6f971a6a52" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">D</span></li>
+										<li name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="e7e01679-1dc2-3be5-9dd5-3d6f971a6a52" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="false" disabled="">E</span></li>
+									</ul>
+								</dl>
+							</section>
+						</aside>
+					</details>
+				</article-->
+			</main>
+			<hr />
+			<div style="text-align: center; margin: 0 auto; font-size: 10px;">
+				<style type="text/css">
+				#cnzz_stat_icon_1261167642 a
+				{
+					text-decoration: none;
+				}
+				</style>
+				<span id="cnzz_stat_icon_1261167642"></span>
+				<script type="text/javascript" src="https://s11.cnzz.com/z_stat.php?id=1261167642&online=1&show=line" onload="javascript: parser.api.cnzzPush(['_setCustomVar', '浏览器标识', navigator.userAgent, 0]); parser.api.cnzzPush(['_trackEvent', '题库', '浏览器标识', navigator.userAgent, 0, 'queslib']);"></script>
+			</div>
+			<hr />
+		</fieldset>
+	</body>
+</html>

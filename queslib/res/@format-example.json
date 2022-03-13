@@ -1,0 +1,242 @@
+{
+	"name": "试题测试"
+	"data": [
+		{
+			"name": "章节测试",
+			"questions": [
+				{
+					"type": "单选题",
+					"title": "这是问题",
+					"answer": "C",
+					"options": [
+						{
+							"name": "A",
+							"title": "选项一",
+							"right": false
+						},
+						{
+							"name": "B",
+							"title": "选项二",
+							"right": false
+						},
+						{
+							"name": "C",
+							"title": "选项三",
+							"right": true
+						},
+						{
+							"name": "D",
+							"title": "选项四",
+							"right": false
+						},
+						{
+							"name": "E",
+							"title": "选项五",
+							"right": false
+						}
+					],
+					"coeffic": "难度系数",
+					"analysis": "答案解析"
+				},
+				{
+					"type": "多选题",
+					"title": "这是问题",
+					"answer": "CE",
+					"options": [
+						{
+							"name": "A",
+							"title": "选项一",
+							"right": false
+						},
+						{
+							"name": "B",
+							"title": "选项二",
+							"right": false
+						},
+						{
+							"name": "C",
+							"title": "选项三",
+							"right": true
+						},
+						{
+							"name": "D",
+							"title": "选项四",
+							"right": false
+						},
+						{
+							"name": "E",
+							"title": "选项五",
+							"right": true
+						}
+					],
+					"coeffic": "难度系数",
+					"analysis": "答案解析"
+				},
+				{
+					"type": "共用题干单选题",
+					"title": "这是题目",
+					"children": [
+						{
+							"title": "第一小问",
+							"answer": "D",
+							"options": [
+								{
+									"name": "A",
+									"title": "选项一",
+									"right": false
+								},
+								{
+									"name": "B",
+									"title": "选项二",
+									"right": false
+								},
+								{
+									"name": "C",
+									"title": "选项三",
+									"right": false
+								},
+								{
+									"name": "D",
+									"title": "选项四",
+									"right": true
+								},
+								{
+									"name": "E",
+									"title": "选项五",
+									"right": false
+								}
+							],
+							"coeffic": "难度系数",
+							"analysis": "答案解析"
+						},
+						{
+							"title": "第二小问",
+							"answer": "B",
+							"options": [
+								{
+									"name": "A",
+									"title": "选项一",
+									"right": false
+								},
+								{
+									"name": "B",
+									"title": "选项二",
+									"right": true
+								},
+								{
+									"name": "C",
+									"title": "选项三",
+									"right": false
+								},
+								{
+									"name": "D",
+									"title": "选项四",
+									"right": false
+								},
+								{
+									"name": "E",
+									"title": "选项五",
+									"right": false
+								}
+							],
+							"coeffic": "难度系数",
+							"analysis": "答案解析"
+						},
+						{
+							"title": "第三小问",
+							"answer": "E",
+							"options": [
+								{
+									"name": "A",
+									"title": "选项一",
+									"right": false
+								},
+								{
+									"name": "B",
+									"title": "选项二",
+									"right": false
+								},
+								{
+									"name": "C",
+									"title": "选项三",
+									"right": false
+								},
+								{
+									"name": "D",
+									"title": "选项四",
+									"right": false
+								},
+								{
+									"name": "E",
+									"title": "选项五",
+									"right": true
+								}
+							],
+							"coeffic": "难度系数",
+							"analysis": "答案解析"
+						}
+					]
+				},
+				{
+					"type": "共用答案单选题",
+					"options": [
+						{
+							"name": "A",
+							"title": "备选一"
+						},
+						{
+							"name": "B",
+							"title": "备选二"
+						},
+						{
+							"name": "C",
+							"title": "备选三"
+						},
+						{
+							"name": "D",
+							"title": "备选四"
+						},
+						{
+							"name": "E",
+							"title": "备选五"
+						}
+					],
+					"children": [
+						{
+							"title": "第一问",
+							"answer": "A",
+							"coeffic": "难度系数",
+							"analysis": "答案解析"
+						},
+						{
+							"title": "第二问",
+							"answer": "D",
+							"coeffic": "难度系数",
+							"analysis": "答案解析"
+						},
+						{
+							"title": "第三问",
+							"answer": "E",
+							"coeffic": "难度系数",
+							"analysis": "答案解析"
+						}
+					]
+				},
+				{
+					"type": "填空题",
+					"title": "这是描述，___、___和___。",
+					"answers": [
+						"第一空答案",
+						"第二空答案",
+						"第三空答案"
+					]
+				},
+				{
+					"type": "名词解释 | 名词解析 | 简答题 | 问答题 | 论述题 | 病例分析 | 案例分析 | 写作 | 思考题",
+					"title": "这是问题描述",
+					"answer": "这是问题答案"
+				}
+			]
+		}
+	]
+}

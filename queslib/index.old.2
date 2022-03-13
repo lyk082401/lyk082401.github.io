@@ -1,0 +1,2996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>梧职院 | 护理专业 | 复习题库</title>
+		<!--script type="text/javascript">
+		(function()
+		{
+			// 强制刷新缓存
+			var sleep = (function(_delay)
+			{
+				var start = (new Date()).getTime();
+				while(((new Date()).getTime() - start) <= _delay)
+				{
+					continue;
+				}
+			}), newurl = document.location.href.replace(/(\_\=)([0-9]{1,})/i, function(_match, _, _t)
+			{
+				return _ + Date.now();
+			});
+			(/\_\=[0-9]{1,}/i).test(document.location.href) ? document.location.href.replace(/\_\=([0-9]{1,})/i, function(_match, _time)
+			{
+				// 缓存超过5分钟
+				/**if((Date.now() - parseInt(_time)) > (5 * 60 * 1000))
+				{
+					document.title = "页面缓存已超过5分钟，正在强制刷新……";
+					sleep(3 * 1000), document.location.replace(newurl);
+				}*/
+			}) : true/**document.location.assign(newurl)*/;
+			//alert(newurl)
+		})();
+		</script-->
+		<script type="text/javascript"
+			src="res/js/eruda.min.js?https://cdn.bootcdn.net/ajax/libs/eruda/2.4.1/eruda.min.js"
+			docsrc="https://eruda.liriliri.io/"
+			onload='javascript: eruda._isInit || eruda.init({tool: []});
+				confirm("旧版已不再维护更新，将切换到新版！");
+				document.location.assign("indexnew.html");
+				eruda.add(
+					{
+						name: "题库菜单",
+						init: function($el)
+						{
+							let queslib = document.querySelector("[name=\"queslib\"]");
+							$el.html((`<center>
+								<p name="select_clone"></p><hr />
+								<button name="autoread" style="color: grey;">自动浏览</button><hr />
+								<button name="changebg" style="color: grey;">日间模式</button><hr />
+								<button name="assignto" style="color: grey;">${(/indexnew\.html/).test(document.location.pathname) ? "访问旧版" : "访问新版"}</button><hr />
+							</center>`).replace(/^\s+/gm, ""));
+							// select_clone 未初始化
+							eruda.util.$.select_clone = $el.find("[name=\"select_clone\"]").get(0);
+							$el.find("button[name=\"autoread\"]").get(0).onclick = (function()
+							{
+								let el = this;
+								if(el.start)
+								{
+									return el.start = false, eruda.util.$(el).text("自动浏览"), clearInterval(el.timer);
+								}
+								// 判断向上或向下移动
+								let jus = el.jus || -1,
+								// 向上或向下移动的距离
+								num = (queslib && queslib.scrollTop) || window.scrollY || 0;
+								el.start = true, eruda.util.$(el).text("手动浏览"), el.timer = setInterval(function()
+								{
+									let y = (queslib && queslib.scrollTop) || window.scrollY;
+									if(y == 0)
+									{
+										num++;
+										// 位于顶部时向下移动
+										jus = -1;
+									}
+									if(y > jus)
+									{
+										num++;
+									}
+									else
+									{
+										num--;
+									}
+									(queslib || window).scroll(0, num);
+									// 记录上次的距离位置用来判断是否是折返方向
+									el.jus = jus = y;
+								}, 25);
+							});
+							eruda.util.$(document).on("dblclick", function(e)
+							{
+								$el.find("button[name=\"autoread\"]").get(0).onclick();
+							});
+							$el.find("button[name=\"changebg\"]").get(0).onclick = (function()
+							{
+								let btn = $el.find("button[name=\"changebg\"]").get(0);
+								if(!btn.nofirst)
+								{
+									document.body.style = "background-color: #cccccc; color: black; font-size: 15px; opacity: 0.75;";
+									btn.innerText = "日间模式";
+								}
+								else if(btn.innerText === "日间模式")
+								{
+									document.body.style = "background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 15px; opacity: 0.50;";
+									btn.innerText = "夜间模式";
+								}
+								else
+								{
+									document.body.style = "background-color: #cccccc; color: black; font-size: 15px; opacity: 0.75;";
+									btn.innerText = "日间模式";
+								}
+								btn.nofirst = true;
+							});
+							$el.find("button[name=\"assignto\"]").get(0).onclick = (function()
+							{
+								(/indexnew\.html/).test(document.location.pathname) ? location.assign("index.html") : location.assign("indexnew.html");
+							});
+							this._$el = $el;
+						},
+						show: function()
+						{
+							this._$el.show();
+						},
+						hide: function()
+						{
+							this._$el.hide();
+						},
+						destroy: function(){}
+					});
+				eruda.add(
+				{
+					name: "距离考试",
+					init: function($el)
+					{
+						var remain = function(_year, _month, _day, _hour, _minute, _second)
+						{
+							var t = Math.round((new Date(_year, _month - 1, _day, _hour, _minute, _second).getTime() - Date.now()) / 1000),
+							d = Math.round(t / (60 * 60 * 24)),
+							h = Math.round((t / (60 * 60)) % 24),
+							m = Math.round((t / 60) % 60),
+							s = Math.round(t % 60);
+							return (t < 0) ? "已结束" : `还剩 ${d} 天 ${h} 时 ${m} 分 ${s} 秒`;
+						};
+						var list = [
+							{
+								name: "健康评估",
+								time: [2021, 12, 16, 16, 10, 00],
+								date: {
+									day: "2021-12-16（星期四）",
+									range: "16:10～17:40"
+								},
+								place: "三期2号楼301 / 三期2号楼202"
+							},
+							{
+								name: "心理护理",
+								time: [2021, 12, 23, 16, 10, 00],
+								date: {
+									day: "2021-12-23（星期四）",
+									range: "16:10～17:40"
+								},
+								place: "三期2号楼301 / 三期2号楼202"
+							},
+							{
+								name: "护理管理",
+								time: [2021, 12, 24, 16, 10, 00],
+								date: {
+									day: "2021-12-24（星期五）",
+									range: "16:10～17:40"
+								},
+								place: "三期2号楼301 / 三期2号楼202"
+							},
+							{
+								name: "五官科护理",
+								time: [2021, 12, 30, 16, 10, 00],
+								date: {
+									day: "2021-12-30（星期四）",
+									range: "16:10～17:40"
+								},
+								place: "三期2号楼301 / 三期2号楼202"
+							},
+							{
+								name: "精神科护理",
+								time: [2021, 12, 31, 16, 10, 00],
+								date: {
+									day: "2021-12-31（星期五）",
+									range: "16:10～17:40"
+								},
+								place: "三期2号楼301 / 三期2号楼202"
+							}
+						];
+						setInterval(function()
+						{
+							$el.html("<center><hr />" + list.map(function(_val, _index, _arrs)
+							{
+								return `<h1>${_val.name}<b>（${remain.apply(null, _val.time)}）</b></h1><h3><b style="color: blue;">${_val.date.day}<br /><b style="color: yellow;">${_val.date.range}</b></b></h3><h6><b style="color: green;">${_val.place}</b></h6>`;
+							}).join("<hr />") + "<hr /></center>");
+						}, 1000);
+						this._$el = $el;
+					},
+					show: function()
+					{
+						this._$el.show();
+					},
+					hide: function()
+					{
+						this._$el.hide();
+					},
+					destroy: function(){}
+				});
+				["console", "elements", "network", "resources", "sources", "info", "snippets"].forEach(function(_val, _index, _arrs)
+				{
+					if(eruda[eruda.util.upperFirst(_val)])
+					{
+						eruda.add(new eruda[eruda.util.upperFirst(_val)]());
+					}
+				});
+				eruda.show("题库菜单");'
+			-crossorigin="anonymous">
+		</script>
+		<script type="text/javascript"
+			src="res/js/minify.json.js?https://hn-1252239881.file.myqcloud.com/res/js/fkei/JSON.minify/minify.json.js"
+			docsrc="https://github.com/fkei/JSON.minify/, https://github.com/getify/JSON.minify/tree/javascript/"
+			-crossorigin="anonymous">
+		</script>
+		<script type="text/javascript"
+			src="res/js/jszip.min.js?https://cdn.bootcdn.net/ajax/libs/jszip/3.6.0/jszip.min.js"
+			docsrc="https://stuk.github.io/jszip/, sync-mode@https://github.com/Stuk/jszip/issues/375#issuecomment-258969023"
+			-crossorigin="anonymous">
+		</script>
+		<script type="text/javascript"
+			src="res/js/jszip-utils.min.js?https://cdn.bootcdn.net/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js"
+			docsrc="http://stuk.github.io/jszip-utils/"
+			-crossorigin="anonymous">
+		</script>
+		<!--[if IE]>
+		<script type="text/javascript"
+			src="res/js/jszip-utils-ie.min.js?https://cdn.bootcdn.net/ajax/libs/jszip-utils/0.1.0/jszip-utils-ie.min.js"
+			docsrc="http://stuk.github.io/jszip-utils/"
+			-crossorigin="anonymous">
+		</script>
+		<![endif]-->
+		<script type="text/javascript"
+			src="res/js/jquery.min.js?https://cdn.bootcdn.net/ajax/libs/jquery/1.11.1/jquery.min.js"
+			docsrc="https://www.jquery123.com/"
+			onload='javascript:
+				if(typeof($) !== "function")
+				{
+					return alert("jQuery 未加载");
+				}
+				(function($, undefined)
+				{
+					"use strict";
+					// use this transport for "binary" data type
+					$.ajaxTransport("+binary", function(options, originalOptions, jqXHR)
+					{
+						// check for conditions and support for blob / arraybuffer response type
+						if((typeof(FormData) !== "undefined") && ((options.dataType && (options.dataType == "binary")) || (options.data && (((typeof(ArrayBuffer) !== "undefined") && options.data instanceof ArrayBuffer) || ((typeof(Blob) !== "undefined") && options.data instanceof Blob)))))
+						{
+							return (
+							{
+								// create new XMLHttpRequest
+								send: function(headers, callback)
+								{
+									// setup all variables
+									var xhr = (typeof(XMLHttpRequest) !== "undefined") ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"),
+									url = options.url,
+									type = options.type,
+									async = options.async || true,
+									// blob or arraybuffer. Default is blob
+									dataType = options.responseType || "blob",
+									data = options.data || null,
+									username = options.username || null,
+									password = options.password || null;
+									xhr.addEventListener("load", function()
+									{
+										var data = {};
+										data[options.dataType] = options.response = jqXHR.response = xhr.response;
+										// make callback and send data
+										callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+									});
+									xhr.addEventListener("error", function()
+									{
+										var data = {};
+										data[options.dataType] = options.response = jqXHR.response = xhr.response;
+										// make callback and send data
+										callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+									});
+									xhr.open(type, url, async, username, password);
+									// setup custom headers
+									for(var i in headers)
+									{
+										xhr.setRequestHeader(i, headers[i]);
+									}
+									xhr.responseType = dataType;
+									xhr.send(data);
+								},
+								abort: function()
+								{
+									console.warn("ajaxTransport", arguments);
+								}
+							});
+						}
+					});
+				})($);
+				$(document).ready(function()
+				{
+					$.LoadingOverlay("show");
+					$(window).one("error", function()
+					{
+						console.warn("onerror", arguments);
+						parser.api.tipmsg("加载出错了，即将刷新页面…", "error", function()
+						{
+							// document.location.reload(false);
+						});
+					});
+					$(document.querySelector("[name=\"queslib\"]") || window).scroll(function()
+					{
+						$.each($("textarea[name][onclick][oninput]"), function(i, n)
+						{
+							if(!n.onclickok)
+							{
+								n.onclick && n.onclick();
+							}
+							n.onclickok = true;
+						});
+					});
+					setTimeout(function()
+					{
+						(document.location.protocol === "file:") ? console.log("网页最后更新时间", parser.api.parseTimeToDateStr(document.lastModified, false)) : $.ajax(
+						{
+							url: document.URL,
+							type: "HEAD",
+							async: true,
+							cache: false,
+							success: function(_data, _status, _xhr)
+							{
+								console.log("网页最后更新时间", parser.api.parseTimeToDateStr(_xhr.getResponseHeader("Last-Modified"), true));
+							},
+							error: function(_xhr, _status, e)
+							{
+								console.warn("setTimeout", arguments);
+							}
+						});
+					}, 1000);
+					function getUrlParam(name)
+					{
+						var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"), r = document.location.search.substr(1).match(reg);
+						return (r && r[2]) || null;
+					}
+					var initIndex = 0;
+					if(initIndex = (getUrlParam("i") && parseInt(getUrlParam("i"), 10))){}
+					// 健康评估
+					else if(Date.now() <= (new Date("2021-12-16 16:10:00")).getTime())
+					{
+						initIndex = 21;
+					}
+					// 心理护理
+					else if(Date.now() <= (new Date("2021-12-23 16:10:00")).getTime())
+					{
+						initIndex = 20;
+					}
+					// 五官科护理
+					else if(Date.now() <= (new Date("2021-12-30 16:10:00")).getTime())
+					{
+						initIndex = 25;
+					}
+					// 精神科护理
+					else if(Date.now() <= (new Date("2021-12-31 16:10:00")).getTime())
+					{
+						initIndex = 22;
+					}
+					else
+					{
+						initIndex = 18;
+					}
+					document.querySelector("select").selectedIndex = (localStorage.getItem("queslib-selected-index") && !isNaN(parseInt(localStorage.getItem("queslib-selected-index"))) && (parseInt(localStorage.getItem("queslib-selected-index")) >= 0)) ? parseInt(localStorage.getItem("queslib-selected-index")) : initIndex;
+					$("select").each(function(_index, _val)
+					{
+						$(_val).attr("disabled", "disabled");
+					});
+					var url = `https://hn-1252239881.${["file", "cos.accelerate", "cos.ap-guangzhou"][0]}.myqcloud.com/res/html/queslib.bin`,
+					initdata = function(_obj)
+					{
+						if(typeof(JSZip) !== "function")
+						{
+							return alert("JSZip 未加载");
+						}
+						JSZip.loadAsync(new Blob([parser.api.base64ToUint8Array(_obj.data)], {type: "application/octet-stream"})).then(function(_zip)
+						{
+							parser.queslib = _zip;
+							$("select").each(function(_index, _val)
+							{
+								$(_val).removeAttr("disabled");
+							});
+							document.querySelector("select").onchange();
+							$.LoadingOverlay("hide");
+						}, console.warn);
+					},
+					config = function(_xhr)
+					{
+						return {
+							date: (function()
+							{
+								var d = new Date();
+								d.setTime((new Date(_xhr.getResponseHeader("Last-Modified")).getTime() + ((new Date()).getTimezoneOffset() * 60 * 1000)));
+								return d.toGMTString();
+							})(),
+							etag: _xhr.getResponseHeader("Etag").replace(/"/g, ""),
+							size: parseInt(_xhr.getResponseHeader("Content-Length"), 10)
+						};
+					},
+					update = (
+					{
+						url: url,
+						type: "GET",
+						async: true,
+						cache: false,
+						processData: false,
+						// crossDomain: true,
+						xhrFields: {
+							// withCredentials: true,
+							overrideMimeType: "text/plain; charset=x-user-defined"
+						},
+						dataType: "binary",
+						responseType: "arraybuffer",
+						// contentType: false,
+						beforeSend: function(_xhr, _options){},
+						dataFilter: function(_data, _type)
+						{
+							return _data;
+						},
+						success: function(_data, _status, _xhr)
+						{
+							var old = localStorage.getItem("queslib-compress-res") ? JSON.parse(localStorage.getItem("queslib-compress-res")) : {},
+							refresh = function()
+							{
+								var obj = {
+									date: {
+										source: config(_xhr).date,
+										string: new Date(config(_xhr).date).toString(),
+										format: parser.api.parseTimeToDateStr(_xhr.getResponseHeader("Last-Modified"), true)
+									},
+									etag: config(_xhr).etag,
+									size: config(_xhr).size,
+									data: parser.api.arrayBufferToBase64(_data)
+								};
+								localStorage.setItem("queslib-compress-res", JSON.stringify(obj));
+								parser.api.tipmsg("题库数据已被更新", "log", function()
+								{
+									console.log("题库数据已被更新", obj.date.format);
+								});
+								return (old = obj);
+							};
+							if((Object.keys(old).length == 0) || (typeof(old) != "object") || (old.etag !== config(_xhr).etag))
+							{
+								old = refresh();
+							}
+							initdata(old);
+						},
+						error: function(_xhr, _status, e)
+						{
+							console.warn("update", arguments);
+						},
+						complete: function(_xhr, _status){},
+					});
+					$.ajax(
+					{
+						url: url,
+						type: "HEAD",
+						async: true,
+						cache: false,
+						success: function(_data, _status, _xhr)
+						{
+							var old = localStorage.getItem("queslib-compress-res") ? JSON.parse(localStorage.getItem("queslib-compress-res")) : {};
+							if((Object.keys(old).length == 0) || (typeof(old) != "object") || (old.etag !== config(_xhr).etag))
+							{
+								$.ajax(update);
+							}
+							else
+							{
+								initdata(old);
+							}
+						},
+						error: function(_xhr, _status, e)
+						{
+							console.warn("ajax", arguments);
+						}
+					});
+					/**
+					if(typeof(JSZipUtils) !== "object")
+					{
+						return alert("JSZipUtils 未加载");
+					}
+					JSZipUtils.getBinaryContent(url, (function(_err, _data)
+					{
+						if(typeof(JSZip) !== "function")
+						{
+							return alert("JSZip 未加载");
+						}
+						_err ? console.warn("getBinaryContent", _err) : JSZip.loadAsync(_data).then(function(_zip)
+						{
+							_zip.file("index.html").async("string", console.log).then(console.log, console.warn);
+						}, console.warn);
+					}));
+					*/
+				});'
+			-crossorigin="anonymous">
+		</script>
+		<script type="text/javascript"
+			src="res/js/loadingoverlay.min.js?https://cdn.bootcdn.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"
+			docsrc="https://gasparesganga.com/labs/jquery-loading-overlay/"
+			-crossorigin="anonymous">
+		</script>
+		<script type="text/javascript"
+			src="res/js/jquery.loading.min.js?https://cdn.bootcdn.net/ajax/libs/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js"
+			docsrc="https://carlosbonetti.github.io/jquery-loading/"
+			-crossorigin="anonymous">
+		</script>
+		<style type="text/css">
+		input[type=checkbox]
+		{
+			margin-right: 5px;
+			cursor: pointer;
+			font-size: 14px;
+			width: 15px;
+			height: 12px;
+			position: relative;
+		}
+		input[type=checkbox]::after
+		{
+			position: absolute;
+			width: 10px;
+			height: 15px;
+			top: 0;
+			content: " ";
+			background-color: #555555;
+			color: #fff;
+			display: inline-block;
+			visibility: visible;
+			padding: 0px 3px;
+			border-radius: 3px;
+		}
+		.option input[type=checkbox]:checked::after
+		{
+			content: "✔︎";
+			font-size: 12px;
+		}
+		input[type=radio]
+		{
+			margin-right: 5px;
+			cursor: pointer;
+			font-size: 14px;
+			width: 15px;
+			height: 12px;
+			position: relative;
+		}
+		input[type=radio]::after
+		{
+			position: absolute;
+			width: 10px;
+			height: 15px;
+			top: 0;
+			content: " ";
+			background-color: #555555;
+			color: #fff;
+			display: inline-block;
+			visibility: visible;
+			padding: 0px 3px;
+			border-radius: 50%;
+		}
+		.option input[type=radio]:checked::before
+		{
+			content: "✔︎";
+			display: block;
+			position: relative;
+			top: -2px;
+			left: 3px;
+			width: 6px;
+			height: 6px;
+			color: #fff;
+			font-weight: 400;
+			z-index: 1;
+		}
+		/** 改变选中之后的背景颜色
+		* 红d9534f
+		* 蓝337ab7
+		* 浅蓝5bc0de
+		* 黄f0ad4e
+		* 橙皮黄fca104
+		* 绿5cb85c
+		* 深红ff0000
+		* 灰白eeeeee
+		* 深灰白cccccc
+		* 深深灰白555555 */
+		input[type=checkbox]:checked::after, input[type=radio]:checked::after
+		{
+			background-color: #5cb85c;
+		}
+		.option-right input[type=radio]::after, .option-right input[type=checkbox]::after
+		{
+			content: "✔︎";
+			background-color: #5cb85c;
+		}
+		.option-error input[type=radio]::after, .option-error input[type=checkbox]::after
+		{
+			content: "✘";
+			background-color: #d9534f;
+		}
+		.option-notdo input[type=radio]::after, .option-notdo input[type=checkbox]::after
+		{
+			content: "﹅";
+			background-color: #fca104;
+		}
+		</style>
+	</head>
+	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 15px; opacity: 0.50;">
+		<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; height: 25px;" onchange='javascript: parser.api.get(this, JSON.parse(this.value));'>
+			<optgroup label="综合题库">
+				<option disabled value='[
+					{"type": "plain-txt", "file": "res/2020年06月-E时代高职英语（综合教程2）.txt"},
+					{"type": "plain-txt", "file": "res/2019年12月-高等学校英语应用能力英语考试（B级）.txt"},
+					{"type": "plain-txt", "file": "res/2019年06月-高等学校英语应用能力英语考试（B级）.txt"}
+				]'>第二学期-高职英语-期末复习</option>
+				<option disabled value='[{"type": "plain-txt", "file": "res/生理学（第2版）/2021年07月-生理学练习题.txt"}]'>第二学期-生理学练习题-期末复习</option>
+				<option disabled value='[{"type": "plain-txt", "file": "res/护用药理学（第4版）/2021年07月-药理学练习题（1~43章汇总）.txt"}]'>第二学期-药理学练习题（1~43章汇总）-期末复习</option>
+				<option disabled value='[
+					{"type": "plain-txt", "file": "res/护用药理学（第4版）/2021年07月-药理学1~14章练习题-2017-2018-2（一）.txt"},
+					{"type": "plain-txt", "file": "res/护用药理学（第4版）/2021年07月-药理学1~14章练习题-2020-2021-2（二）.txt"},
+					{"type": "plain-txt", "file": "res/护用药理学（第4版）/2021年07月-药理学15~31章练习题-2016-2017-2.txt"},
+					{"type": "plain-txt", "file": "res/护用药理学（第4版）/2021年07月-药理学32~43章练习题-2016-2017-2.txt"},
+					{"type": "plain-txt", "file": "res/护用药理学（第4版）/2021年07月-期末总复习.txt"}
+				]'>第二学期-药理学练习题-期末复习</option>
+				<option disabled value='[{"type": "plain-txt", "file": "res/20级护理《基础护理学1》补考复习作业.txt"}]'>第二学期-20级护理《基础护理学1》补考复习作业</option>
+				<option disabled value='[{"type": "plain-txt", "file": "res/20级护理《病理学与病理生理学》补考复习.txt"}]'>第二学期-20级护理《病理学与病理生理学》补考复习</option>
+				<option value='[{"type": "plain-txt", "file": "res/护理心理学基础（第3版）/2021年12月-护理心理学练习题.txt"}]'>第三学期-护理心理学练习题</option>
+				<option value='[{"type": "plain-txt", "file": "res/眼耳鼻咽喉口腔科护理学（第4版）/2021年12月-五官科护理练习题.txt"}]'>第三学期-五官科护理练习题</option>
+				<option value='[{"type": "plain-txt", "file": "res/精神科护理学（第4版）/2021年12月-精神科护理练习题.txt"}]'>第三学期-精神科护理练习题</option>
+			</optgroup>
+			<optgroup label="《基础护理学实训与学习指导》">
+				<option disabled value='[{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/2021年07月-护基练习题（1~7章汇总）.txt"}]'>第二学期-护基练习题（1~7章汇总）-期末复习</option>
+				<option disabled value='[
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第一章 医院和住院环境.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第二章 入院和出院护理.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第三章 舒适与安全.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第四章 医院感染的预防和控制.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第五章 清洁护理.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第六章 休息与活动.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第七章 生命体征的观察与护理.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学（第4版）/2021年07月-2020~2021-2《基础护理学1》课后练习.txt"}
+				]'>第二学期-护基练习题-期末复习</option>
+				<option disabled value='[
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第八章 饮食护理.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第九章 排泄护理.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第十章 药物疗法与过敏试验法.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第十一章 静脉输液和输血.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第十二章 冷热疗法.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第十三章 标本采集.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第十四章 病情观察和危重病人的抢救技术.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第十五章 临终病人的护理.txt"},
+					{"type": "plain-txt", "file": "res/基础护理学实训与学习指导/第十六章 医疗和护理文件记录.txt"}
+				]'>第三学期-护基练习题-期末复习</option>
+			</optgroup>
+			<optgroup label="人卫图书增值（扫一扫，测一测）">
+				<option disabled value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第一章 礼仪及护理礼仪.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第二章 日常社交礼仪.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第三章 护士实用礼仪.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第四章 人际关系.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第五章 人际沟通.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第六章 护理工作中的语言沟通.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第七章 护理工作中的非语言沟通.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第八章 护理实践礼仪.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理礼仪与人际沟通（第2版）/第九章 求职礼仪.xml"}
+				]'>第一学期-护理礼仪与人际沟通（第2版）</option>
+				<option disabled value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第一章 绪论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第二章 健康与疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第三章 护士与病人.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第四章 护理支持性理论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第五章 护理理论与模式.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第六章 评判性思维与临床护理决策.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第七章 护理程序.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/护理学导论（第4版）/第八章 护理安全与职业防护.xml"}
+				]'>第一学期-护理学导论（第4版）</option>
+				<option disabled value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/绪论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第一章 运动系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第二章 消化系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第三章 呼吸系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第四章 泌尿系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第五章 生殖系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第六章 脉管系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第七章 感觉器.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第八章 神经系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第九章 内分泌系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第十章 基本组织.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第十一章 器官微细结构.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第一学期/人体解剖学与组织胚胎学/第十二章 人体胚胎发育概要.xml"}
+				]'>第一学期-人体解剖学与组织胚胎学</option>
+				<option disabled value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第一章 疾病概论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二章 应激.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第三章 缺氧.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第四章 细胞和组织的适应、损伤与修复.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第五章 局部血液循环障碍.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第六章 水、电解质代谢紊乱.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第七章 酸碱平衡紊乱.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第八章 发热.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第九章 炎症.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十章 休克.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十一章 弥散性血管内凝血.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十二章 肿瘤.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十三章 呼吸系统疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十四章 呼吸功能不全.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十五章 心血管系统疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十六章 心功能不全.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十七章 消化系统疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十八章 肝性脑病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第十九章 泌尿系统疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十章 肾功能不全.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十一章 生殖系统和乳腺疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十二章 内分泌系统疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/病理学与病理生理学（第4版）/第二十三章 传染病及寄生虫病.xml"}
+				]'>第二学期-病理学与病理生理学（第4版）</option>
+				<option disabled value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第一章 绪论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第二章 细胞的基本功能.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第三章 血液.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第四章 血液循环.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第五章 呼吸.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第六章 消化和吸收.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第七章 能量代谢与体温.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第八章 尿的生成与排出.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第九章 感觉器官.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第十章 神经系统.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第十一章 内分泌.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/生理学（第2版）/第十二章 生殖.xml"}
+				]'>第二学期-生理学（第2版）</option>
+				<option disabled value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第一章 绪言.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二章 药物效应动力学.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三章 药物代谢动力学.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第四章 影响药物作用的因素.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第五章 传出神经系统药理概论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第六章 胆碱受体激动药和胆碱酯酶抑制药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第七章 胆碱受体阻断药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第八章 肾上腺素受体激动药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第九章 肾上腺素受体阻断药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十章 局部麻醉药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十一章 镇静催眠药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十二章 抗癫痫药和抗惊厥药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十三章 治疗中枢神经系统退行性疾病药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十四章 抗精神失常药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十五章 镇痛药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十六章 解热镇痛抗炎药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十七章 中枢兴奋药和改善脑代谢药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十八章 利尿药和脱水药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第十九章 抗高血压药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十章 抗充血性心力衰竭药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十一章 抗心律失常药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十二章 抗心绞痛药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十三章 调血脂药和抗动脉粥样硬化药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十四章 肾上腺皮质激素类药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十五章 甲状腺激素和抗甲状腺药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十六章 胰岛素和口服降血糖药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十七章 性激素类药和避孕药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十八章 作用于子宫药物.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第二十九章 抗过敏药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十章 作用于血液和造血系统药物.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十一章 作用于呼吸系统药物.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十二章 作用于消化系统药物.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十三章 抗菌药物概述.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十四章 β-内酰胺类抗生素.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十五章 大环内酯类、林可霉素类、多肽类及多磷类抗生素.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十六章 氨基糖苷类抗生素.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十七章 四环素类和氯霉素类抗生素.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十八章 人工合成抗菌药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第三十九章 抗真菌药和抗病毒药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第四十章 抗结核病药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第四十一章 抗寄生虫病药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第四十二章 消毒防腐药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第四十三章 抗恶性肿瘤药.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第四十四章 影响免疫功能药物.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/护用药理学（第4版）/第四十五章 特效解毒药.xml"}
+				]'>第二学期-护用药理学（第4版）</option>
+				<option value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第一章 医院和住院环境.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第二章 入院和出院护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第三章 舒适与安全.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第四章 医院感染的预防和控制.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第五章 清洁护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第六章 生命体征的观察与护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第七章 饮食护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第八章 排泄护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第九章 药物疗法与过敏试验法.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第十章 静脉输液和输血.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第十一章 冷热疗法.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第十二章 标本采集.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第十三章 病情观察和危重病人的抢救.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第十四章 临终病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第二学期/基础护理学（第4版）/第十五章 医疗与护理文件记录.xml"}
+				]'>第二学期-基础护理学（第4版）</option>
+				<option value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第一章 女性生殖系统解剖与生理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二章 妊娠期妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第三章 分娩期妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第四章 产褥期母婴的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第五章 高危妊娠的管理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第六章 异常妊娠妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第七章 妊娠期特有疾病妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第八章 妊娠合并症妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第九章 异常分娩妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十章 分娩期并发症妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十一章 产褥期并发症妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十二章 妇科疾病患者护理计划的制订.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十三章 女性生殖系统炎症患者的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十四章 妇科手术患者的围术期护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十五章 女性生殖系统肿瘤患者的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十六章 女性生殖系统创伤性疾病患者的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十七章 妊娠滋养细胞疾病患者的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十八章 女性生殖内分泌疾病患者的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第十九章 子宫内膜异位症与子宫腺肌病患者的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二十章 不孕症妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二十一章 计划生育妇女的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/妇产科护理学（第4版）/第二十二章 妇产科护理操作技术.xml"}
+				]'>第三学期-妇产科护理学（第4版）</option>
+				<option value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第一章 绪论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第二章 心理过程.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第三章 人格.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第四章 心理健康与发展心理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第五章 心理应激.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第六章 心身疾病.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第七章 心理评估.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第八章 心理干预.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第九章 病人心理与护患沟通.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/护理心理学基础（第3版）/第十章 心理护理.xml"}
+				]'>第三学期-护理心理学基础（第3版）</option>
+				<option disabled value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第一章 健康资料.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第二章 健康史评估.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第三章 常见症状评估.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第四章 身体评估.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第五章 心理评估.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第六章 社会评估.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第七章 实验室检查.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第八章 心电图检查.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第九章 影像学检查.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第十章 护理诊断的思维方法.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/健康评估（第4版）/第十一章 健康评估记录.xml"}
+				]'>第三学期-健康评估（第4版）</option>
+				<option value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第一章 绪论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第二章 精神疾病的病因及症状学.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第三章 精神障碍病人的治疗环境.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第四章 精神疾病治疗过程的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第五章 神经症病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第六章 应激相关障碍病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第七章 情感性精神障碍病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第八章 精神分裂症病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第九章 器质性精神障碍病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第十章 人格障碍病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第十一章 心理因素相关生理障碍病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第十二章 精神活性物质所致精神障碍病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/精神科护理学（第4版）/第十三章 儿童少年期精神障碍病人的护理.xml"}
+				]'>第三学期-精神科护理学（第4版）</option>
+				<option value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第一章 绪论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第四节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第五节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第六节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第七节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第八节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第九节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第十节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第二章 呼吸系统疾病病人的护理 第十一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第四节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第五节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第六节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第七节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第八节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第三章 循环系统疾病病人的护理 第九节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第四节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第五节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第六节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第七节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第八节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第九节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第四章 消化系统疾病病人的护理 第十节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第五章 泌尿系统疾病病人的护理 第四节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第六章 血液系统疾病病人的护理 第四节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第四节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第五节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第七章 内分泌与代谢系统疾病病人的护理 第六节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第八章 风湿性疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第一节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第二节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第三节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第四节.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/内科护理学（第4版）/第九章 神经系统疾病病人的护理 第五节.xml"}
+				]'>第三学期-内科护理学（第4版）</option>
+				<option value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第一章 绪论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二章 水、电解质及酸碱平衡失调病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三章 营养支持病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第四章 外科休克病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第五章 麻醉病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第六章 手术室护理工作.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第七章 手术前后病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第八章 外科感染病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第九章 损伤病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十章 肿瘤病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十一章 颅脑疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十二章 颈部疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十三章 胸部疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十四章 乳房疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十五章 腹外疝病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十六章 急性化脓性腹膜炎与腹部损伤病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十七章 胃十二指肠疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十八章 肠疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第十九章 肛管疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十章 肝胆疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十一章 胰腺疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十二章 急腹症病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十三章 周围血管疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十四章 泌尿、男性生殖系疾病的主要症状和检查.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十五章 泌尿系统损伤疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十六章 尿石症病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十七章 泌尿、男性生殖系结核病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十八章 泌尿、男生殖系统肿瘤病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第二十九章 良性前列腺增生病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十章 肾移植病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十一章 骨折病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十二章 关节脱位病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十三章 骨与关节感染病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十四章 颈肩痛与腰腿痛病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十五章 常见骨肿瘤病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十六章 断肢（指）再植病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十七章 关节置换病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十八章 皮肤性病学总论.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第三十九章 变态反应性皮肤病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第四十章 感染性皮肤病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第四十一章 动物性皮肤病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第四十二章 红斑鳞屑性皮肤病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第四十三章 性传播疾病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/外科护理学（第4版）/第四十四章 大疱性皮肤病病人的护理.xml"}
+				]'>第三学期-外科护理学（第4版）</option>
+				<option value='[
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第一章 眼的应用解剖生理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二章 眼科病人的护理概述.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第三章 眼睑及泪器病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第四章 结膜病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第五章 角膜病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第六章 白内障病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第七章 青光眼病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第八章 葡萄膜、视网膜和玻璃体病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第九章 眼外伤病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十章 斜视与弱视病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十一章 屈光不正病人和老视的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十二章 盲和低视力病人的康复及护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十三章 耳鼻咽喉的应用解剖生理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十四章 耳鼻咽喉科病人的护理概述.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十五章 耳科病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十六章 鼻科病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十七章 咽科病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十八章 喉科病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第十九章 气管、支气管及食管异物病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十章 口腔颌面部的应用解剖生理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十一章 口腔科病人的护理概述.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十二章 牙体、牙髓病和根尖周围组织病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十三章 牙周组织病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十四章 口腔黏膜病病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十五章 口腔修复病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十六章 口腔颌面部感染病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十七章 口腔颌面部损伤病人的护理.xml"},
+					{"type": "pmph-xml", "file": "res/人卫图书增值/第三学期/眼耳鼻咽喉口腔科护理学（第4版）/第二十八章 先天性唇裂与腭裂病人的护理.xml"}
+				]'>第三学期-眼耳鼻咽喉口腔科护理学（第4版）</option>
+			</optgroup>
+			<optgroup disabled label="老年照护职业技能等级证书练习题（部分）">
+				<option value='[
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第一章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第二章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第三章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第四章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第五章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第六章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第七章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第八章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/初级练习题/1+X老年照护考试项目初级第九章练习题.txt"}
+				]'>初级练习题</option>
+				<option value='[
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第一章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第二章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第三章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第四章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第五章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第六章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第七章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第八章练习题.txt"},
+					{"type": "plain-txt", "file": "res/老年照护职业技能等级证书练习题/中级练习题/1+X老年照护考试项目中级第九章练习题.txt"}
+				]'>中级练习题</option>
+			</optgroup>
+			<optgroup label="老年照护理论模拟测试">
+				<option value='[{"type": "plain-txt", "file": "res/老年照护理论模拟测试/初级模拟题/初级（1）.txt"}]'>初级（1）</option>
+				<option value='[{"type": "plain-txt", "file": "res/老年照护理论模拟测试/初级模拟题/初级（2）.txt"}]'>初级（2）</option>
+				<option value='[{"type": "plain-txt", "file": "res/老年照护理论模拟测试/初级模拟题/初级（3）.txt"}]'>初级（3）</option>
+				<option value='[{"type": "plain-txt", "file": "res/老年照护理论模拟测试/中级模拟题/中级（1）.txt"}]'>中级（1）</option>
+				<option value='[{"type": "plain-txt", "file": "res/老年照护理论模拟测试/中级模拟题/中级（2）.txt"}]'>中级（2）</option>
+				<option value='[{"type": "plain-txt", "file": "res/老年照护理论模拟测试/中级模拟题/中级（3）.txt"}]'>中级（3）</option>
+			</optgroup>
+			<optgroup disabled label="健康评估实训与学习指导">
+				<option value='[
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第一章 健康资料与健康史评估.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第二章 常见症状评估.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 身体评估.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第四章 心理评估与社会评估.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第五章 实验室检查.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第六章 心电图检查.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第七章 影像学检查.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第八章 护理诊断的思维方法.txt"},
+					{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第九章 健康评估记录.txt"}
+				]'>第三学期-健评练习题-期末复习</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第一章 健康资料与健康史评估.txt"}]'>第一章 健康资料与健康史评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第二章 常见症状评估.txt"}]'>第二章 常见症状评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 身体评估.txt"}]'>第三章 身体评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第一节 身体评估的基本方法.txt"}]'>第三章 第一节 身体评估的基本方法</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第二节 一般状态评估.txt"}]'>第三章 第二节 一般状态评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第三节 皮肤和淋巴结评估.txt"}]'>第三章 第三节 皮肤和淋巴结评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第四节 头部和颈部评估.txt"}]'>第三章 第四节 头部和颈部评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第五节 胸壁、胸廓和乳房评估.txt"}]'>第三章 第五节 胸壁、胸廓和乳房评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第六节 肺脏评估.txt"}]'>第三章 第六节 肺脏评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第七节 心脏与血管评估.txt"}]'>第三章 第七节 心脏与血管评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第八节 腹部评估.txt"}]'>第三章 第八节 腹部评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第九节 肛门、直肠和生殖器评估.txt"}]'>第三章 第九节 肛门、直肠和生殖器评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第十节 脊柱与四肢评估.txt"}]'>第三章 第十节 脊柱与四肢评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第三章 第十一节 神经系统评估.txt"}]'>第三章 第十一节 神经系统评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第四章 心理评估与社会评估.txt"}]'>第四章 心理评估与社会评估</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第五章 实验室检查.txt"}]'>第五章 实验室检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第六章 心电图检查.txt"}]'>第六章 心电图检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第七章 影像学检查.txt"}]'>第七章 影像学检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第七章 第一节 X线检查.txt"}]'>第七章 第一节 X线检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第七章 第二节 计算机体层成像检查.txt"}]'>第七章 第二节 计算机体层成像检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第七章 第三节 磁共振成像检查.txt"}]'>第七章 第三节 磁共振成像检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第七章 第四节 核医学检查.txt"}]'>第七章 第四节 核医学检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第七章 第五节 超声检查.txt"}]'>第七章 第五节 超声检查</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第八章 护理诊断的思维方法.txt"}]'>第八章 护理诊断的思维方法</option>
+				<option value='[{"type": "plain-txt", "file": "res/健康评估实训与学习指导/第九章 健康评估记录.txt"}]'>第九章 健康评估记录</option>
+			</optgroup>
+		</select>
+		<textarea wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="display: none; float: center; margin: 0 auto; border: 0; width: 100%;" readonly></textarea>
+		<div style="width: 100%; word-break: normal; word-wrap: normal; white-space: pre-wrap;">
+			<p id="results"></p>
+		</div>
+		<script type="text/javascript">
+		/** javascript: document.write(`<pre style="word-break: normal; word-wrap: normal; white-space: pre-wrap;" contenteditable>${document.documentElement.outerHTML.replace(/\</igm, "&lt;").replace(/\>/igm, "&gt;")}</pre>`); */
+		/**
+		http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginByH5?userName=${username}&userPwd=${password}&appVersion=2.8.25")
+		http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginOut?newToken=${newToken}&userId=${userId}")
+		http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/getUserInfo?newToken=${newToken}&userId=${userId}")
+		http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/student/getCourseList?newToken=${newToken}&stuId=${userId}&isPass=1")
+		http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/student/getCourseList?newToken=${newToken}&stuId=${userId}&isPass=0")
+		*/
+		var parser = (
+		{
+			api: {}, text: {}, xml: {}, type: (
+			{
+				default: "单选题",
+				// 选择题
+				choices: ["单选题", "共用题干单选题", "共用答案单选题"],
+				// 文字作答题
+				answers: ["填空题", "名词解析", "简答题", "论述题", "案例分析", "写作"]
+			}),
+			// 题号匹配 ["1) ", "1. ", "1.", "1．", "1 ", "（1）"]
+			quesnumRegExp: /(^[0-9]{1,}\)\u0020)|(^[0-9]{1,}\.\u0020)|(^[0-9]{1,}\.)|(^[0-9]{1,}．)|(^[0-9]{1,}\u0020)|(^（[0-9]{1,}）)/i,
+			// 选项号匹配 ["A) ", "A. ", "A.", "A．", "A "]
+			optsnumRegExp: /(^[A-Z]{1,}\)\u0020)|(^[A-Z]{1,}\.\u0020)|(^[A-Z]{1,}\.)|(^[A-Z]{1,}．)|(^[A-Z]{1,}\u0020)/i,
+			optionNames: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
+			optionIndex: {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7, "I": 8, "J": 9, "K": 10, "L": 11, "M": 12, "N": 13, "O": 14, "P": 15, "Q": 16, "R": 17, "S": 18, "T": 19, "U": 20, "V": 21, "W": 22, "X": 23, "Y": 24, "Z": 25},
+			quesnumCNs: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "二十一", "二十二", "二十三", "二十四"]
+		});
+		parser.api.dump = (function(_obj)
+		{
+			if(typeof($) !== "function")
+			{
+				return alert("jQuery 未加载");
+			}
+			if($("textarea").length != 0)
+			{
+				if(document.location.protocol == "file:")
+				{
+					return $("textarea").eq(0).prependTo("body").val((typeof(_obj) == "object") ? JSON.stringify(_obj, null, "\t") : _obj).show().click();
+				}
+			}
+		});
+		parser.api.check_answers = (function(_answer_text)
+		{
+			if(typeof($) !== "function")
+			{
+				return alert("jQuery 未加载");
+			}
+			// 纯选择题答案检查
+			var chapters = _answer_text.split("\n\n"), answers = [];
+			$(chapters).each((_index, _val) => {
+				answers[_index] = [];
+				_val.replace(/([0-9]{1,})\.([A-Z]{1,})/gi, function(_match, capture_1, capture_2)
+				{
+					answers[_index].push(capture_2);
+				});
+			});
+			/** 遍历章节元素 */
+			$("center[name='chapter']").each((_index, _val) => {
+				/** 遍历题目数据 */
+				$(JSON.parse(_val.querySelector("button").value)).each(function(_index2, _val2)
+				{
+					var answer = "";
+					/** 遍历每个选项 */
+					$("[name=\"" + _val2.name + "\"]").each(function(_index3, _val3)
+					{
+						if(_val3.checked)
+						{
+							answer += ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"][_index3];
+						}
+					});
+					if(answer != answers[_index][_index2])
+					{
+						console.log(`第 ${["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十", "二十一", "二十二", "二十三", "二十四"][_index]} 章第 ${_index2 + 1} 题答案有误，正确答案为 ${answers[_index][_index2]}，错误选择为 ${answer/** $(_val3).parent().text()*/}`);
+					}
+				});
+			});
+		});
+		parser.api.parseTimeToDateStr = (function(_st, _isUTC)
+		{
+			var date = new Date(_st),
+			v = (function(_s)
+			{
+				return (_s < 10) ? ("0" + _s) : _s;
+			}),
+			str = _isUTC ? (date.getUTCFullYear() + "-" + v(date.getUTCMonth() + 1) + "-" + v(date.getUTCDate()) + " " + v(date.getUTCHours()) + ":" + v(date.getUTCMinutes()) + ":" + v(date.getUTCSeconds()) + ((date.getUTCMilliseconds() == 0) ? "" : (" " + date.getUTCMilliseconds()))) : (date.getFullYear() + "-" + v(date.getMonth() + 1) + "-" + v(date.getDate()) + " " + v(date.getHours()) + ":" + v(date.getMinutes()) + ":" + v(date.getSeconds()) + ((date.getMilliseconds() == 0) ? "" : (" " + date.getMilliseconds())));
+			return str;
+		});
+		parser.api.tipmsg = (function(_msg, _type, _callback)
+		{
+			if(typeof($) !== "function")
+			{
+				return alert("jQuery 未加载");
+			}
+			($("#tip-msg").length == 0) && $("body").append('<strong id="tip-msg" style="display: none; position: fixed; top: 50px; left: -5px; right: -5px; width: 100%; z-index: 9999; float: center; margin: 0 auto; text-align: center;"></strong>');
+			var colors = ({log: "MediumSeaGreen", info: "DodgerBlue", debug: "LightSlateGray", warn: "LightGoldenRodYellow", error: "OrangeRed"});
+			$("#tip-msg").text(_msg).css("color", colors[_type] || colors["log"]).stop(true, true).fadeIn(500).delay(2000).fadeOut(500, function(){_callback && _callback();});
+		});
+		parser.api.sleep = (function(_time)
+		{
+			var start = (new Date()).getTime();
+			while(((new Date()).getTime() - start) <= _time)
+			{
+				continue;
+			}
+		});
+		parser.api.delay = (function(_delay)
+		{
+			return new Promise((_resolve, _reject) => {
+				setTimeout(_resolve, _delay);
+			});
+		});
+		parser.api.translateToBinaryString = (function(_text)
+		{
+			var out;
+			out = "";
+			for(i = 0; i < _text.length; i++)
+			{
+				out += String.fromCharCode(_text.charCodeAt(i) & 0xff);
+			}
+			return out;
+		});
+		parser.api.base64ToUint8Array = (function(_str)
+		{
+			var padding = "=".repeat((4 - _str.length % 4) % 4);
+			var base64 = (_str + padding).replace(/\-/g, "+").replace(/_/g, "/");
+			var rawData = atob(base64);
+			var bytes = new Uint8Array(rawData.length);
+			for(var i = 0; i < rawData.length; ++i)
+			{
+				bytes[i] = rawData.charCodeAt(i);
+			}
+			return bytes;
+		});
+		parser.api.arrayBufferToBase64 = (function(_ab)
+		{
+			return btoa(parser.api.uint8ArrayToString(new Uint8Array(_ab)));
+			/**
+			var reader = new FileReader();
+			reader.onload = (function(e)
+			{
+				var base64 = reader.result || e.target.result;
+				console.log(base64 = base64.split(",").slice(-1)[0]);
+			});
+			reader.readAsDataURL(new Blob([_ab]));
+			*/
+		});
+		parser.api.uint8ArrayToString = (function(_u8a)
+		{
+			var str = "";
+			for(var i = 0; i < _u8a.byteLength; i++)
+			{
+				str += String.fromCharCode(_u8a[i]);
+			}
+			return str;
+		});
+		parser.api.uuid = (function()
+		{
+			var S4 = (function()
+			{
+				return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+			});
+			return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+		});
+		// 文本相似度计算 parser.api.dump((parser.api.similar("", "", 2) * 100) + "%");
+		parser.api.similar = (function(s, t, f)
+		{
+			if(!s || !t)
+			{
+				return 0;
+			}
+			var l = (s.length > t.length) ? s.length : t.length;
+			var n = s.length;
+			var m = t.length;
+			var d = [];
+			f = f || 3;
+			var min = (function(a, b, c)
+			{
+				return (a < b) ? ((a < c) ? a : c) : ((b < c) ? b : c);
+			});
+			var i, j, si, tj, cost;
+			if(n === 0)
+			{
+				return m;
+			}
+			if(m === 0)
+			{
+				return n;
+			}
+			for(i = 0; i <= n; i++)
+			{
+				d[i] = [];
+				d[i][0] = i;
+			}
+			for(j = 0; j <= m; j++)
+			{
+				d[0][j] = j;
+			}
+			for(i = 1; i <= n; i++)
+			{
+				si = s.charAt(i - 1);
+				for(j = 1; j <= m; j++)
+				{
+					tj = t.charAt(j - 1);
+					if(si === tj)
+					{
+						cost = 0;
+					}
+					else
+					{
+						cost = 1;
+					}
+					d[i][j] = min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+				}
+			}
+			let res = (1 - (d[n][m] / l));
+			return res.toFixed(f);
+		});
+		// Changes XML to JSON https://davidwalsh.name/convert-xml-json
+		parser.api.xmlToJson = (function(_xml)
+		{
+			var obj = {};
+			if(_xml.nodeType == 1)
+			{
+				// ELEMENT_NODE
+				if(_xml.attributes)
+				{
+					if(_xml.attributes.length > 0)
+					{
+						obj["@attributes"] = {};
+						for(var j = 0; j < _xml.attributes.length; j++)
+						{
+							var attribute = _xml.attributes.item(j);
+							obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+						}
+					}
+				}
+			}
+			else if(_xml.nodeType == 3)
+			{
+				// TEXT_NODE #text
+				return obj = ((_xml.nodeValue == "\n") || (_xml.nodeValue == "\r\n")) ? undefined : _xml.nodeValue;
+			}
+			else if(_xml.nodeType == 4)
+			{
+				// DOCUMENT_POSITION_FOLLOWING #cdata-section
+				return obj = _xml.data;
+			}
+			else if(_xml.nodeType == 9)
+			{
+				// DOCUMENT_NODE
+				obj["@attributes"] = {version: _xml.xmlVersion, encoding: _xml.xmlEncoding};
+			}
+			else
+			{
+				console.warn("存在未处理的XML节点类型", _xml.nodeType);
+			}
+			// do children
+			if(_xml.hasChildNodes())
+			{
+				for(var i = 0; i < _xml.childNodes.length; i++)
+				{
+					var item = _xml.childNodes.item(i);
+					var nodeName = item.nodeName;
+					if(typeof(obj[nodeName]) == "undefined")
+					{
+						obj[nodeName] = parser.api.xmlToJson(item);
+					}
+					else
+					{
+						if(typeof(obj[nodeName].push) == "undefined")
+						{
+							var old = obj[nodeName];
+							obj[nodeName] = [];
+							obj[nodeName].push(old);
+						}
+						obj[nodeName].push(parser.api.xmlToJson(item));
+					}
+				}
+			}
+			return obj;
+		});
+		parser.api.xmlToJsonNoAttrs = (function(_xml)
+		{
+			var obj = {};
+			if(_xml.children.length > 0)
+			{
+				for(var i = 0; i < _xml.children.length; i++)
+				{
+					var item = _xml.children.item(i);
+					var nodeName = item.nodeName;
+					if(typeof(obj[nodeName]) == "undefined")
+					{
+						obj[nodeName] = parser.api.xmlToJsonNoAttrs(item);
+					}
+					else
+					{
+						if(typeof(obj[nodeName].push) == "undefined")
+						{
+							var old = obj[nodeName];
+							obj[nodeName] = [];
+							obj[nodeName].push(old);
+						}
+						obj[nodeName].push(parser.api.xmlToJsonNoAttrs(item));
+					}
+				}
+			}
+			else
+			{
+				obj = _xml.textContent;
+			}
+			return obj;
+		});
+		// 简单文本试题解析
+		parser.text.simple = (function(_title, _data)
+		{
+			var all = {};
+			all["name"] = decodeURIComponent(_title);
+			all["questions"] = [];
+			if(!_data || (_data.trim() == ""))
+			{
+				return all;
+			}
+			var data = _data.split("\n\n\n");
+			function choicesParser(_type, _questr, _arrs)
+			{
+				var arrs = [];
+				for(var ques = Array.isArray(_questr) ? _questr : _questr.split("\n\n"), q = 0; q < ques.length; q++)
+				{
+					var lines = ques[q].trim().split("\n"),
+					title = (function()
+						{
+							// 兼容答案在第一行的特殊情况
+							if((/^([A-Z]{1,})$/).test(lines[0].trim()))
+							{
+								lines.push("参考答案：" + lines[0].trim());
+								lines = lines.slice(1);
+							}
+							return lines[0].trim().replace(parser.quesnumRegExp, "").trim();
+						})(),
+					lines = lines.slice(1),
+					opts = [],
+					que = {
+						title: title,
+						answer: undefined,
+						options: [],
+						coeffic: undefined,
+						analysis: undefined
+					};
+					if(_type)
+					{
+						que.type = _type;
+					}
+					for(var l = 0; l < lines.length; l++)
+					{
+						// 以字母开头为选项
+						if((/^([A-Z])\./).test(lines[l].trim()))
+						{
+							que.options.push(
+							{
+								name: String(lines[l].trim().match(/^([A-Z])\./)[1]).trim(),
+								title: lines[l].trim().replace(/^([A-Z])\./, "").trim().replace(/((\u3164√)|√)$/, "").trim(),
+								right: (/((\u3164√)|√)$/).test(lines[l].trim())
+							});
+							// 其他标注答案方法
+							if((/((\u3164√)|√)$/).test(lines[l].trim()))
+							{
+								que.options.hasAnswer = true;
+							}
+						}
+						else if((/^(参考答案：)/).test(lines[l].trim()))
+						{
+							que.answer = String(lines[l].trim().match(/^(参考答案：)(.*)([A-Z]{1,})/)[3]).trim();
+						}
+						else if((/^(难度系数：)/).test(lines[l].trim()))
+						{
+							que.coeffic = String(lines[l].trim().match(/^(难度系数：)(.*)/)[2]).trim();
+						}
+						else if((/^(参考解析：)/).test(lines[l].trim()))
+						{
+							que.analysis = String(lines[l].trim().match(/^(参考解析：)(.*)/)[2]).trim();
+						}
+						else
+						{
+							console.warn("未处理的选项", lines[l].trim());
+						}
+					}
+					if(que.answer)
+					{
+						for(var o = 0; o < que.options.length; o++)
+						{
+							if(que.answer.split("").includes(que.options[o].name))
+							{
+								que.options[o].right = true;
+							}
+						}
+					}
+					else if(que.options.hasAnswer)
+					{
+						for(var o = 0; o < que.options.length; o++)
+						{
+							if(que.options[o].right)
+							{
+								if(!que.answer)
+								{
+									que.answer = "";
+								}
+								que.answer += que.options[o].name;
+							}
+						}
+					}
+					else
+					{
+						console.warn("没有参考答案", que);
+					}
+					_arrs && _arrs.push(que);
+					arrs.push(que);
+				}
+				return arrs;
+			}
+			for(var i = 0; i < data.length; i++)
+			{
+				var type = "单选题", questr = data[i].trim().replace(/\[\=\[([\u4e00-\u9fa5]{1,})\]\=\]/i, function(_match, _type, _offset, _string)
+				{
+					type = _type;
+					return "";
+				}).replace(/\[\#\[(.*)\]\#\]/i, function(_match, _chapter, _offset, _string)
+				{
+					console.log(all["name"], _chapter);
+					return "";
+				}).trim();
+				switch(type)
+				{
+					case("共用题干单选题"):
+					{
+						var ques = questr.split("\n\n"),
+						title = ques[0].trim().replace(parser.quesnumRegExp, "").trim(),
+						ques = ques.slice(1);
+						all["questions"].push(
+						{
+							type: type,
+							title: title,
+							children: choicesParser(null, ques, null)
+						});
+						break;
+					}
+					case("共用答案单选题"):
+					{
+						var ques = questr.split("\n\n"),
+						title = ques[0].trim().replace(parser.quesnumRegExp, "").trim(),
+						ques = ques.slice(1),
+						options = [],
+						children = [];
+						Array.from(title.split("\n")).forEach(function(_line, _index, _lines)
+						{
+							options.push(
+							{
+								name: String(_line.trim().match(/^([A-Z])\./)[1]).trim(),
+								title: _line.trim().replace(/^([A-Z])\./, "").trim()
+							});
+						});
+						Array.from(ques).forEach(function(_que, _index, _ques)
+						{
+							var q = _que.trim().split("\n"),
+							t = q[0].trim().replace(parser.quesnumRegExp, "").trim(),
+							q = q.slice(1),
+							o = {
+								title: t,
+								answer: undefined,
+								coeffic: undefined,
+								analysis: undefined
+							};
+							Array.from(q).forEach(function(_line, _index, _lines)
+							{
+								if((/^(参考答案：)/).test(_line.trim()))
+								{
+									o.answer = String(_line.trim().match(/^(参考答案：)(.*)([A-Z]{1,})/)[3]).trim();
+								}
+								else if((/^(难度系数：)/).test(_line.trim()))
+								{
+									o.coeffic = String(_line.trim().match(/^(难度系数：)(.*)/)[2]).trim();
+								}
+								else if((/^(参考解析：)/).test(_line.trim()))
+								{
+									o.analysis = String(_line.trim().match(/^(参考解析：)(.*)/)[2]).trim();
+								}
+								else
+								{
+									console.warn("未处理的选项", _line.trim());
+								}
+							});
+							children.push(o);
+						});
+						all["questions"].push(
+						{
+							type: type,
+							options: options,
+							children: children
+						});
+						break;
+					}
+					case("填空题"):
+					{/**
+						var ques = questr.split("\n\n");
+						for(var q = 0; q < ques.length; q++)
+						{
+							all["questions"].push(
+							{
+								type: type,
+								title: ques[q].trim().replace(parser.quesnumRegExp, "").trim().replace(/\u3164\{(.*.)\}$/i, "").trim(),
+								answers: (function()
+								{
+									var answers = [];
+									ques[q].trim().replace(/\u3164\{(.*.)\}$/i, function(_match, _answer, _offset, _string)
+									{
+										answers = _answer.split("\u3164");
+										return "";
+									});
+									return answers;
+								})()
+							});
+						}*/
+						break;
+					}
+					case("名词解析"):
+					{/**
+						var ques = questr.split("\n\n");
+						for(var q = 0; q < ques.length; q++)
+						{
+							all["questions"].push(
+							{
+								type: type,
+								title: ques[q].trim().replace(parser.quesnumRegExp, "").trim().replace(/\u3164\{(.*.)\}$/i, "").trim().replace(/：$/i, "").trim(),
+								answer: (function()
+								{
+									var answer = null;
+									ques[q].trim().replace(/\u3164\{(.*.)\}$/i, function(_match, _answer, _offset, _string)
+									{
+										answer = _answer.trim();
+										return "";
+									});
+									return answer;
+								})()
+							});
+						}*/
+						break;
+					}
+					case("简答题"):
+					case("论述题"):
+					case("案例分析"):
+					case("写作"):
+					{/**
+						var ques = questr.split("\n\n");
+						for(var q = 0; q < ques.length; q++)
+						{
+							var answer = null, body = ques[q].replace(/\{([\s\S]{0,}?)\}/igm, function(_match, _answer, _offset, _string)
+							{
+								answer = _answer.trim().replace(/(^答：)|(^解析：)|(^参考答案：)|(^答案：)/i, "").trim();
+								return "";
+							}).trim().replace(parser.quesnumRegExp, "").trim();
+							all["questions"].push(
+							{
+								type: type,
+								title: body,
+								answer: answer
+							});
+						}*/
+						break;
+					}
+					default:
+					{
+						// 单选题或未知题型
+						if((type == "单选题") || (type == "多选题"))
+						{
+							choicesParser(type, questr, all["questions"]);
+						}
+						else
+						{
+							console.warn("未知题型", type);
+						}
+						break;
+					}
+				}
+			}
+			(document.location.protocol == "file:") && console.log("›plain-txt", all);
+			return all;
+		});
+		/**
+		parser.text.simple_bak = (function(_title, _data)
+		{
+			var all = {};
+			all["name"] = _title;
+			all["questions"] = [];
+			var data = _data.split("\n\n\n");
+			for(var i = 0; i < data.length; i++)
+			{
+				var type = "单选题", questr = data[i].trim().replace(/〔([\u4e00-\u9fa5]{1,})〕/i, function(_match, _type, _offset, _string)
+				{
+					type = _type;
+					return "";
+				}).trim();
+				switch(type)
+				{
+					case("共用题干单选题"):
+					{
+						var ques = questr.split("\n\n");
+						all["questions"].push(
+						{
+							type: type,
+							title: ques[0].trim().replace(parser.quesnumRegExp, "").trim(),
+							children: (function()
+							{
+								var clds = [], children = ques.slice(1);
+								for(var c = 0; c < children.length; c++)
+								{
+									var childques = children[c].split("\n");
+									clds.push(
+									{
+										title: childques[0].trim().replace(parser.quesnumRegExp, "").trim(),
+										options: (function()
+										{
+											var opts = [], options = childques.slice(1);
+											for(var o = 0; o < options.length; o++)
+											{
+												if(options[o].trim().startsWith("答案"))
+												{
+													// 新匹配模式
+													opts[parser.optionIndex[options[o].trim().replace(/答案：/, "").trim()]].right = true;
+													break;
+												}
+												opts.push(
+												{
+													title: options[o].trim().replace(parser.optsnumRegExp, "").replace(/\u3164√$/i, "").trim(),
+													right: options[o].trim().endsWith("\u3164√")
+												});
+											}
+											return opts;
+										})()
+									});
+								}
+								return clds;
+							})()
+						});
+						break;
+					}
+					case("共用答案单选题"):
+					{
+						var ques = questr.split("\n\n");
+						all["questions"].push(
+						{
+							type: type,
+							options: (function()
+							{
+								var opts = [], options = ques[0].trim().replace(parser.quesnumRegExp, "").trim().split("\n");
+								Array.from(options).forEach(function(_opt, _index, _opts)
+								{
+									opts.push(
+									{
+										name: parser.optionNames[_index],
+										title: _opt.trim().replace(parser.optsnumRegExp, "").trim()
+									});
+								});
+								return opts;
+							})(),
+							children: (function()
+							{
+								var clds = [];
+								Array.from(ques.slice(1)).forEach(function(_que, _index, _ques)
+								{
+									clds.push(
+									{
+										title: _que.trim().replace(parser.quesnumRegExp, "").trim().replace(/\u3164\{(.*.)\}$/i, "").trim(),
+										answer: (function()
+										{
+											var answer = null;
+											_que.trim().replace(/\u3164\{(.*.)\}$/i, function(_match, _answer, _offset, _string)
+											{
+												answer = _answer;
+												return "";
+											});
+											return answer;
+										})()
+									});
+								});
+								return clds;
+							})()
+						});
+						break;
+					}
+					case("填空题"):
+					{
+						var ques = questr.split("\n\n");
+						for(var q = 0; q < ques.length; q++)
+						{
+							all["questions"].push(
+							{
+								type: type,
+								title: ques[q].trim().replace(parser.quesnumRegExp, "").trim().replace(/\u3164\{(.*.)\}$/i, "").trim(),
+								answers: (function()
+								{
+									var answers = [];
+									ques[q].trim().replace(/\u3164\{(.*.)\}$/i, function(_match, _answer, _offset, _string)
+									{
+										answers = _answer.split("\u3164");
+										return "";
+									});
+									return answers;
+								})()
+							});
+						}
+						break;
+					}
+					case("名词解析"):
+					{
+						var ques = questr.split("\n\n");
+						for(var q = 0; q < ques.length; q++)
+						{
+							all["questions"].push(
+							{
+								type: type,
+								title: ques[q].trim().replace(parser.quesnumRegExp, "").trim().replace(/\u3164\{(.*.)\}$/i, "").trim().replace(/：$/i, "").trim(),
+								answer: (function()
+								{
+									var answer = null;
+									ques[q].trim().replace(/\u3164\{(.*.)\}$/i, function(_match, _answer, _offset, _string)
+									{
+										answer = _answer.trim();
+										return "";
+									});
+									return answer;
+								})()
+							});
+						}
+						break;
+					}
+					case("简答题"):
+					case("论述题"):
+					case("案例分析"):
+					case("写作"):
+					{
+						var ques = questr.split("\n\n");
+						for(var q = 0; q < ques.length; q++)
+						{
+							var answer = null, body = ques[q].replace(/\{([\s\S]{0,}?)\}/igm, function(_match, _answer, _offset, _string)
+							{
+								answer = _answer.trim().replace(/(^答：)|(^解析：)|(^参考答案：)|(^答案：)/i, "").trim();
+								return "";
+							}).trim().replace(parser.quesnumRegExp, "").trim();
+							all["questions"].push(
+							{
+								type: type,
+								title: body,
+								answer: answer
+							});
+						}
+						break;
+					}
+					default:
+					{
+						// 单选题或未知题型
+						if(type == "单选题")
+						{
+							var ques = questr.split("\n\n");
+							for(var q = 0; q < ques.length; q++)
+							{
+								all["questions"].push(
+								{
+									type: type,
+									title: ques[q].split("\n")[0].trim().replace(parser.quesnumRegExp, "").replace(/\[单选题\]/, "").trim(),
+									options: (function()
+									{
+										var opts = [], options = ques[q].split("\n").slice(1);
+										for(var o = 0; o < options.length; o++)
+										{
+											if(options[o].trim().startsWith("答案"))
+											{
+												opts[({A: 0, B: 1, C: 2, D: 3, E: 4, F: 5, G: 6, H: 7, I: 8, J: 9})[options[o].trim().replace(/答案：/, "").trim()]].right = true;
+												break;
+											}
+											opts.push(
+											{
+												title: options[o].trim().replace(parser.optsnumRegExp, "").replace(/\u3164√$/i, "").trim(),
+												right: options[o].trim().endsWith("\u3164√")
+											});
+										}
+										return opts;
+									})()
+								});
+							}
+						}
+						else
+						{
+							console.warn("未知题型", type);
+						}
+						break;
+					}
+				}
+			}
+			(document.location.protocol == "file:") && console.log("›plain-txt", all);
+			return all;
+		});
+		*/
+		// 人卫图书增值XML试题解析
+		parser.xml.pmph = (function(_title, _xml)
+		{
+			var parseQue = (function(_que, _typedesc)
+			{
+				var func = {
+					"单选题": (function()
+					{
+						return (
+						{
+							type: "单选题",
+							title: _que.desc.trim().replace(parser.quesnumRegExp, "").trim(),
+							options: (function()
+							{
+								var opts = [];
+								_que.options && _que.options.option && Array.from(_que.options.option).forEach(function(_opt, _index, _opts)
+								{
+									opts.push(
+									{
+										name: _opt.id,
+										title: _opt.desc.trim(),
+										right: (_opt.id == _que.answers)
+									});
+								});
+								(_que.options && _que.options.option) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
+								return opts;
+							})(),
+							answer: _que.answers ? _que.answers.trim() : undefined,
+							analysis: _que.keypoints ? _que.keypoints.trim().replace(/(^解析：)/i, "").trim() : undefined
+						});
+					}),
+					"共用题干单选题": (function()
+					{
+						return (
+						{
+							type: "共用题干单选题",
+							title: _que.desc.trim().replace(parser.quesnumRegExp, "").trim(),
+							children: (function()
+							{
+								var arrs = [];
+								_que.children && _que.children.question && Array.from(_que.children.question).forEach(function(__que, _index, _ques)
+								{
+									arrs.push(
+									{
+										title: __que.desc.trim().replace(/(（[0-9]{1,}）)|(\([0-9]{1,}\))/i, "").trim(),
+										options: (function()
+										{
+											var opts = [];
+											Array.from(__que.options.option).forEach(function(_opt, __index, _opts)
+											{
+												opts.push(
+												{
+													name: _opt.id,
+													title: _opt.desc.trim(),
+													right: (_opt.id == __que.answers)
+												});
+											});
+											return opts;
+										})(),
+										answer: __que.answers ? __que.answers.trim() : undefined,
+										analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/i, "").trim() : undefined
+									});
+								});
+								(_que.children && _que.children.question) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
+								return arrs;
+							})()
+						});
+					}),
+					"共用答案单选题": (function()
+					{
+						return (
+						{
+							type: "共用答案单选题",
+							options: (function()
+							{
+								var opts = [], allopts = _que.desc.trim().replace(parser.quesnumRegExp, "").trim().split(/\n|\r\n|\r/i).slice(1);
+								Array.from(allopts).forEach(function(_opt, _index, _opts)
+								{
+									opts.push(
+									{
+										name: parser.optionNames[_index],
+										title: _opt.trim().replace(parser.optsnumRegExp, "").trim()
+									});
+								});
+								return opts;
+							})(),
+							children: (function()
+							{
+								var arrs = [];
+								_que.children && _que.children.question && Array.from(_que.children.question).forEach(function(__que, _index, _ques)
+								{
+									arrs.push(
+									{
+										title: __que.desc.trim().replace(/(（[0-9]{1,}）|(\([0-9]{1,}\)))/i, "").trim(),
+										answer: __que.answers ? __que.answers.trim() : undefined,
+										analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/i, "").trim() : undefined
+									});
+								});
+								(_que.children && _que.children.question) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
+								return arrs;
+							})()
+						});
+					})
+				};
+				switch(_que.type)
+				{
+					case("1"):
+					case("2"):
+					{
+						return (_typedesc.trim().toUpperCase().startsWith("A3") || _typedesc.trim().toUpperCase().startsWith("A4")) ? func["共用题干单选题"]() : func["单选题"]();
+					}
+					case("3"):
+					{
+						return func["共用题干单选题"]();
+					}
+					case("4"):
+					{
+						return func["共用答案单选题"]();
+					}
+					default:
+					{
+						console.warn("XML存在未处理题型", _que, _que.type, _typedesc);
+						break;
+					}
+				}
+				return {};
+			}), pushQues = (function(_arrs, _ques, _typedesc)
+			{
+				// 2小题及以上
+				if(Array.isArray(_ques))
+				{
+					return Array.from(_ques).forEach(function(_que, _index, __ques)
+					{
+						_arrs.push(parseQue(_que, _typedesc));
+					});
+				}
+				else
+				{
+					// 只有1小题
+					return _arrs.push(parseQue(_ques, _typedesc));
+				}
+			});
+			var all = {};
+			all["name"] = decodeURIComponent(_title);
+			all["questions"] = [];
+			var xmldoc = null;
+			if(typeof(_xml) == "string")
+			{
+				var xmler = new DOMParser();
+				xmldoc = xmler.parseFromString(_xml.trim(), "text/xml");
+			}
+			else
+			{
+				xmldoc = _xml;
+			}
+			var data = parser.api.xmlToJsonNoAttrs(xmldoc);
+			// 2大题及以上
+			if(Array.isArray(data.exam.questions))
+			{
+				Array.from(data.exam.questions).forEach(function(_val, _index, _vals)
+				{
+					pushQues(all["questions"], _val.question, _val.instructions);
+				});
+			}
+			else
+			{
+				// 只有1大题
+				pushQues(all["questions"], data.exam.questions.question, data.exam.questions.instructions);
+			}
+			(document.location.protocol == "file:") && console.log("›pmph-xml", all);
+			return all;
+		});
+		parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
+		{
+			if(!(_el || _el.value))
+			{
+				return alert("糟糕，数据丢失了，请刷新页面再重试");
+			}
+			var formatSeconds = (function(_second)
+			{
+				var s = parseInt(_second);
+				var ms = ((_second - s) * 1000).toFixed(0);
+				var m = 0;
+				var h = 0;
+				if(s > 60)
+				{
+					m = parseInt(s / 60);
+					s = parseInt(s % 60);
+					if(m > 60)
+					{
+						h = parseInt(m / 60);
+						m = parseInt(m % 60);
+					}
+				}
+				var result = parseInt(ms) + "ms";
+				if(s > 0)
+				{
+					result = parseInt(s) + /** "″" */"s" + result;
+				}
+				if(m > 0)
+				{
+					result = parseInt(m) + /** "′" */"m" + result;
+				}
+				if(h > 0)
+				{
+					result = parseInt(h) + "h" + result;
+				}
+				return result;
+			});
+			var data = JSON.parse(_el.value);
+			if(!data.length)
+			{
+				return alert("本章节没有可供作答的" + (_ischoice ? "选择" : "文字") + "题");
+			}
+			if(typeof($) !== "function")
+			{
+				return alert("jQuery 未加载");
+			}
+			if(_ischoice)
+			{
+				if(_isdo)
+				{
+					_el.innerText = _endstr, _el.right = {}, _el.error = {}, _el.notdo = {}, _el.starttime = Date.now();
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2).removeAttr("disabled checked")
+							.parent().css({"color": ""}).addClass("option").removeClass("option-right option-error option-notdo");
+						});
+					});
+				}
+				else
+				{
+					_el.innerText = _startstr;
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2).attr("disabled", "disabled");
+							// 此题还没选出正确答案
+							if($('[name="' + _val2.name + '"]:checked').length == 0)
+							{
+								_el.notdo[_val2.name] = null;
+								$('[name="' + _val2.name + '"][value="true"]').each(function(_index3, _val3)
+								{
+									$(_val3).parent().css({"color": "#fca104"}).addClass("option-notdo");
+								});
+							}
+							else
+							{
+								if(_val.type.endsWith("多选题"))
+								{
+									if(_val2.checked)
+									{
+										if(_val2.value == "false")
+										{
+											_el.error[_val2.name] = false;
+											$(_val2).parent().css({"color": "#d9534f"}).removeClass("option").addClass("option-error");
+										}
+										else
+										{
+											_el.right[_val2.name] = true;
+										}
+									}
+									else
+									{
+										if(_val2.value == "true")
+										{
+											_el.error[_val2.name] = false;
+											$(_val2).parent().css({"color": "#fca104"}).addClass("option-notdo");
+										}
+									}
+									// 最后判断，只要错一题均不计分
+									if(_index2 == ($('[name="' + _val2.name + '"]').size() - 1))
+									{
+										if((_el.error[_val2.name] != null) && (_el.right[_val2.name] != null))
+										{
+											Reflect.deleteProperty(_el.right, _val2.name);
+										}
+									}
+								}
+								else
+								{
+									if(_val2.checked)
+									{
+										if((_val2.checked ? "true" : "false") == _val2.value)
+										{
+											_el.right[_val2.name] = true;
+										}
+										else
+										{
+											_el.error[_val2.name] = false;
+											// 选择错误
+											$(_val2).parent().css({"color": "#d9534f"}).removeClass("option").addClass("option-error");
+											// 高亮正确选项
+											$('[name="' + _val2.name + '"][value="true"]').each(function(_index3, _val3)
+											{
+												$(_val3).parent().css({"color": "#5cb85c"}).addClass("option-right");
+											});
+										}
+									}
+								}
+							}
+						});
+					});
+					var rightNum = Object.keys(_el.right).length,
+					errorNum = Object.keys(_el.error).length,
+					notdoNum = Object.keys(_el.notdo).length,
+					scoreRate  = ((rightNum / data.length) * 100).toFixed(2);
+					var msg = (parser.api.parseTimeToDateStr(Date.now()) + "\n\n〔单选题〕\n\n\t题数：" + data.length
+					+ "\n\n\t做对：" + ((rightNum == 0) ? /** "一题没对哦" */0 : rightNum)
+					+ "\n\n\t做错：" + ((errorNum == 0) ? /** "全都做对啦" */0 : errorNum)
+					+ ((notdoNum == 0) ? "" : ("\n\n\t未做：" + notdoNum))
+					+ "\n\n得分率：" + scoreRate + "%"
+					+ "\n\n失分率：" + (100 - scoreRate).toFixed(2) + "%"
+					+ "\n\n错题率：" + ((errorNum / data.length) * 100).toFixed(2) + "%"
+					+ ((notdoNum == 0) ? "" : ("\n\n未做率：" + ((notdoNum / data.length) * 100).toFixed(2) + "%"))
+					+ "\n\n答题用时：" + formatSeconds((Date.now() - _el.starttime) / 1000));
+					console.log(msg);
+					alert(msg);
+				}
+			}
+			else
+			{
+				if(_isdo)
+				{
+					_el.innerText = _endstr, _el.right = {}, _el.error = {}, _el.notdo = {}, _el.textScore = [], _el.starttime = Date.now();
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2).removeAttr("readonly").css({"color": "#ffffff"}).val("");
+							if(_val.type == "填空题")
+							{
+								$(_val2)[0].nextElementSibling.style.display = "none";
+							}
+							else
+							{
+								$(_val2)[0].nextElementSibling.style.display = "none";
+								$(_val2)[0].nextElementSibling.nextElementSibling.style.display = "none";
+							}
+						});
+					});
+				}
+				else
+				{
+					_el.innerText = _startstr;
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2).attr("readonly", "readonly");
+							var titleno = 0;
+							$(_val2).parent()[0].previousElementSibling.innerText.trim().replace(/^([0-9]{1,})\./i, function(_match, _titleno){titleno = _titleno;});
+							if(_val.type == "填空题")
+							{
+								if($(_val2).val() != "")
+								{
+									if($(_val2).val() == $(_val2)[0].nextElementSibling.value)
+									{
+										_el.right[_val2.name] = true;
+									}
+									else
+									{
+										_el.error[_val2.name] = false;
+										$(_val2).css({"color": "#d9534f"});
+										$(_val2)[0].nextElementSibling.style.display = "inline";
+									}
+								}
+								else
+								{
+									_el.notdo[_val2.name] = null;
+									$(_val2).val($(_val2)[0].nextElementSibling.value);
+									$(_val2).css({"color": "yellow"});
+								}
+							}
+							else
+							{
+								if($(_val2).val() != "")
+								{
+									_el.right[_val2.name] = true;
+									var rate = (parser.api.similar($(_val2).val(), $(_val2)[0].defaultValue, 2) * 100) + "%";
+									_el.textScore.push(titleno + ".〔" + _val.type + "〕" + rate);
+									$(_val2)[0].nextElementSibling.nextElementSibling.style.display = "inline";
+									$(_val2)[0].nextElementSibling.nextElementSibling.value = $(_val2)[0].defaultValue;
+									
+									$(_val2)[0].nextElementSibling.style.display = "inline";
+									$(_val2)[0].nextElementSibling.value = _el.textScore[_el.textScore.length - 1];
+								}
+								else
+								{
+									_el.notdo[_val2.name] = null;
+									$(_val2)[0].value = $(_val2)[0].defaultValue;
+									$(_val2).css({"color": "yellow"});
+								}
+							}
+						});
+					});
+					var rightNum = Object.keys(_el.right).length,
+					errorNum = Object.keys(_el.error).length,
+					notdoNum = Object.keys(_el.notdo).length,
+					scoreRate  = ((rightNum / data.length) * 100).toFixed(2);
+					var msg = (parser.api.parseTimeToDateStr(Date.now()) + "\n\n题数：" + data.length
+					+ "\n\n\t〔填空题〕\n\n\t做对：" + ((rightNum == 0) ? /** "一题没对哦" */0 : rightNum)
+					+ "\n\n\t做错：" + ((errorNum == 0) ? /** "全都做对啦" */0 : errorNum)
+					+ ((notdoNum == 0) ? "" : ("\n\n\t未做：" + notdoNum))
+					+ "\n\n得分率：" + scoreRate + "%"
+					+ "\n\n失分率：" + (100 - scoreRate).toFixed(2) + "%"
+					+ "\n\n错题率：" + ((errorNum / data.length) * 100).toFixed(2) + "%"
+					+ ((notdoNum == 0) ? "" : ("\n\n未做率：" + ((notdoNum / data.length) * 100).toFixed(2) + "%"))
+					
+					+ "\n\n文字作答题得分率参考：\n\n" + _el.textScore.join("\n")
+					
+					+ "\n\n\n答题用时：" + formatSeconds((Date.now() - _el.starttime) / 1000));
+					console.log(msg);
+					alert(msg);
+				}
+				return;
+			}
+		});
+		/**
+		parser.api.doOrSubmit_bak = (function(_el, _ischoice, _isdo, _startstr, _endstr)
+		{
+			if(!(_el || _el.value))
+			{
+				return alert("糟糕，数据丢失了，请刷新页面再重试");
+			}
+			var data = JSON.parse(_el.value);
+			if(!data.length)
+			{
+				return alert("本章节没有可供作答的" + (_ischoice ? "选择" : "文字") + "题");
+			}
+			if(typeof($) !== "function")
+			{
+				return alert("jQuery 未加载");
+			}
+			if(_ischoice)
+			{
+				if(_isdo)
+				{
+					_el.innerText = _endstr, _el.right = {}, _el.error = {}, _el.notdo = {}, _el.starttime = Date.now();
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2)
+							.removeAttr("disabled checked")
+							.parent()
+							.css({"color": ""})
+							.addClass("option")
+							.removeClass("option-right option-error option-notdo");
+						});
+					});
+				}
+				else
+				{
+					_el.innerText = _startstr;
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2).attr("disabled", "disabled");
+							if(_val2.checked)
+							{
+								if((_val2.checked ? "true" : "false") == _val2.value)
+								{
+									_el.right[_val2.name] = true;
+								}
+								else
+								{
+									_el.error[_val2.name] = false;
+									// 选择错误
+									$(_val2).parent()
+									.css({"color": "#d9534f"})
+									.removeClass("option")
+									.addClass("option-error");
+									// 高亮正确选项
+									$('[name="' + _val2.name + '"][value="true"]').eq(0).parent()
+									.css({"color": "#5cb85c"})
+									.addClass("option-right");
+								}
+							}
+							// 此题还没选出正确答案
+							if($('[name="' + _val2.name + '"]:checked').length == 0)
+							{
+								_el.notdo[_val2.name] = -1;
+								$('[name="' + _val2.name + '"][value="true"]').eq(0).parent().css({"color": "#fca104"}).addClass("option-notdo");
+							}
+						});
+					});
+					var formatSeconds = (function(_second)
+					{
+						var s = parseInt(_second);
+						var m = 0;
+						var h = 0;
+						if(s > 60)
+						{
+							m = parseInt(s / 60);
+							s = parseInt(s % 60);
+							if(m > 60)
+							{
+								h = parseInt(m / 60);
+								m = parseInt(m % 60);
+							}
+						}
+						var result = parseInt(s) + "″";
+						if(m > 0)
+						{
+							result = parseInt(m) + "′" + result;
+						}
+						if(h > 0)
+						{
+							result = parseInt(h) + "h" + result;
+						}
+						return result;
+					});
+					var rightNum = Object.keys(_el.right).length,
+					errorNum = Object.keys(_el.error).length,
+					notdoNum = Object.keys(_el.notdo).length,
+					scoreRate  = ((rightNum / data.length) * 100).toFixed(2);
+					alert("〔单选题〕\n\n\t题数：" + data.length
+					+ "\n\n\t做对：" + ((rightNum == 0) ? "一题没对哦" : rightNum)
+					+ "\n\n\t做错：" + ((errorNum == 0) ? "全都做对啦" : errorNum)
+					+ ((notdoNum == 0) ? "" : ("\n\n\t未做：" + notdoNum))
+					+ "\n\n得分率：" + scoreRate + "%"
+					+ "\n\n失分率：" + (100 - scoreRate).toFixed(2) + "%"
+					+ "\n\n错题率：" + ((errorNum / data.length) * 100).toFixed(2) + "%"
+					+ ((notdoNum == 0) ? "" : ("\n\n未做率：" + ((notdoNum / data.length) * 100).toFixed(2) + "%"))
+					+ "\n\n答题用时：" + formatSeconds((Date.now() - _el.starttime) / 1000));
+				}
+			}
+			else
+			{
+				if(_isdo)
+				{
+					_el.innerText = _endstr, _el.right = {}, _el.error = {}, _el.notdo = {}, _el.textScore = [], _el.starttime = Date.now();
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2)
+							.removeAttr("readonly")
+							.css({"color": "#ffffff"})
+							.val("");
+							if(_val.type == "填空题")
+							{
+								$(_val2)[0].nextElementSibling.style.display = "none";
+							}
+							else
+							{
+								$(_val2)[0].nextElementSibling.style.display = "none";
+								$(_val2)[0].nextElementSibling.nextElementSibling.style.display = "none";
+							}
+						});
+					});
+				}
+				else
+				{
+					_el.innerText = _startstr;
+					$(data).each(function(_index, _val)
+					{
+						$('[name="' + _val.name + '"]').each(function(_index2, _val2)
+						{
+							$(_val2).attr("readonly", "readonly");
+							var titleno = 0;
+							$(_val2).parent()[0].previousElementSibling.innerText.trim().replace(/^([0-9]{1,})\./i, function(_match, _titleno){titleno = _titleno;});
+							if(_val.type == "填空题")
+							{
+								if($(_val2).val() != "")
+								{
+									if($(_val2).val() == $(_val2)[0].nextElementSibling.value)
+									{
+										_el.right[_val2.name] = true;
+									}
+									else
+									{
+										_el.error[_val2.name] = false;
+										$(_val2).css({"color": "#d9534f"});
+										$(_val2)[0].nextElementSibling.style.display = "inline";
+									}
+								}
+								else
+								{
+									_el.notdo[_val2.name] = -1;
+									$(_val2).val($(_val2)[0].nextElementSibling.value);
+									$(_val2).css({"color": "yellow"});
+								}
+							}
+							else
+							{
+								if($(_val2).val() != "")
+								{
+									_el.right[_val2.name] = true;
+									var rate = (parser.api.similar($(_val2).val(), $(_val2)[0].defaultValue, 2) * 100) + "%";
+									_el.textScore.push(titleno + ".〔" + _val.type + "〕" + rate);
+									$(_val2)[0].nextElementSibling.nextElementSibling.style.display = "inline";
+									$(_val2)[0].nextElementSibling.nextElementSibling.value = $(_val2)[0].defaultValue;
+									
+									$(_val2)[0].nextElementSibling.style.display = "inline";
+									$(_val2)[0].nextElementSibling.value = _el.textScore[_el.textScore.length - 1];
+								}
+								else
+								{
+									_el.notdo[_val2.name] = -1;
+									$(_val2)[0].value = $(_val2)[0].defaultValue;
+									$(_val2).css({"color": "yellow"});
+								}
+							}
+						});
+					});
+					var formatSeconds = (function(_second)
+					{
+						var s = parseInt(_second);
+						var m = 0;
+						var h = 0;
+						if(s > 60)
+						{
+							m = parseInt(s / 60);
+							s = parseInt(s % 60);
+							if(m > 60)
+							{
+								h = parseInt(m / 60);
+								m = parseInt(m % 60);
+							}
+						}
+						var result = parseInt(s) + "″";
+						if(m > 0)
+						{
+							result = parseInt(m) + "′" + result;
+						}
+						if(h > 0)
+						{
+							result = parseInt(h) + "h" + result;
+						}
+						return result;
+					});
+					var rightNum = Object.keys(_el.right).length,
+					errorNum = Object.keys(_el.error).length,
+					notdoNum = Object.keys(_el.notdo).length,
+					scoreRate  = ((rightNum / data.length) * 100).toFixed(2);
+					alert("题数：" + data.length
+					+ "\n\n\t〔填空题〕\n\n\t做对：" + ((rightNum == 0) ? "一题没对哦" : rightNum)
+					+ "\n\n\t做错：" + ((errorNum == 0) ? "全都做对啦" : errorNum)
+					+ ((notdoNum == 0) ? "" : ("\n\n\t未做：" + notdoNum))
+					+ "\n\n得分率：" + scoreRate + "%"
+					+ "\n\n失分率：" + (100 - scoreRate).toFixed(2) + "%"
+					+ "\n\n错题率：" + ((errorNum / data.length) * 100).toFixed(2) + "%"
+					+ ((notdoNum == 0) ? "" : ("\n\n未做率：" + ((notdoNum / data.length) * 100).toFixed(2) + "%"))
+					
+					+ "\n\n文字作答题得分率参考：\n\n" + _el.textScore.join("\n")
+					
+					+ "\n\n\n答题用时：" + formatSeconds((Date.now() - _el.starttime) / 1000));
+				}
+				return;
+			}
+		});
+		*/
+		parser.api.parseToHtml = (function(_data, _addCacheTag)
+		{
+			// (document.location.protocol == "file:") && parser.api.dump(_data);
+			(document.location.protocol == "file:") && console.log("››parseToHtml", _data);
+			if(_addCacheTag)
+			{
+				_addCacheTag.cachedata = _data;
+			}
+			var allhtml = "",
+			// 此章节每道题中选项的 name 值，目前只包括单/多选题型
+			choice_quesnames = [], answer_quesnames = [], parse = (function(__data)
+			{
+				choice_quesnames[choice_quesnames.length] = [];
+				answer_quesnames[answer_quesnames.length] = [];
+				var htmls = [], html = "";
+				htmls.push(`<center name="chapter"><p><h3>${__data.name}{{chapter_total_quesnum}}</h3><button type="button" value='{{chapter_choice_data}}' style="color: #555555;" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');">选择题练习</button><span style="padding: 16px 6px 6px 3px; margin-left: 9px; border-left: 1px solid; font-size: 0;"></span><button type="button" value='{{chapter_answer_data}}' style="color: #555555;" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题练习', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');">文字题练习</button></p></center>`);
+				for(var i = 0; i < __data.questions.length; i++)
+				{
+					var child = __data.questions[i], uuid = parser.api.uuid();
+					if((child.type == "单选题") || (child.type == "多选题"))
+					{
+						html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+						for(var k = 0; k < child.options.length; k++)
+						{
+							html += `<span class="option" onclick="javascript: this.querySelector('input').disabled || (this.querySelector('input').checked = (!this.querySelector('input').checked));" style="line-height: 30px; word-spacing: 1.5px; letter-spacing: 1.5px;"><input type="${(child.type == '单选题') ? 'radio' : 'checkbox'}" name="${uuid}" value="${child.options[k].right ? 'true' : 'false'}"${child.options[k].right ? " checked" : ""} disabled />${parser.optionNames[k]}.${child.options[k].title}</span>`;
+							html += (k < (child.options.length - 1)) ? "<br />" : "";
+						}
+						choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+						htmls.push(html);
+					}
+					if(child.type == "填空题")
+					{
+						if(child.answers && child.answers.length)
+						{
+							html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+							for(var k = 0; k < child.answers.length; k++)
+							{
+								html += `<span onclick="javascript: this.querySelector('input').click();" style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;"><small>（${parser.quesnumCNs[k]}）</small><input type="text" name="${uuid}" value="${child.answers[k] ? child.answers[k] : ''}" style="text-align: center; width: 80%; opacity: 0.8; border: 0; background-color: #33B5E5; color: #ffffff;" readonly /><input type="text" value="${child.answers[k] ? child.answers[k] : ''}" style="display: none; text-align: center; width: 80%; opacity: 0.8; border: 0; background-color: #5cb85c; color: #ffffff;" readonly /></span>`;
+								html += (k < (child.answers.length - 1)) ? "<br />" : "";
+							}
+							answer_quesnames[answer_quesnames.length - 1].push({name: uuid, type: child.type});
+							htmls.push(html);
+						}
+					}
+					if(["写作", "名词解析", "简答题", "论述题", "案例分析"].indexOf(child.type) != -1)
+					{
+						if(child.answer && (child.answer.trim() != ""))
+						{
+							html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+							html += `<span onclick="javascript: this.querySelector('textarea').click();" style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;"><textarea name="${uuid}" wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="width: 90%; opacity: 0.8; border: 0; background-color: #33B5E5; color: #ffffff;" readonly>${child.answer ? child.answer.replace(/\<([\/]{0,})([A-Za-z]{1,})([0-9]{0,})([ \/]{0,})\>/ig, "") : ""}</textarea><input type="text" value="" style="display: none; text-align: center; width: 90%; opacity: 0.8; border: 0; background-color: #337ab7; color: #ffffff;" readonly /><textarea wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="display: none; width: 90%; opacity: 0.8; border: 0; background-color: #5cb85c; color: #ffffff;" readonly></textarea></span>`;
+							answer_quesnames[answer_quesnames.length - 1].push({name: uuid, type: child.type});
+							htmls.push(html);
+						}
+					}
+					if(child.type == "共用题干单选题")
+					{
+						html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+						for(var k = 0; k < child.children.length; k++)
+						{
+							html += `<p><span><small>（${parser.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></p>`;
+							for(var j = 0; j < child.children[k].options.length; j++)
+							{
+								html += `<span class="option" onclick="javascript: this.querySelector('input').disabled || (this.querySelector('input').checked = (!this.querySelector('input').checked));" style="line-height: 30px; word-spacing: 1.5px; letter-spacing: 1.5px;"><input type="radio" name="${uuid}" value="${child.children[k].options[j].right ? 'true' : 'false'}"${child.children[k].options[j].right ? " checked" : ""} disabled />${parser.optionNames[j]}.${child.children[k].options[j].title}</span>`;
+								html += (j < (child.children[k].options.length - 1)) ? "<br />" : "";
+							}
+							html += (k < child.children.length - 1) ? "<br />" : "";
+							choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+							uuid = parser.api.uuid();
+						}
+						htmls.push(html);
+					}
+					if(child.type == "共用答案单选题")
+					{
+						var titles = [], optstmp = [];
+						for(var k = 0; k < child.options.length; k++)
+						{
+							titles.push(child.options[k].name + ". " + child.options[k].title);
+							optstmp.push(`<span class="option" onclick="javascript: this.querySelector('input').disabled || (this.querySelector('input').checked = (!this.querySelector('input').checked));" style="line-height: 30px; word-spacing: 1.5px; letter-spacing: 1.5px;"><input type="radio" name="{{uuid}}" value="{{value}}"{{checked}} disabled />${parser.optionNames[k]}${(k < (child.options.length - 1)) ? "\t" : ""}</span>`);
+						}
+						html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big><small>（${parser.quesnumCNs[0]}）~（${parser.quesnumCNs[child.children.length - 1]}）共用答案</small><br />${titles.join("<br />")}</big></span></p>`;
+						for(var k = 0; k < child.children.length; k++)
+						{
+							html += `<p><span><small>（${parser.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></p><span style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;">`;
+							var newopts = optstmp.slice(0);
+							for(var j = 0; j < newopts.length; j++)
+							{
+								newopts[j] = newopts[j].replace(/\{\{uuid\}\}/i, uuid).replace(/\{\{value\}\}/i, (parser.optionNames[j] == child.children[k].answer) ? "true" : "false").replace(/\{\{checked\}\}/i, (parser.optionNames[j] == child.children[k].answer) ? " checked" : "");
+							}
+							html += newopts.join("") + "</span>" + ((k < (child.children.length - 1)) ? "<br />" : "");
+							choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+							uuid = parser.api.uuid();
+						}
+						htmls.push(html);
+					}
+				}
+				return htmls.join("<br /><br />");
+			});
+			if(Array.isArray(_data.data))
+			{
+				for(var i = 0; i < _data.data.length; i++)
+				{
+					allhtml += parse(_data.data[i]);
+					allhtml += (i < _data.data.length - 1) ? "<br />" : "";
+				}
+			}
+			if(Array.isArray(_data.questions))
+			{
+				allhtml += parse(_data);
+			}
+			document.title = _data.name;
+			var quesnum = 0, choice_chaptersnum = 0, answer_chaptersnum = 0, chapter_total_quesnum = 0;
+			allhtml = allhtml.replace(/\{\{quesnum\}\}/ig, function(_match, _offset, _string)
+			{
+				return (quesnum = quesnum + 1);
+			}).replace(/\{\{chapter_choice_data\}\}/ig, function(_match, _offset, _string)
+			{
+				var data = JSON.stringify(choice_quesnames[choice_chaptersnum]);
+				choice_chaptersnum = choice_chaptersnum + 1;
+				return data;
+			}).replace(/\{\{chapter_answer_data\}\}/ig, function(_match, _offset, _string)
+			{
+				var data = JSON.stringify(answer_quesnames[answer_chaptersnum]);
+				answer_chaptersnum = answer_chaptersnum + 1;
+				return data;
+			}).replace(/\{\{chapter_total_quesnum\}\}/ig, function(_match, _offset, _string)
+			{
+				var c = choice_quesnames[chapter_total_quesnum] ? choice_quesnames[chapter_total_quesnum].length : 0;
+				var a = answer_quesnames[chapter_total_quesnum] ? answer_quesnames[chapter_total_quesnum].length : 0;
+				chapter_total_quesnum = chapter_total_quesnum + 1;
+				return "‖共" + (c + a) + "题";
+			});
+			var totalquesnum = 0;
+			Array.from(choice_quesnames).forEach(function(_arr, _index, _arrs)
+			{
+				totalquesnum = totalquesnum + _arr.length;
+			});
+			Array.from(answer_quesnames).forEach(function(_arr, _index, _arrs)
+			{
+				totalquesnum = totalquesnum + _arr.length;
+			});
+			document.title = "总" + totalquesnum + "题‖" + document.title;
+			return allhtml;
+		});
+		parser.api.parseToHtmlExport = (function(_data, _addCacheTag)
+		{
+			(document.location.protocol == "file:") && console.log("››parseToHtml", _data);
+			if(_addCacheTag)
+			{
+				_addCacheTag.cachedata = _data;
+			}
+			var allhtml = "",
+			// 此章节每道题中选项的 name 值，目前只包括单/多选题型
+			choice_quesnames = [], answer_quesnames = [], parse = (function(__data)
+			{
+				choice_quesnames[choice_quesnames.length] = [];
+				answer_quesnames[answer_quesnames.length] = [];
+				var htmls = [], html = "";
+				htmls.push(`<center name="chapter"><p><h3>${__data.name}{{chapter_total_quesnum}}</h3><button type="button" value='{{chapter_choice_data}}' style="color: #555555;" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');">选择题练习</button><span style="padding: 16px 6px 6px 3px; margin-left: 9px; border-left: 1px solid; font-size: 0;"></span><button type="button" value='{{chapter_answer_data}}' style="color: #555555;" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题练习', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');">文字题练习</button></p></center>`);
+				for(var i = 0; i < __data.questions.length; i++)
+				{
+					var child = __data.questions[i], uuid = parser.api.uuid();
+					if((child.type == "单选题") || (child.type == "多选题"))
+					{
+						html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+						for(var k = 0; k < child.options.length; k++)
+						{
+							html += `<span class="option" onclick="javascript: this.querySelector('input').disabled || (this.querySelector('input').checked = (!this.querySelector('input').checked));" style="line-height: 30px; word-spacing: 1.5px; letter-spacing: 1.5px;"><input type="${(child.type == '单选题') ? 'radio' : 'checkbox'}" name="${uuid}" value="${child.options[k].right ? 'true' : 'false'}"${child.options[k].right ? " checked" : ""} disabled />${parser.optionNames[k]}.${child.options[k].title}</span>`;
+							html += (k < (child.options.length - 1)) ? "<br />" : `<br />参考答案：${child.answer}`;
+						}
+						choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+						htmls.push(html);
+					}
+					if(child.type == "填空题")
+					{
+						if(child.answers && child.answers.length)
+						{
+							html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+							for(var k = 0; k < child.answers.length; k++)
+							{
+								html += `<span onclick="javascript: this.querySelector('input').click();" style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;"><small>（${parser.quesnumCNs[k]}）</small><input type="text" name="${uuid}" value="${child.answers[k] ? child.answers[k] : ''}" style="text-align: center; width: 80%; opacity: 0.8; border: 0; background-color: #33B5E5; color: #ffffff;" readonly /><input type="text" value="${child.answers[k] ? child.answers[k] : ''}" style="display: none; text-align: center; width: 80%; opacity: 0.8; border: 0; background-color: #5cb85c; color: #ffffff;" readonly /></span>`;
+								html += (k < (child.answers.length - 1)) ? "<br />" : "";
+							}
+							answer_quesnames[answer_quesnames.length - 1].push({name: uuid, type: child.type});
+							htmls.push(html);
+						}
+					}
+					if(["写作", "名词解析", "简答题", "论述题", "案例分析"].indexOf(child.type) != -1)
+					{
+						if(child.answer && (child.answer.trim() != ""))
+						{
+							html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+							html += `<span onclick="javascript: this.querySelector('textarea').click();" style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;"><textarea name="${uuid}" wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="width: 90%; opacity: 0.8; border: 0; background-color: #33B5E5; color: #ffffff;" readonly>${child.answer ? child.answer.replace(/\<([\/]{0,})([A-Za-z]{1,})([0-9]{0,})([ \/]{0,})\>/ig, "") : ""}</textarea><input type="text" value="" style="display: none; text-align: center; width: 90%; opacity: 0.8; border: 0; background-color: #337ab7; color: #ffffff;" readonly /><textarea wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="display: none; width: 90%; opacity: 0.8; border: 0; background-color: #5cb85c; color: #ffffff;" readonly></textarea></span>`;
+							answer_quesnames[answer_quesnames.length - 1].push({name: uuid, type: child.type});
+							htmls.push(html);
+						}
+					}
+					if(child.type == "共用题干单选题")
+					{
+						html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
+						for(var k = 0; k < child.children.length; k++)
+						{
+							html += `<p><span><small>（${parser.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></p>`;
+							for(var j = 0; j < child.children[k].options.length; j++)
+							{
+								html += `<span class="option" onclick="javascript: this.querySelector('input').disabled || (this.querySelector('input').checked = (!this.querySelector('input').checked));" style="line-height: 30px; word-spacing: 1.5px; letter-spacing: 1.5px;"><input type="radio" name="${uuid}" value="${child.children[k].options[j].right ? 'true' : 'false'}"${child.children[k].options[j].right ? " checked" : ""} disabled />${parser.optionNames[j]}.${child.children[k].options[j].title}</span>`;
+								html += (j < (child.children[k].options.length - 1)) ? "<br />" : "";
+							}
+							html += (k < child.children.length - 1) ? "<br />" : "";
+							choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+							uuid = parser.api.uuid();
+						}
+						htmls.push(html);
+					}
+					if(child.type == "共用答案单选题")
+					{
+						var titles = [], optstmp = [];
+						for(var k = 0; k < child.options.length; k++)
+						{
+							titles.push(child.options[k].name + ". " + child.options[k].title);
+							optstmp.push(`<span class="option" onclick="javascript: this.querySelector('input').disabled || (this.querySelector('input').checked = (!this.querySelector('input').checked));" style="line-height: 30px; word-spacing: 1.5px; letter-spacing: 1.5px;"><input type="radio" name="{{uuid}}" value="{{value}}"{{checked}} disabled />${parser.optionNames[k]}${(k < (child.options.length - 1)) ? "\t" : ""}</span>`);
+						}
+						html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big><small>（${parser.quesnumCNs[0]}）~（${parser.quesnumCNs[child.children.length - 1]}）共用答案</small><br />${titles.join("<br />")}</big></span></p>`;
+						for(var k = 0; k < child.children.length; k++)
+						{
+							html += `<p><span><small>（${parser.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></p><span style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;">`;
+							var newopts = optstmp.slice(0);
+							for(var j = 0; j < newopts.length; j++)
+							{
+								newopts[j] = newopts[j].replace(/\{\{uuid\}\}/i, uuid).replace(/\{\{value\}\}/i, (parser.optionNames[j] == child.children[k].answer) ? "true" : "false").replace(/\{\{checked\}\}/i, (parser.optionNames[j] == child.children[k].answer) ? " checked" : "");
+							}
+							html += newopts.join("") + "</span>" + ((k < (child.children.length - 1)) ? "<br />" : "");
+							choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
+							uuid = parser.api.uuid();
+						}
+						htmls.push(html);
+					}
+				}
+				return htmls.join("<br /><br />");
+			});
+			if(Array.isArray(_data.data))
+			{
+				for(var i = 0; i < _data.data.length; i++)
+				{
+					allhtml += parse(_data.data[i]);
+					allhtml += (i < _data.data.length - 1) ? "<br />" : "";
+				}
+			}
+			if(Array.isArray(_data.questions))
+			{
+				allhtml += parse(_data);
+			}
+			document.title = _data.name;
+			var quesnum = 0, choice_chaptersnum = 0, answer_chaptersnum = 0, chapter_total_quesnum = 0;
+			allhtml = allhtml.replace(/\{\{quesnum\}\}/ig, function(_match, _offset, _string)
+			{
+				return (quesnum = quesnum + 1);
+			}).replace(/\{\{chapter_choice_data\}\}/ig, function(_match, _offset, _string)
+			{
+				var data = JSON.stringify(choice_quesnames[choice_chaptersnum]);
+				choice_chaptersnum = choice_chaptersnum + 1;
+				return data;
+			}).replace(/\{\{chapter_answer_data\}\}/ig, function(_match, _offset, _string)
+			{
+				var data = JSON.stringify(answer_quesnames[answer_chaptersnum]);
+				answer_chaptersnum = answer_chaptersnum + 1;
+				return data;
+			}).replace(/\{\{chapter_total_quesnum\}\}/ig, function(_match, _offset, _string)
+			{
+				var c = choice_quesnames[chapter_total_quesnum] ? choice_quesnames[chapter_total_quesnum].length : 0;
+				var a = answer_quesnames[chapter_total_quesnum] ? answer_quesnames[chapter_total_quesnum].length : 0;
+				chapter_total_quesnum = chapter_total_quesnum + 1;
+				return "‖共" + (c + a) + "题";
+			});
+			var totalquesnum = 0;
+			Array.from(choice_quesnames).forEach(function(_arr, _index, _arrs)
+			{
+				totalquesnum = totalquesnum + _arr.length;
+			});
+			Array.from(answer_quesnames).forEach(function(_arr, _index, _arrs)
+			{
+				totalquesnum = totalquesnum + _arr.length;
+			});
+			document.title = "总" + totalquesnum + "题‖" + document.title;
+			return allhtml;
+		});
+			// 按题型整理数据
+			parser.api.adjust = (function(_alldata)
+			{
+				// 根据指定个数分割数组
+				function chunkArr(arr, size)
+				{
+					// 判断如果不是数组(就没有length)，或者size没有传值，size小于1，就返回空数组
+					if(!arr.length || !size || (size < 1))
+					{
+						return [];
+					}
+					let [start, end, result] = [null, null, []];
+					for(let i = 0; i < Math.ceil(arr.length / size); i++)
+					{
+						start = i * size;
+						end = start + size;
+						result.push(arr.slice(start, end));
+					}
+					return result;
+				}
+				var newdata = {
+					name: _alldata.name,
+					data: []
+				}, types = {};
+				Array.from(_alldata.data).forEach(function(_chapter, _index, _chapters)
+				{
+					Array.from(_chapter.questions).forEach(function(_question, __index, _questions)
+					{
+						if(!types[_question.type])
+						{
+							types[_question.type] = [];
+						}
+						types[_question.type].push(_question);
+					});
+				});
+				Array.from(Object.keys(types)).forEach(function(_type, _index, _types)
+				{
+					Array.from(chunkArr(types[_type], 100)).forEach(function(_split, __index, _splits)
+					{
+						newdata.data.push({name: _type + ((_splits.length > 1) ? ("（" + parser.quesnumCNs[__index] + "）") : ""), questions: _split});
+					});
+				});
+				return newdata;
+			});
+		parser.api.get = (function(_el, _data)
+		{
+			$.LoadingOverlay("show");
+			localStorage.setItem("queslib-selected-index", _el.selectedIndex);
+			// 优先使用对象缓存数据，以免频繁从网络拉取数据
+			if(_el.item(_el.selectedIndex).cachedata)
+			{
+				document.querySelector("#results").innerHTML = parser.api.parseToHtml(parser.api.adjust(_el.item(_el.selectedIndex).cachedata), _el.item(_el.selectedIndex));
+			}
+			else
+			{
+				if(typeof(parser.queslib) !== "object")
+				{
+					return alert("题库数据还未初始化");
+				}
+				if(typeof(parser.queslib.file) !== "function")
+				{
+					return alert("题库数据加载器错误");
+				}
+				if(Array.isArray(_data))
+				{
+					var obj = {};
+					obj.name = _el.item(_el.selectedIndex).innerText;
+					obj.data = [];
+					(_data.length != 0) && Promise.allSettled(_data.map(function(_val, _index, _arr)
+					{
+						return new Promise(function(_resolve, _reject)
+						{
+							parser.queslib.file(_val.file) ? parser.queslib.file(_val.file).async("string").then(function(_str)
+							{
+								var filename = _val.file.substring(_val.file.lastIndexOf("/") + 1);
+								filename = filename.substring(0, filename.lastIndexOf("."));
+								_resolve({index: _index, type: _val.type, name: filename, data: _str});
+							}, _reject) : _reject([_index, "文件不存在", _val]);
+						});
+					})).then(function(_results)
+					{
+						Array.from(_results).forEach(function(_val, _index, _vals)
+						{
+							if(_val.status === "fulfilled")
+							{
+								obj.data.push(((_val.value.type === "pmph-xml") ? parser.xml.pmph : ((_val.value.type === "plain-txt") ? parser.text.simple : parser.text.simple))(_val.value.name, _val.value.data));
+							}
+							else
+							{
+								console.warn("allSettled", _index, _val);
+							}
+						});
+						document.querySelector("#results").innerHTML = parser.api.parseToHtml(parser.api.adjust(obj), _el.item(_el.selectedIndex));
+					}, console.warn);
+				}
+			}
+			/**
+			if(typeof($) !== "function")
+			{
+				return alert("jQuery 未加载");
+			}
+			else if(_data.files.length == 1)
+			{
+				$.get(_data.baseurl + encodeURIComponent(_data.files[0]) + "?_=" + Date.now()).done(function(__data, _status, _xhr)
+				{
+					(document.location.protocol == "file:") && console.log([arguments]);
+					var d = (typeof(__data) == "object") ? __data : (_data.files[0].endsWith(".txt") ? parser.text.simple(_el.item(_el.selectedIndex).innerText, __data) : (_data.files[0].endsWith(".xml") ? parser.xml.pmph(_el.item(_el.selectedIndex).innerText, __data) : JSON.parse(__data)));
+					document.querySelector("#results").innerHTML = parser.api.parseToHtml(d, _el.item(_el.selectedIndex));
+				}).fail(function(_xhr, _status, e)
+				{
+					(document.location.protocol == "file:") && console.warn("get", [arguments]);
+					if(e instanceof SyntaxError)
+					{
+						var d = JSON.parse(JSON.minify(_xhr.responseText, null, "\t"));
+						document.querySelector("#results").innerHTML = parser.api.parseToHtml(d, _el.item(_el.selectedIndex));
+					}
+					else if(e instanceof DOMException)
+					{
+						console.warn("get", decodeURIComponent(_xhr.statusText));
+					}
+					else
+					{
+						console.warn("get", "typeof(e) == "string", _xhr.status, _xhr.statusText);
+					}
+				});
+			}
+			else
+			{
+				$.ajaxSettings.async = false;
+				var obj = {};
+				obj.name = _el.item(_el.selectedIndex).innerText;
+				obj.data = [];
+				for(var i = 0; i < _data.files.length; i++)
+				{
+					// 避免触发CDN QPS≤10 限制返回 514
+					((i != 0) && ((i % 10) == 0)) && parser.api.sleep(1000);
+					$.get(_data.baseurl + encodeURIComponent(_data.files[i]) + "?_=" + Date.now()).done(function(__data, _status, _xhr)
+					{
+						(document.location.protocol == "file:") && console.log([arguments]);
+						if(_data.files[i].endsWith(".txt"))
+						{
+							var filename = this.url.substring(this.url.lastIndexOf("/") + 1),
+							d = parser.text.simple(filename.substring(0, filename.lastIndexOf(".")), __data);
+							obj.data.push(d);
+						}
+						else if(_data.files[i].endsWith(".xml"))
+						{
+							var filename = this.url.substring(this.url.lastIndexOf("/") + 1),
+							d = parser.xml.pmph(filename.substring(0, filename.lastIndexOf(".")), __data);
+							obj.data.push(d);
+						}
+						else
+						{
+							var d = (typeof(__data) == "object") ? __data : JSON.parse(__data);
+							obj.data.push(d);
+						}
+					}).fail(function(_xhr, _status, e)
+					{
+						(document.location.protocol == "file:") && console.warn("get", [arguments]);
+						if(e instanceof SyntaxError)
+						{
+							var d = JSON.parse(JSON.minify(_xhr.responseText, null, "\t"));
+							obj.data.push(d);
+						}
+						else if(e instanceof DOMException)
+						{
+							console.warn("get", decodeURIComponent(_xhr.statusText));
+						}
+						else
+						{
+							console.warn("get", typeof(e) == "string", _xhr.status, _xhr.statusText);
+						}
+					});
+				}
+				document.querySelector("#results").innerHTML = parser.api.parseToHtml(obj, _el.item(_el.selectedIndex));
+				$.ajaxSettings.async = true;
+			}
+			*/
+			$.LoadingOverlay("hide");
+		});
+		</script>
+	</body>
+</html>
