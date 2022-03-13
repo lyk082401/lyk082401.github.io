@@ -42,5 +42,5 @@
 * * [新版](http://debugxweb.qq.com/?check_xwalk_update) `http://debugxweb.qq.com/?check_xwalk_update`
 
 ### [MarkDown 转 HTML](https://markdown-it.github.io/)
-* * [MarkDown](https://cdnjs.cat.net/ajax/libs/markdown-it/12.3.2/markdown-it.min.js)
-* * [语法高亮](https://cdnjs.cat.net/ajax/libs/highlight.js/11.5.0/highlight.min.js)
+* * [MarkDown](https://cdnjs.cat.net/ajax/libs/markdown-it/12.3.2/markdown-it.min.js?https://cdn.staticfile.org/markdown-it/12.3.2/markdown-it.min.js)
+* * [语法高亮](https://cdnjs.cat.net/ajax/libs/highlight.js/11.5.0/highlight.min.js?https://cdn.staticfile.org/highlight.js/11.5.0/highlight.min.js)
