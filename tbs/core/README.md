@@ -5,7 +5,7 @@
 ### 第一步
 * [下载](https://web.omeo.top/tbs/core/tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk) `tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk`
 * 然后复制 `tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk` 到 `/storage/emulated/0/Android/data/com.tencent.mm/files/tbs/` 文件夹里
-* * 或者也可以使用 [在线安装](http://debugtbs.qq.com/?type=1&url=https://web.omeo.top/tbs/core/tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk) 方式
+* * （提示 `地址不合法` 暂不可用）或者也可以使用 [在线安装](http://debugtbs.qq.com/?type=1&url=https://web.omeo.top/tbs/core/tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk) 方式
 * * * 微信里打开 `http://debugtbs.qq.com/?type=1&url=https://web.omeo.top/tbs/core/tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk` 按提示确认安装即可
 * * 也可以在任意可用 `X5 内核` 的手机微信
 * * 打开 [TBS 调试页面](http://debugtbs.qq.com/) `http://debugtbs.qq.com`
