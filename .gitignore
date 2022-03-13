@@ -1,0 +1,27 @@
+### 包含文件
+
+!.gitignore
+
+!.gitattributes
+
+!.gitkeep
+
+!.nojekyll
+
+!CNAME
+
+!LICENSE
+
+!*.md
+
+!*.yml
+
+### 排除文件
+
+*.
+
+.git/
+
+.cmd/
+
+.env
