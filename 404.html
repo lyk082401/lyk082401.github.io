@@ -9,9 +9,9 @@
 		<link type="text/css" rel="stylesheet" charset="UTF-8" href="https://cdnjs.cat.net/ajax/libs/weui/1.1.3/style/weui.min.css?https://cdn.staticfile.org/weui/1.1.3/style/weui.min.css" />
 		<script type="text/javascript">
 		let domain = "web.omeo.top";
-		let current = location.href;
+		let current = document.location.href;
 		let target = current.substring(current.indexOf("/", current.indexOf(":") + 3));
-		location.replace(location.protocol + "//" + domain + target);
+		document.location.replace(location.protocol + "//" + domain + target);
 		</script>
 	</head>
 	<body>
