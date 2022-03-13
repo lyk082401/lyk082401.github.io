@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="width: 100%; height: 100%; margin: 0; padding: 0; border: 0; overflow: auto;">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="referrer" content="always" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>OMEO - Web</title>
+	</head>
+	<body>
+
+<h2>关于新版微信无法使用 <code>X5 内核</code> 的解决方法</h2>
+<ul>
+<li>注意</li>
+<li>
+<ul>
+<li>目前只支持 <code>64位</code> 微信版本</li>
+</ul>
+</li>
+<li>推荐使用 <a href="http://d.binmt.cc">MT管理器</a> 操作 <code>http://d.binmt.cc</code> 或者 <a href="https://web.omeo.top/tbs/core/MT%E7%AE%A1%E7%90%86%E5%99%A8-bin.mt.plus-2.10.3-22022063.apk">直链下载</a></li>
+<li>推荐使用 <a href="https://web.omeo.top/tbs/core/ShareMe-com.xiaomi.midrop-3.17.52-31752.apk">小米快传</a> 分享 <code>https://web.omeo.top/tbs/core/ShareMe-com.xiaomi.midrop-3.17.52-31752.apk</code></li>
+</ul>
+<h3>第一步</h3>
+<ul>
+<li><a href="https://web.omeo.top/tbs/core/tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk">下载</a> <code>tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk</code></li>
+<li>然后复制 <code>tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk</code> 到 <code>/storage/emulated/0/Android/data/com.tencent.mm/files/tbs/</code> 文件夹里</li>
+<li>
+<ul>
+<li><s>（提示 <code>地址不合法</code> 暂不可用）或者也可以使用 <a href="http://debugtbs.qq.com/?type=1&amp;url=https://web.omeo.top/tbs/core/tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk">在线安装</a> 方式</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li>微信里打开 <code>http://debugtbs.qq.com/?type=1&amp;url=https://web.omeo.top/tbs/core/tbs_com.tencent.tbs.core-5.0.0-45913-arm64-v8a.apk</code> 按提示确认安装即可</s></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>也可以在任意可用 <code>X5 内核</code> 的手机微信</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>打开 <a href="http://debugtbs.qq.com/">TBS 调试页面</a> <code>http://debugtbs.qq.com</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>然后点击 <code>安装在线内核</code> 等待安装完成即可</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>之后再次打开 <a href="http://debugtbs.qq.com/">TBS 调试页面</a> <code>http://debugtbs.qq.com</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>然后点击 <code>拷贝内核</code> 提示成功之后到文件管理器里找到 <code>/storage/emulated/0/tencent/tbs/backup/com.tencent.mm/corefiles_时间戳/core_private/x5.debug.tbs</code> 或 <code>/storage/emulated/0/tencent/tbs/backup/com.tencent.mm/x5.tbs.org</code> 发送给无法使用 <code>X5 内核</code> 的手机</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>之后复制 <code>x5.debug.tbs</code> 或 <code>x5.tbs.org</code> 到 <code>/storage/emulated/0/Android/data/com.tencent.mm/files/tbs/</code> 文件夹里，并重命名为 <code>tbs.apk</code> 即可</li>
+</ul>
+</li>
+</ul>
+<h3>第二步</h3>
+<ul>
+<li><code>强制启用 x5</code></li>
+<li>
+<ul>
+<li><a href="http://debugmm.qq.com/?forcex5=true">旧版</a> <code>http://debugmm.qq.com/?forcex5=true</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="http://debugxweb.qq.com/?forcex5=true">新版</a> <code>http://debugxweb.qq.com/?forcex5=true</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li>提示 <code>foce use x5 switch is on</code> 即可</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>第三步</h3>
+<ul>
+<li>安装 <code>本地内核</code></li>
+<li>
+<ul>
+<li>打开 <a href="http://debugtbs.qq.com/">TBS 调试页面</a> <code>http://debugtbs.qq.com</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>然后点击 <code>安装本地内核</code> 等待安装完成然后重启即可</li>
+</ul>
+</li>
+</ul>
+<h3>最后一步</h3>
+<ul>
+<li>启用 <code>vConsole</code></li>
+<li>
+<ul>
+<li>打开 <a href="http://debugx5.qq.com/">X5 调试页面</a> <code>http://debugx5.qq.com</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>然后点击上方 <code>信息</code> 选项卡，下拉找到 <code>TBS settings</code> 标签，勾选 <code>打开vConsole调试功能</code> 即可</li>
+</ul>
+</li>
+</ul>
+<h5>可选操作</h5>
+<ul>
+<li>打开 <code>Inspector 调试</code></li>
+<li>
+<ul>
+<li><a href="http://debugx5.qq.com/?inspector=true">旧版</a> <code>http://debugx5.qq.com/?inspector=true</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="http://debugxweb.qq.com/?inspector=true">新版</a> <code>http://debugxweb.qq.com/?inspector=true</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="chrome://inspect/#devices">电脑 Chrome 调试</a> <code>chrome://inspect/#devices</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>检查 <code>浏览器和插件更新</code></li>
+<li>
+<ul>
+<li><a href="http://debugmm.qq.com/?check_xwalk_update">旧版</a> <code>http://debugmm.qq.com/?check_xwalk_update</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="http://debugxweb.qq.com/?check_xwalk_update">新版</a> <code>http://debugxweb.qq.com/?check_xwalk_update</code></li>
+</ul>
+</li>
+</ul>
+<h3><a href="https://markdown-it.github.io/">MarkDown 转 HTML</a></h3>
+<ul>
+<li>
+<ul>
+<li><a href="https://cdnjs.cat.net/ajax/libs/markdown-it/12.3.2/markdown-it.min.js">MarkDown</a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li><a href="https://cdnjs.cat.net/ajax/libs/highlight.js/11.5.0/highlight.min.js">语法高亮</a></li>
+</ul>
+</li>
+</ul>
+
+	</body>
+</html>

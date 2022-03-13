@@ -40,3 +40,7 @@
 * 检查 `浏览器和插件更新`
 * * [旧版](http://debugmm.qq.com/?check_xwalk_update) `http://debugmm.qq.com/?check_xwalk_update`
 * * [新版](http://debugxweb.qq.com/?check_xwalk_update) `http://debugxweb.qq.com/?check_xwalk_update`
+
+### [MarkDown 转 HTML](https://markdown-it.github.io/)
+* * [MarkDown](https://cdnjs.cat.net/ajax/libs/markdown-it/12.3.2/markdown-it.min.js)
+* * [语法高亮](https://cdnjs.cat.net/ajax/libs/highlight.js/11.5.0/highlight.min.js)

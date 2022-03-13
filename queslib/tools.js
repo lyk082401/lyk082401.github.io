@@ -1,5 +1,7 @@
 (function(f, g)
 {
+	// https://cdnjs.cat.net/ajax/libs/markdown-it/12.3.2/markdown-it.min.js
+	// https://cdnjs.cat.net/ajax/libs/highlight.js/11.5.0/highlight.min.js
 	g.tools = f.bind(f)(g);
 	console.info(Dexie)
 })(function(self)
