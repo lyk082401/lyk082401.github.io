@@ -2538,7 +2538,7 @@ parser.api.test = (function($data)
 	let obj = {};
 	obj.name = "解析测试";
 	obj.data = [];
-	if((Object.prototype.toString.call($data) === "[object Object]") || ((typeof($data) === "string") && (/^\{/).test($data)))
+	if((Object.prototype.toString.call($data) === "[object Object]") || ((typeof($data) === "string") && (/(^\{)|(^\[)/).test($data)))
 	{
 		obj.data.push(parser.json.icveappzjy2("JSON数据", $data));
 	}
