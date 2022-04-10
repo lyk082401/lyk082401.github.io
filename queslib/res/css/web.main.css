@@ -1,0 +1,289 @@
+/** <style type="text/css"> */
+/** --- 复选框 */
+[name="queslib"] [type=checkbox]
+{
+	margin-right: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	width: 15px;
+	height: 12px;
+	position: relative;
+}
+[name="queslib"] input[type=checkbox]::after
+{
+	position: absolute;
+	width: 10px;
+	height: 15px;
+	top: 0;
+	content: " ";
+	background-color: #555555;
+	color: #fff;
+	display: inline-block;
+	visibility: visible;
+	padding: 0px 3px;
+	border-radius: 3px;
+}
+[name="queslib"] .option input[type=checkbox]:checked::after
+{
+	content: "✔︎";
+	font-size: 12px;
+}
+/** 复选框 --- */
+/** --- 单选框 */
+[name="queslib"] input[type=radio]
+{
+	margin-right: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	width: 15px;
+	height: 12px;
+	position: relative;
+}
+[name="queslib"] input[type=radio]::after
+{
+	position: absolute;
+	width: 10px;
+	height: 15px;
+	top: 0;
+	content: " ";
+	background-color: #555555;
+	color: #fff;
+	display: inline-block;
+	visibility: visible;
+	padding: 0px 3px;
+	border-radius: 50%;
+}
+[name="queslib"] .option input[type=radio]:checked::before
+{
+	content: "✔︎";
+	display: block;
+	position: relative;
+	top: -2px;
+	left: 3px;
+	width: 6px;
+	height: 6px;
+	color: #fff;
+	font-weight: 400;
+	z-index: 1;
+}
+/** 单选框 --- */
+/** 改变选中之后的背景颜色
+* 红d9534f
+* 蓝337ab7
+* 浅蓝5bc0de
+* 黄f0ad4e
+* 橙皮黄fca104
+* 绿5cb85c
+* 深红ff0000
+* 灰白eeeeee
+* 深灰白cccccc
+* 深深灰白555555 */
+[name="queslib"] input[type=checkbox]:checked::after, [name="queslib"] input[type=radio]:checked::after
+{
+	background-color: #5cb85c;
+}
+[name="queslib"] .option-right input[type=radio]::after, [name="queslib"] .option-right input[type=checkbox]::after
+{
+	content: "✔︎";
+	background-color: #5cb85c;
+}
+[name="queslib"] .option-error input[type=radio]::after, [name="queslib"] .option-error input[type=checkbox]::after
+{
+	content: "✘";
+	background-color: #d9534f;
+}
+[name="queslib"] .option-notdo input[type=radio]::after, [name="queslib"] .option-notdo input[type=checkbox]::after
+{
+	content: "﹅";
+	background-color: #fca104;
+}
+/** </style>
+<style type="text/css"> */
+/** 滚动条 */
+[name="queslib"]::-webkit-scrollbar
+{
+	width: 3px;
+}
+/** 轨道 */
+[name="queslib"]::-webkit-scrollbar-track
+{
+	background-color: #5cb85c;
+	border-radius: 5px;
+}
+/** 滑块 */
+[name="queslib"]::-webkit-scrollbar-thumb
+{
+	background-color: #5bc0de;
+	background-image: linear-gradient(180deg, #D0368A 0%, #708AD4 99%);
+	box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+	border-radius: 5px;
+	height: 30px;
+}
+/** 长按含有 title 属性的元素时弹出 title 里的内容 */
+[title]:after
+{
+	content: attr(title);
+	position: absolute;
+	left: 50%;
+	/** 正数显示在上方，负数显示在下方 */
+	bottom: -100%;
+	transform: translate(-50%, 0);
+	color: #fff;
+	text-shadow: 0 -1px 0px black;
+	box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+	background: #383838;
+	border-radius: 2px;
+	padding: 3px 10px;
+	font-size: 12px;
+	white-space: nowrap;
+	transition: all .3s;
+	opacity: 0;
+	visibility: hidden;
+}
+[title]:hover:after
+{
+	transition-delay: 100ms;
+	visibility: visible;
+	transform: translate(-50%, -6px);
+	opacity: 1;
+}
+/** </style>
+<style type="text/css"> */
+[name="queslib"]
+{
+	position: absolute;
+	/**
+	width: 88vw;
+	height: 95vh;*/
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	overflow: auto;
+	/** 禁用浏览器文字大小调整功能 */
+	-webkit-text-size-adjust: none;
+	/** 平滑文字 */
+	-webkit-text-stroke: 1px transparent;
+}
+[name="queslib"] textarea
+{
+	/** 大小可调整 */
+	resize: both;
+}
+[name="queslib"] section u, [name="queslib"] section b
+{
+	color: #ffffff;
+	/** 红色镂空字体 */
+	-webkit-text-stroke: 0.8px rgba(255, 0, 0, 1);
+}
+[name="queslib"] aside[name="todo"]
+{
+	display: block;
+	position: -webkit-sticky;
+	position: sticky;
+	top: -5px;
+}
+[name="queslib"] aside[name="todo"] table
+{
+	border: 0 solid black;
+	border-spacing: 10px 0;
+}
+[name="queslib"] aside[name="todo"] b, [name="queslib"] summary, [name="queslib"] select
+{
+	/** 禁止页面文字长按选择 */
+	-webkit-user-select: none;
+}
+[name="queslib"] aside[name="todo"] button
+{
+	background-color: transparent;
+	color: #337ab7;
+	/** 禁止页面文字长按选择 */
+	-webkit-user-select: none;
+}
+[name="queslib"] dl, [name="queslib"] ul
+{
+	padding: 0;
+	margin: 0;
+}
+[name="queslib"] dl
+{
+	margin-top: 10px;
+	margin-bottom: 25px;
+}
+[name="queslib"] ul
+{
+	padding-top: 10px;
+	padding-bottom: 25px;
+}
+[name="queslib"] dl dd, [name="queslib"] ul li
+{
+	margin-left: 25px;
+}
+[name="queslib"] dl dd
+{
+	margin-top: 10px;
+}
+[name="queslib"] ul li
+{
+	float: left;
+	list-style: none;
+	padding-top: 5px;
+	padding-bottom: 10px;
+}
+[name="queslib"] legend, [name="queslib"] summary, [name="queslib"] dt, [name="queslib"] dd
+{
+	word-break: break-all;
+	text-align: left;
+}
+[name="queslib"] legend
+{
+	text-align: center;
+}
+[name="queslib"] summary
+{
+	text-align: left;
+}
+[name="queslib"] article, [name="queslib"] details, [name="queslib"] aside, [name="queslib"] section, [name="queslib"] dl, [name="queslib"] dt, [name="queslib"] ul, [name="queslib"] hr
+{
+	clear: both;
+}
+[name="queslib"] [name="question"] [name="child"] [name="option"]
+{
+	line-height: 30px;
+	word-spacing: 1.5px;
+	letter-spacing: 1.5px;
+}
+/** </style>
+<style type="text/css"> */
+/** ZebraDialog 按钮样式 */
+.ZebraDialog_Title .dialog-bg-right, .ZebraDialog_Body .dialog-bg-right, .ZebraDialog_Buttons .dialog-bg-right
+{
+	background: #5cb85c;
+}
+.ZebraDialog_Title .dialog-bg-error, .ZebraDialog_Body .dialog-bg-error, .ZebraDialog_Buttons .dialog-bg-error
+{
+	background: #d9534f;
+}
+.ZebraDialog_Title .dialog-bg-notdo, .ZebraDialog_Body .dialog-bg-notdo, .ZebraDialog_Buttons .dialog-bg-notdo
+{
+	background: #fca104;
+}
+/** iOS Safari 浏览器样式测试适配 */
+[name="queslib"]
+{
+	-webkit-overflow-scrolling: touch;
+	/** 禁用点击出现半透明灰色背景 */
+	-webkit-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	/** 禁用长按页面时的弹出菜单 */
+	webkit-touch-callout: none;
+}
+[name="queslib"] select, [name="queslib"] input, [name="queslib"] textarea
+{
+	/** 去除默认样式 */
+	-webkit-appearance: none;
+}
+[name="queslib"] [name="question"] [name="child"] [name="option"]
+{
+	cursor: pointer;
+}
+/** </style> */
