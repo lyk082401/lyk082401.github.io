@@ -1027,6 +1027,15 @@ catalog.updateProp = function($obj, $el)
 };
 catalog.init = function($select)
 {
+	try
+	{
+		(/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) && (document.title = "网站未适配苹果浏览器，如遇问题请反馈给开发者！", $select.style.display = "none");
+		((!+[1,]) || self.ActiveXObject || self.attachEvent) && alert("不推荐使用IE浏览器访问，如遇问题请更换其他浏览器！");
+	}
+	catch(e)
+	{
+		console.warn(e);
+	}
 	// 清空选项（包括空白节点）
 	while($select.childNodes.length)
 	{
