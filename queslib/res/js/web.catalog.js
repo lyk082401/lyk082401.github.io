@@ -1034,7 +1034,7 @@ catalog.init = function($select)
 	}
 	catch(e)
 	{
-		console.warn(e);
+		alert(e.stack);
 	}
 	// 清空选项（包括空白节点）
 	while($select.childNodes.length)
