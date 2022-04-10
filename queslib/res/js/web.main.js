@@ -2531,4 +2531,23 @@ parser.api.get = (function(_el, _data)
 	$.LoadingOverlay("hide");
 	parser.api.cnzzPush(["_trackEvent", "题库", "试题切换", _el.selectedOptions.item(0).parentElement.label + "@" + (_el.selectedOptions.item(0).text || _el.selectedOptions.item(0).label), _el.selectedIndex, "queslib"]);
 });
+parser.api.test = (function($data)
+{
+	let fragment = document.createDocumentFragment();
+	let tpl = document.createElement("template");
+	let obj = {};
+	obj.name = "解析测试";
+	obj.data = [];
+	if((Object.prototype.toString.call($data) === "[object Object]") || ((typeof($data) === "string") && (/^\{/).test($data)))
+	{
+		obj.data.push(parser.json.icveappzjy2("JSON数据", $data));
+	}
+	else if(typeof($data) === "string")
+	{
+		obj.data.push(((/\<\?xml/).test($data) ? parser.xml.pmph : parser.txt.simple)("文本数据", $data));
+	}
+	tpl.innerHTML = parser.api.tohtml(parser.api.adjust(obj));
+	fragment.appendChild(tpl.content);
+	$(document).find("[name='queslib'] main").html(fragment);
+});
 // </script>
