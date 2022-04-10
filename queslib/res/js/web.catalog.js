@@ -1029,8 +1029,8 @@ catalog.init = function($select)
 {
 	try
 	{
-		(/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) && ($select.style.display = "none") && ($.Zebra_Dialog || alert)("网站未适配苹果浏览器，如遇问题请反馈给开发者！");
-		((!+[1,]) || self.ActiveXObject || self.attachEvent) && ($.Zebra_Dialog || alert)("不推荐使用IE浏览器访问，如遇问题请更换其他浏览器！");
+		(/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) && ($select.style.display = "none") && (new $.Zebra_Dialog("网站未适配苹果浏览器，如遇问题请反馈给开发者！"));
+		((!+[1,]) || self.ActiveXObject || self.attachEvent) && (new $.Zebra_Dialog("不推荐使用IE浏览器访问，如遇问题请更换其他浏览器！"));
 	}
 	catch(e)
 	{
