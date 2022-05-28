@@ -1,0 +1,227 @@
+<!-- Dexie JS -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/dexie/3.2.1/dexie.min.js?https://cdn.staticfile.org/dexie/3.2.1/dexie.min.js"></script>
+
+<!-- Dexie JS -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/dexie/3.2.1/dexie.min.js?https://cdn.staticfile.org/dexie/3.2.1/dexie.min.js"></script>
+
+<!-- Eruda Console doc"https://eruda.liriliri.io/, https://github.com/liriliri/eruda/blob/master/doc/API.md, https://unpkg.com/browse/eruda@2.4.1/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js?https://cdn.staticfile.org/eruda/2.4.1/eruda.min.js" onload="javascript: self.eruda && (eruda._isInit || eruda.init({tool: [], autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"></script>
+
+<!-- vConsole doc"http://wechatfe.github.io/vconsole/demo.html, https://github.com/Tencent/vConsole/blob/dev/README_CN.md, https://unpkg.com/browse/vconsole@3.11.0/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vConsole/3.12.1/vconsole.min.js?https://cdn.staticfile.org/vConsole/3.12.1/vconsole.min.js" onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({defaultPlugins: ['system', 'network', 'element', 'storage'], 'storage.defaultStorages': ['cookies', 'localStorage', 'sessionStorage'], theme: 'dark', disableLogScrolling: true, 'log.showTimestamps': true, onReady: function(){}}))); /**@close (location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"></script>
+
+<!-- Vue -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vue/2.6.14/vue.min.js?https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+
+<!-- Vue vConsole Devtools Plugin -->
+<script type="text/javascript" charset="UTF-8" src="res/cdn.jsdelivr.net/npm/vue-vconsole-devtools@1.0.5/dist/vue_plugin.js" onload="javascript: self.vConsole && self.vueVconsoleDevtools && (self.vueVconsoleDevtools.initPlugin(self.vConsole), self.Vue && self.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('init', self.Vue));" defer></script>
+
+<!-- JSON Minify doc"https://github.com/fkei/JSON.minify/, https://github.com/getify/JSON.minify/tree/javascript/" -->
+<script type="text/javascript" charset="UTF-8" src="res/web.omeo.top/JSON.minify/minify.json.js"></script>
+
+<!-- JSZip doc"https://stuk.github.io/jszip/, sync-mode@https://github.com/Stuk/jszip/issues/375#issuecomment-258969023" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip/3.6.0/jszip.min.js?https://cdn.staticfile.org/jszip/3.6.0/jszip.min.js"></script>
+
+<!-- JSZip Utils doc"http://stuk.github.io/jszip-utils/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js?https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils.min.js"></script><!--[if IE]><script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils-ie.min.js?https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils-ie.min.js"></script><![endif]-->
+
+<!-- jQuery doc"https://www.jquery123.com/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js?https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js" onload="javascript: self.jQuery && jQuery(document).ready(function(){ self.parser && (parser.api.init.apply(this, arguments), eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\\\/\\\\*\\\\*@close(.+?)\\\\*\\\\/'))[1].trim())); }));"></script>
+
+<!-- jQuery Loading Overlay doc"https://gasparesganga.com/labs/jquery-loading-overlay/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js?https://cdn.staticfile.org/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
+
+<!-- jQuery Easy Loading doc"https://carlosbonetti.github.io/jquery-loading/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js?https://cdn.staticfile.org/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js"></script>
+
+<!-- Zepto JS doc"https://zeptojs.bootcss.com/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/zepto/1.2.0/zepto.min.js?https://cdn.staticfile.org/zepto/1.2.0/zepto.min.js"></script>
+
+<!-- Lodash JS doc"https://www.lodashjs.com/" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/lodash.js/4.17.21/lodash.min.js?https://cdn.staticfile.org/lodash.js/4.17.21/lodash.min.js"></script>
+
+<!-- Zebra Dialog JS doc"https://stefangabos.github.io/Zebra_Dialog/index.html" -->
+<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/zebra_dialog.src.min.js?https://cdn.staticfile.org/zebra_dialog/3.0.5/zebra_dialog.src.min.js"></script>
+
+<!-- Zebra Dialog CSS doc"https://stefangabos.github.io/Zebra_Dialog/index.html" -->
+<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css" />
+
+<!-- Zebra Dialog CSS doc"https://stefangabos.github.io/Zebra_Dialog/materialize.html" -->
+<!--link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css" /-->
+
+<!-- Zebra Dialog CSS doc"https://stefangabos.github.io/Zebra_Dialog/flat.html" -->
+<!--link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css" /-->
+
+		<script type="text/javascript">
+		try
+		{
+			(function()
+			{
+				let indent = "\n" + ("\t").repeat(2);
+				function appendElement()
+				{
+					for(let arg of Array.prototype.slice.call(arguments).values())
+					{
+						// append into "<head></head>"
+						document.head.append ? document.head.append(arg) : document.head.appendChild(arg);
+					}
+				}
+				function appendComment()
+				{
+					for(let arg of Array.prototype.slice.call(arguments).values())
+					{
+						appendElement(document.createTextNode(indent), document.createComment(arg));
+					}
+				}
+				function dynamicLoad($name, $url, $args)
+				{
+					return new Promise(function($done, $fail)
+					{
+						try
+						{
+							let el = document.createElement($name);
+							el.charset = "UTF-8";
+							if($name === "script")
+							{
+								el.type = "text/javascript";
+								el.src = $url;
+							}
+							else if($name === "link")
+							{
+								el.rel = "stylesheet";
+								el.href = $url;
+							}
+							else
+							{
+								$args && (typeof($args.fail) === "function") && $args.fail(e);
+								$fail(new Error("不支持加载 " + $name));
+							}
+							($url.startsWith("http://") || $url.startsWith("https://") || $url.startsWith("//")) && (el.crossOrigin = "anonymous");
+							if($args && Object.prototype.toString.call($args.attr) === "[object Object]")
+							{
+								for(let [k, v] of Object.entries($args.attr))
+								{
+									el.setAttribute(k, v);
+								}
+							}
+							if($args && Object.prototype.toString.call($args.prop) === "[object Object]")
+							{
+								for(let [k, v] of Object.entries($args.prop))
+								{
+									el[k] = v;
+								}
+							}
+							el.onload = el.readystatechange = function(e)
+							{
+								if(!el.readyState || (el.readyState === "complete") || (el.readyState === "loaded"))
+								{
+									$args && (typeof($args.done) === "function") && $args.done(e);
+									$done(e);
+								}
+								else
+								{
+									$args && (typeof($args.fail) === "function") && $args.fail(e);
+									$fail(e);
+								}
+								el.onload = el.readystatechange = null;
+							};
+							el.onerror = el.onabort = function(e)
+							{
+								$args && (typeof($args.fail) === "function") && $args.fail(e);
+								$fail(e);
+								el.onerror = el.onabort = null;
+							};
+							appendElement(el);
+						}
+						catch(e)
+						{
+							$args && (typeof($args.fail) === "function") && $args.fail(e);
+							$fail(e);
+						}
+					});
+				}
+				/**
+				function dynamicCreateElement($arr, $elName, $indent)
+				{
+					$indent || ($indent = "\n" + ("\t").repeat(2));
+					let needfix = document.createElement("div");
+					needfix.setAttribute("class", "IE6IE7");
+					needfix = (needfix.className === "IE6IE7");
+					if(Array.isArray($arr))
+					{
+						$arr.forEach(function($obj, $i, $$)
+						{
+							let el = document.createElement($elName);
+							let desc = null;
+							let onlydesc = false;
+							for(let [k, v] of Object.entries($obj))
+							{
+								if((k === "") && (typeof(v) === "string"))
+								{
+									desc = v;
+									onlydesc = (Object.keys($obj).length == 1);
+								}
+								// ".?"
+								else if((/^\.([\s\S]+)/).test(k) || (k.indexOf(".") != -1))
+								{
+									// "?"
+									k = k.replace(/^\.([\s\S]+)/, "$1");
+									// "?.??"
+									let kk = k.split(".");
+									// ["?", "??"]
+									if(kk.length == 2)
+									{
+										el[kk[0]][kk[1]] = v;
+									}
+									else
+									{
+										// ["?"]
+										el[k] = v;
+									}
+								}
+								// "x-*" "data-*"
+								else if(k.startsWith("x-") || k.startsWith("data-"))
+								{
+									el.setAttribute(k, v);
+								}
+								// ":?"
+								else if((/^\:([\s\S]+)/).test(k))
+								{
+									el.setAttribute(k.replace(/^\:([\s\S]+)/, "$1"), v);
+								}
+								else
+								{
+									el[k] = v;
+								}
+							}
+							function append(arg)
+							{
+								for(let arg of Array.prototype.slice.call(arguments).values())
+								{
+									// append into "<head></head>"
+									document.head.append ? document.head.append(arg) : document.head.appendChild(arg);
+								}
+							}
+							if(onlydesc)
+							{
+								desc && append(document.createTextNode($indent), document.createComment(desc));
+							}
+							else
+							{
+								desc && append(document.createTextNode($indent), document.createComment("^ " + desc + " "));
+								append(document.createTextNode($indent), el);
+								desc && append(document.createTextNode($indent), document.createComment(" " + desc + " $"));
+							}
+						});
+						alert([document.head.outerHTML.substr(11000)])
+					}
+				}
+				*/
+			})();
+		}
+		catch(e)
+		{
+			console.warn(e);
+			alert(e.stack);
+		}
+		</script>

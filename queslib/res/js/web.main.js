@@ -258,7 +258,7 @@ parser.api.init = (function()
 				let rm = true;
 				$($($og).attr("data-ifsite").split("|").concat("/storage/emulated/0")).each(function($$i, $s)
 				{
-					if((/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) || document.location.href.includes($s))
+					if((/(iPhone|iPad|iPod|iOS)/i).test(navigator.userAgent) || location.href.includes($s))
 					{
 						rm = false;
 					}
@@ -284,7 +284,7 @@ parser.api.init = (function()
 					<p name="cloneSelect_container">${select.outerHTML.replace(/eruda\.util\.\$\.cloneSelect/, "$(document).find('[name=\\'queslib\\'] select').get(0)")}</p><hr />
 					<button name="autoread" style="color: grey;">自动浏览</button><hr />
 					<button name="changebg" style="color: grey;">日间模式</button><hr />
-					<!--button name="assignto" style="color: grey;">${(/indexnew\.html/).test(document.location.pathname) ? "访问旧版" : "访问新版"}</button><hr /-->
+					<!--button name="assignto" style="color: grey;">${(/indexnew\.html/).test(location.pathname) ? "访问旧版" : "访问新版"}</button><hr /-->
 					每章题量&nbsp;&nbsp;&nbsp;
 					<button name="quesnum">➖</button>
 					<input name="quesnum" type="range" min="10" max="200" step="5" value="${localStorage.getItem('queslib-question-num') ? localStorage.getItem('queslib-question-num') : '50'}" />
@@ -424,7 +424,7 @@ parser.api.init = (function()
 				/**
 				$el.find("button[name='assignto']").get(0).onclick = (function($e)
 				{
-					(/indexnew\.html/).test(document.location.pathname) ? document.location.assign("index.html") : document.location.assign("indexnew.html");
+					(/indexnew\.html/).test(location.pathname) ? location.assign("index.html") : location.assign("indexnew.html");
 				});
 				*/
 				$el.css("position", "absolute");
@@ -646,7 +646,7 @@ parser.api.init = (function()
 			})
 		});
 		// 添加其他剩余工具
-		((document.location.protocol === "file:") ? ["console", "network", "resources", "info", "elements", "sources", "snippets"] : ["console", "snippets"]).forEach(function($val, $index, $arrs)
+		((location.protocol === "file:") ? ["console", "network", "resources", "info", "elements", "sources", "snippets"] : ["console", "snippets"]).forEach(function($val, $index, $arrs)
 		{
 			if(eruda[eruda.util.upperFirst($val)])
 			{
@@ -740,7 +740,7 @@ parser.api.init = (function()
 			console.warn("加载出错了", arguments);
 			parser.api.tipmsg("加载出错了，即将刷新页面…", "error", function()
 			{
-				confirm("是否刷新页面？") && document.location.reload(false);
+				confirm("是否刷新页面？") && location.reload(false);
 			});
 		});
 		parser.onToggleDetails = (function($el)
@@ -769,9 +769,9 @@ parser.api.init = (function()
 		});
 		setTimeout(function()
 		{
-			(document.location.protocol === "file:") ? console.log("网页最后更新时间", parser.api.parseTimeToDateStr(document.lastModified, false)) : $.ajax(
+			(location.protocol === "file:") ? console.log("网页最后更新时间", parser.api.parseTimeToDateStr(document.lastModified, false)) : $.ajax(
 			{
-				url: document.location.href,
+				url: location.href,
 				type: "HEAD",
 				async: true,
 				cache: false,
@@ -928,6 +928,10 @@ parser.api.init = (function()
 			{
 				console.warn("题库数据更新失败", arguments);
 				queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+				self.parser && confirm("库数据更新失败！是否进行缓存？") && (parser.api.downloadWithUrl(url), setTimeout(function()
+				{
+					location.reload(false);
+				}, 100));
 			}),
 			complete: (function($xhr, $status){})
 		});
@@ -1033,12 +1037,12 @@ parser.api.cnzzPush = (function($arrs)
 });
 parser.api.getUrlParam = (function($name)
 {
-	let reg = new RegExp("(^|&)" + $name + "=([^&]*)(&|$)"), r = document.location.search.substr(1).match(reg);
+	let reg = new RegExp("(^|&)" + $name + "=([^&]*)(&|$)"), r = location.search.substr(1).match(reg);
 	return (r && r[2]) || null;
 });
 parser.api.dump = (function($obj)
 {
-	if(document.location.protocol === "file:")
+	if(location.protocol === "file:")
 	{
 		if($("textarea[name='dump']").length == 0)
 		{
@@ -1067,6 +1071,7 @@ parser.api.dump = (function($obj)
 });
 parser.api.download = (function($data, $name, $type)
 {
+	// 创建内存引用
 	let d = (URL || webkitURL).createObjectURL(new Blob([$data || document.documentElement.outerHTML], {type: $type || "application/octet-stream"})),
 	a = document.createElement("a");
 	// IE 浏览器
@@ -1084,7 +1089,19 @@ parser.api.download = (function($data, $name, $type)
 		a.click();
 		document.body.removeChild(a);
 	}
+	// 释放内存引用
 	(URL || webkitURL).revokeObjectURL(d);
+	return a;
+});
+parser.api.downloadWithUrl = (function($url)
+{
+	let a = document.createElement("a");
+	a.href = $url;
+	a.target = "_self";
+	a.style.display = "none";
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
 	return a;
 });
 parser.api.check_answers = (function(_answer_text)
@@ -1633,7 +1650,7 @@ parser.txt.simple = (function($title, $data)
 			}
 		}
 	}
-	(document.location.protocol === "file:") && console.log("›plain-txt", all);
+	(location.protocol === "file:") && console.log("›plain-txt", all);
 	return all;
 });
 parser.json.forceToObj = (function($json, $default)
@@ -1730,7 +1747,7 @@ parser.json.icveappzjy2 = (function($title, $json)
 	{
 		console.warn("JSON解析", "未处理数据", $json);
 	}
-	(document.location.protocol === "file:") && console.log("›icveappzjy2-json", all);
+	(location.protocol === "file:") && console.log("›icveappzjy2-json", all);
 	return all;
 });
 // 云课堂智慧职教APP-MOOC学院JSON试题解析
@@ -1911,7 +1928,7 @@ parser.xml.pmph = (function(_title, _xml)
 		// 只有1大题
 		pushQues(all["questions"], data.exam.questions.question, data.exam.questions.instructions);
 	}
-	(document.location.protocol == "file:") && console.log("›pmph-xml", all);
+	(location.protocol == "file:") && console.log("›pmph-xml", all);
 	return all;
 });
 parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
@@ -2204,8 +2221,8 @@ parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
 });
 parser.api.tohtml = (function(_data, _cacheObj)
 {
-	// (document.location.protocol === "file:") && parser.api.dump(_data);
-	(document.location.protocol === "file:") && console.log("››tohtml", _data);
+	// (location.protocol === "file:") && parser.api.dump(_data);
+	(location.protocol === "file:") && console.log("››tohtml", _data);
 	if(_cacheObj)
 	{
 		_cacheObj.cachedata = _data;

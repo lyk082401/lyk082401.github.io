@@ -1009,7 +1009,7 @@ catalog.updateAttr = function($obj, $el)
 {
 	if(Object.prototype.toString.call($obj) === "[object Object]")
 	{
-		for(let [k , v] of Object.entries($obj))
+		for(let [k, v] of Object.entries($obj))
 		{
 			$el.setAttribute(k, v);
 		}
@@ -1019,7 +1019,7 @@ catalog.updateProp = function($obj, $el)
 {
 	if(Object.prototype.toString.call($obj) === "[object Object]")
 	{
-		for(let [k , v] of Object.entries($obj))
+		for(let [k, v] of Object.entries($obj))
 		{
 			$el[k] = v;
 		}
