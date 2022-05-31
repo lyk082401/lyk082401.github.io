@@ -1069,8 +1069,12 @@ parser.api.dump = (function($obj)
 		}, "\t") : $obj).show().click();
 	}
 });
-parser.api.download = (function($data, $name, $type)
+parser.api.download = (function($data, $name, $type, $target)
 {
+	if(typeof($name) === "string")
+	{
+		$name = decodeURIComponent($name);
+	}
 	// 创建内存引用
 	let d = (URL || webkitURL).createObjectURL(new Blob([$data || document.documentElement.outerHTML], {type: $type || "application/octet-stream"})),
 	a = document.createElement("a");
@@ -1083,7 +1087,7 @@ parser.api.download = (function($data, $name, $type)
 	{
 		a.href = d;
 		a.download = $name || (d.toString().match(/([^:\/]+)/g).reverse()[0] + ".bin");
-		a.target = "_self";
+		a.target = $target || "_self";
 		a.style.display = "none";
 		document.body.appendChild(a);
 		a.click();
@@ -1093,11 +1097,15 @@ parser.api.download = (function($data, $name, $type)
 	(URL || webkitURL).revokeObjectURL(d);
 	return a;
 });
-parser.api.downloadWithUrl = (function($url)
+parser.api.downloadWithUrl = (function($url, $noreferrer, $target)
 {
 	let a = document.createElement("a");
 	a.href = $url;
-	a.target = "_self";
+	a.target = $target || "_self";
+	if($noreferrer)
+	{
+		a.rel = "noreferrer";
+	}
 	a.style.display = "none";
 	document.body.appendChild(a);
 	a.click();
