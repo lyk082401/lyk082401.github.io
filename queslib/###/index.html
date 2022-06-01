@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="width: 100%; height: 100%; margin: 0; padding: 0; border: 0; overflow: auto;">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="referrer" content="always" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>云课堂智慧职教 | 作业与考试 | 记录提取</title>
+		<!-- ("SRI Hash Generator")["https://www.srihash.org/"] -->
+		<script type="text/javascript">
+		try
+		{
+			window.onerror = (function($message, $url, $line, $column, $error)
+			{
+				console.warn($message, $url, $line, $column, $error);
+				$error && Object.getOwnPropertyNames($error).forEach(function($key, $index, $arrs)
+				{
+					$error["$" + $key] = $error[$key];
+				});
+				alert(JSON.stringify({message: $message, url: $url, line: $line, column: $column, error: $error}, null, "\t"));
+			});
+			window.onbeforeunload = window.onunload = (function($e)
+			{
+				return ($e || window.event || document.event).returnValue = "确定离开当前页面吗？";
+			});
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+		</script>
+		<style type="text/css">
+		@font-face
+		{
+			font-family: "AndroidClock";
+			src: url("res/fonts/AndroidClock.ttf");
+		}
+		html, body
+		{
+			font-family: "AndroidClock";
+		}
+		</style>
+		<!-- Eruda Console -->
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js?https://cdn.staticfile.org/eruda/2.4.1/eruda.min.js" onload="javascript: self.eruda && (eruda._isInit || eruda.init({autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"></script>
+		<!-- vConsole -->
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vConsole/3.12.1/vconsole.min.js?https://cdn.staticfile.org/vConsole/3.12.1/vconsole.min.js" onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({defaultPlugins: ['system', 'network', 'element', 'storage'], 'storage.defaultStorages': ['cookies', 'localStorage', 'sessionStorage'], theme: 'dark', disableLogScrolling: true, 'log.showTimestamps': true, onReady: function(){}}))); /**@close (location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"></script>
+		<!-- jQuery -->
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js?https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js" onload="javascript: self.jQuery && jQuery(document).ready(function(){ eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\/\\*\\*@close(.+?)\\*\\/'))[1].trim()); });"></script>
+		<!-- jBox -->
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.js?https://cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.js"></script>
+		<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.css?https://cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.css" />
+		<!-- Web Main Reference -->
+		<script type="text/javascript" charset="UTF-8" src="res/js/web.main.js"></script>
+		<link rel="stylesheet" charset="UTF-8" href="res/css/web.main.css" />
+	</head>
+	<body style="background-color: #cccccc; color: black; font-size: 12px; opacity: 0.75;">
+		<fieldset name="queslib">
+			<legend>云课堂智慧职教</legend>
+			<hr />
+			<main name="icve">
+				<center>
+					<form name="login" onsubmit="javascript: /** 保存登陆信息到本地 */ localStorage.setItem('icve-auth-stuId', this.querySelector(`input[name='val-stuId']`).value); localStorage.setItem('icve-auth-newToken', this.querySelector(`input[name='val-newToken']`).value); /** 开始进行登陆 */ icve.icveapp['newMobileAPI/Student/getCourseList_new'](1, this.querySelector(`input[name='val-stuId']`).value, this.querySelector(`input[name='val-newToken']`).value); /** 阻止表单提交 */ return false;">
+						<input name="val-stuId" type="text" placeholder="请输入 stuId" style="width: 45%;" required />
+						<input name="val-newToken" type="text" placeholder="请输入 newToken" style="width: 45%;" required />
+						<hr />
+						<button name="btn-login" type="submit" style="background-color: transparent; color: #337ab7; /** 禁止页面文字长按选择 */-webkit-user-select: none;">登录</button>
+					</form>
+				</center>
+				<div name="icveapp" style="text-align: center; margin: 0 auto; font-size: 12px;"></div>
+			</main>
+			<script type="text/javascript">
+			try
+			{
+				jQuery(document).ready(function()
+				{
+					// 尝试获取和读取本地已保存的信息进行直接登陆
+					if(localStorage.getItem("icve-auth-stuId"))
+					{
+						document.querySelector("[name='icve'] input[name='val-stuId']").value = localStorage.getItem("icve-auth-stuId");
+					}
+					if(localStorage.getItem("icve-auth-newToken"))
+					{
+						document.querySelector("[name='icve'] input[name='val-newToken']").value = localStorage.getItem("icve-auth-newToken");
+					}
+					if(localStorage.getItem("icve-auth-stuId") && localStorage.getItem("icve-auth-newToken"))
+					{
+						document.querySelector("[name='icve'] button[name='btn-login']").click();
+					}
+				});
+				/** 手动获取 stuId 和 newToken
+				登陆账号 https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginByH5?userName=${}&userPwd=${}&appVersion=2.8.25
+				获取信息 https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/getUserInfo?newToken=${}&userId=${}
+				获取课程 https://zjy2.icve.com.cn/api/NewMobileAPI/student/getCourseList?newToken=${}&stuId=${}&isPass=0
+				退出登陆 https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginOut?newToken=${}&userId=${}
+				*/
+				// #职教云在修课程
+				/**
+				function icveapp$newmobileapi$AppVersion$getAppVersion()
+				{
+					// 获取应用最新版本信息
+					$.post(icve.icveapp.baseurl + "newmobileapi/AppVersion/getAppVersion", "versionCode=2.8.43&" + icve.common + "", function($data, $status, $xhr)
+					{
+						console.log("icve icveapp newmobileapi/AppVersion/getAppVersion", $data, $xhr.responseText);
+					}, "json").fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/AppVersion/getAppVersion", $xhr, $status, $e);
+					});
+				}
+				function icveapp$newmobileapi$mobilelogin$saveUserLog($userId, $clientId, $newToken)
+				{
+					// 保存用户登录日志
+					$.post(icve.icveapp.baseurl + "newmobileapi/mobilelogin/saveUserLog", "userId=" + $ + "&sourceType=2&appVersion=2.8.43%2CM2104K10AC%2C31&clientId=" + $ + "&app_version=2.8.43&model=M2104K10AC&api_version=31&" + icve.common + "&newToken=" + ($newToken || icve.newToken), function($data, $status, $xhr)
+					{
+						console.log("icve icveapp newmobileapi/mobilelogin/saveUserLog", $data, $xhr.responseText);
+					}, "json").fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/mobilelogin/saveUserLog", $xhr, $status, $e);
+					});
+				}
+				function icveapp$newmobileapi$AppVersion$getProjectList($newToken)
+				{
+					// 获取项目列表
+					$.post(icve.icveapp.baseurl + "newmobileapi/AppVersion/getProjectList", "SourceType=2&" + icve.common + "&newToken=" + ($newToken || icve.newToken), function($data, $status, $xhr)
+					{
+						console.log("icve icveapp newmobileapi/AppVersion/getProjectList", $data, $xhr.responseText);
+					}, "json").fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/AppVersion/getProjectList", $xhr, $status, $e);
+					});
+				}
+				*/
+				/**
+				// #MOOC我的学习
+				function moocapp$mobile$courseinfo$getMyCourseList($userId, $newToken)
+				{
+					// 获取MOOC在修课程列表 isFinished=0 在修，isFinished=1 已修
+					$.post(icve.moocapp.baseurl + "mobile/courseinfo/getMyCourseList", "platType=2&isFinished=0&userId=" + $ + "&sourceType=0&page=1&" + icve.common + "&newToken=" + ($newToken || icve.newToken), function($data, $status, $xhr)
+					{
+						console.log("icve moocapp mobile/courseinfo/getMyCourseList", $data, $xhr.responseText);
+					}, "json").fail(function($xhr, $status, $e)
+					{
+						console.warn("icve moocapp mobile/courseinfo/getMyCourseList", $xhr, $status, $e);
+					});
+				}
+				*/
+				self.icve = {
+					mainel: $("[name='icve'] [name='icveapp']"),
+					icveapp: {
+						baseurl: "https://zjyapp.icve.com.cn/",
+					},
+					moocapp: {
+						baseurl: "https://moocapp.icve.com.cn/",
+					},
+					common: "equipmentAppVersion=2.8.43&equipmentModel=Redmi%20M2104K10AC&equipmentApiVersion=12",
+					btncommonstyle: function($add)
+					{
+						return "background-color: transparent; color: #337ab7; /** 禁止页面文字长按选择 */-webkit-user-select: none;" + ($add ? (" " + $add) : "");
+					},
+					descbtnwarper: function($text)
+					{
+						let linelen = $text.split(/\r\n|\n/).length;
+						return `<textarea cols="100" rows="` + ((linelen < 20) ? 20 : linelen) + `" wrap="hard" style="width: 100%; height: 100%;" readonly>` + $text + `</textarea>`;
+					},
+					descbtnclick: function($parent, $attrname)
+					{
+						return "javascript: if(this.jbox){ confirm(this.tmpstr) && this.jbox.open(); }else{ this.tmpstr = JSON.stringify(JSON.parse(decodeURIComponent(" + $parent + ".getAttribute('" + $attrname + "'))), null, '\t'); confirm(this.tmpstr) && (this.jbox = new jBox('Modal', { content: icve.descbtnwarper(this.tmpstr) })).open(); }";
+					},
+					onclickordbl: function($target, $el2, $cb2)
+					{
+						return ({
+							click: function($el, $cb)
+							{
+								if($el.clickTimer)
+								{
+									clearTimeout($el.clickTimer);
+									$el.clickTimer = null;
+								}
+								$el.clickTimer = setTimeout(function()
+								{
+									$cb.call($el);
+								}, 300);
+							},
+							dblclick: function($el, $cb)
+							{
+								if($el.clickTimer)
+								{
+									clearTimeout($el.clickTimer);
+									$el.clickTimer = null;
+								}
+								$cb.call($el);
+							}
+						})[$target]($el2, $cb2);
+					},
+					stuId: null,
+					newToken: null
+				};
+				icve.icveapp["newMobileAPI/Student/getCourseList_new"] = function($page, $stuId, $newToken)
+				{
+					icve.stuId || (icve.stuId = $stuId);
+					icve.newToken || (icve.newToken = $newToken);
+					// 获取在修课程列表 isPass=0 在修，isPass=1 已修
+					$.post(icve.icveapp.baseurl + "newMobileAPI/Student/getCourseList_new", "stuId=" + ($stuId || icve.stuId) + "&isPass=0&page=" + $page + "&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json")
+					.done(function($data, $status, $xhr)
+					{
+						// console.log("icve icveapp newMobileAPI/Student/getCourseList_new", $data, $xhr.responseText);
+						if($page == 1)
+						{
+							icve.mainel.html("");
+						}
+						if($data.code == 1)
+						{
+							if($data.dataList.length > 0)
+							{
+								icve.icveapp["newMobileAPI/Student/getCourseList_new"]($page + 1, $stuId, $newToken);
+								let html = `<aside name="course_list">`;
+								html += `\n${"\t".repeat(1)}<hr />`;
+								let plen = $data.dataList.length;
+								$($data.dataList).each(function($index, $child)
+								{
+									html += `\n${"\t".repeat(1)}<details name="course_list_child" data-openClassId="${$child.openClassId}" data-courseOpenId="${$child.courseOpenId}" data-courseInfo="${encodeURIComponent(JSON.stringify($child))}">`;
+									html += `\n${"\t".repeat(2)}<summary style="padding: 10px 5px; color: #2983bb;">●&nbsp;&nbsp;&nbsp;${$child.mainTeacherName}--${$child.courseName}&nbsp;&nbsp;&nbsp;<button type="button" style="${icve.btncommonstyle('float: right;')}" onclick="${icve.descbtnclick('this.parentElement.parentElement', 'data-courseInfo')}">详细信息</button></summary>`;
+									html += `\n${"\t".repeat(2)}<hr />`;
+									html += `\n${"\t".repeat(2)}<details name="course_homework">`;
+									html += `\n${"\t".repeat(3)}<summary style="padding: 10px 5px; color: #2983bb;">●●&nbsp;&nbsp;&nbsp;作业</summary>`;
+									html += `\n${"\t".repeat(2)}</details>`;
+									html += `\n${"\t".repeat(2)}<hr style="width: 80%;" />`;
+									html += `\n${"\t".repeat(2)}<details name="course_exam">`;
+									html += `\n${"\t".repeat(3)}<summary style="padding: 10px 5px; color: #2983bb;">●●&nbsp;&nbsp;&nbsp;考试</summary>`;
+									html += `\n${"\t".repeat(2)}</details>`;
+									html += `\n${"\t".repeat(1)}</details>`;
+									if($index < (plen - 1))
+									{
+										html += `\n${"\t".repeat(1)}<hr />`;
+									}
+								});
+								html += `\n${"\t".repeat(1)}<hr />`;
+								html += `\n</aside>`;
+								icve.mainel.html(icve.mainel.html() + html);
+							}
+							else
+							{
+								icve.mainel.find("[name='course_list']")
+								.find("[name='course_list_child']")
+								.each(function($index, $el)
+								{
+									icve.icveapp["newmobileapi/homework/getHomeworkList_new"]($($el), $el.getAttribute("data-openClassId"), $el.getAttribute("data-courseOpenId"), 1);
+								});
+							}
+						}
+					})
+					.fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newMobileAPI/Student/getCourseList_new", $xhr, $status, $e);
+					});
+				};
+				icve.icveapp["newmobileapi/homework/getHomeworkList_new"] = function($mainel, $openClassId, $courseOpenId, $page, $stuId, $newToken)
+				{
+					// 获取作业列表
+					$.post(icve.icveapp.baseurl + "newmobileapi/homework/getHomeworkList_new", "openClassId=" + $openClassId + "&courseOpenId=" + $courseOpenId + "&pageSize=10&page=" + $page + "&homeworkType=0&hkState=0&stuId=" + ($stuId || icve.stuId) + "&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json")
+					.done(function($data, $status, $xhr)
+					{
+						// console.log("icve icveapp newmobileapi/homework/getHomeworkList_new", $data, $xhr.responseText);
+						if($data.code == 1)
+						{
+							if($data.homeworkList.length > 0)
+							{
+								icve.icveapp["newmobileapi/homework/getHomeworkList_new"]($mainel, $openClassId, $courseOpenId, $page + 1, $stuId, $newToken);
+								let html = `<aside name="homework_list">`;
+								html += `\n${"\t".repeat(1)}<hr style="width: 60%;" />`;
+								let plen = $data.homeworkList.length;
+								$($data.homeworkList).each(function($index, $child)
+								{
+									html += `\n${"\t".repeat(1)}<details name="homework_list_child" data-openClassId="${$openClassId}" data-courseOpenId="${$courseOpenId}" data-homeworkId="${$child.homeworkId}" data-homeworkTermTimeId="${$child.homeworkTermTimeId}" data-homeworkInfo="${encodeURIComponent(JSON.stringify($child))}">`;
+									html += `\n${"\t".repeat(2)}<summary style="padding: 10px 5px; color: #2983bb;">●●●&nbsp;&nbsp;&nbsp;${$child.title}&nbsp;&nbsp;&nbsp;<button type="button" style="${icve.btncommonstyle('float: right;')}" onclick="${icve.descbtnclick('this.parentElement.parentElement', 'data-homeworkInfo')}">详细信息</button></summary>`;
+									html += `\n${"\t".repeat(2)}<hr style="width: 60%;" />`;
+									html += `\n${"\t".repeat(1)}</details>`;
+									if($index < (plen - 1))
+									{
+										html += `\n${"\t".repeat(1)}<hr style="width: 60%;" />`;
+									}
+								});
+								html += `\n${"\t".repeat(1)}<hr style="width: 60%;" />`;
+								html += `\n</aside>`;
+								let el = $mainel.find("[name='course_homework']");
+								el.html(el.html() + html);
+							}
+							else
+							{
+								$mainel.find("[name='course_homework']")
+								.find("[name='homework_list']")
+								.find("[name='homework_list_child']")
+								.each(function($index, $el)
+								{
+									$el.ontoggle = function($e)
+									{
+										$el.open && !$el.isdo && (function()
+										{
+											$el.isdo = true;
+											icve.icveapp["newmobileapi/homework/getHomeworkStuRecord"]($($el), $el.getAttribute("data-openClassId"), $el.getAttribute("data-courseOpenId"), $el.getAttribute("data-homeworkId"), $el.getAttribute("data-homeworkTermTimeId"));
+										})();
+									};
+								});
+							}
+						}
+					}).fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/homework/getHomeworkList_new", $xhr, $status, $e);
+					});
+				};
+				icve.icveapp["newmobileapi/homework/getHomeworkStuRecord"] = function($mainel, $openClassId, $courseOpenId, $homeworkId, $homeworkTermTimeId, $stuId, $newToken)
+				{
+					// 获取作业记录
+					$.post(icve.icveapp.baseurl + "newmobileapi/homework/getHomeworkStuRecord", "openClassId=" + $openClassId + "&homeworkId=" + $homeworkId + "&stuId=" + ($stuId || icve.stuId) + "&userType=1&homeworkTermTimeId=" + $homeworkTermTimeId + "&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json")
+					.done(function($data, $status, $xhr)
+					{
+						// console.log("icve icveapp newmobileapi/homework/getHomeworkStuRecord", $data, $xhr.responseText);
+						if($data.code == 1)
+						{
+							if($data.stuHomeworkList.length > 0)
+							{
+								let html = `<aside name="homework_record_list">`;
+								html += `\n${"\t".repeat(1)}<hr style="width: 40%;" />`;
+								let plen = $data.stuHomeworkList.length;
+								$($data.stuHomeworkList).each(function($index, $child)
+								{
+									html += `\n${"\t".repeat(1)}<details name="homework_record_list_child" data-openClassId="${$openClassId}" data-courseOpenId="${$courseOpenId}" data-homeWorkId="${$homeworkId}" data-homeworkStuId="${$child.homeworkStuId}" data-homeworkRecordInfo="${encodeURIComponent(JSON.stringify($child))}">`;
+									html += `\n${"\t".repeat(2)}<summary style="padding: 10px 5px; color: #2983bb;">●●●●&nbsp;&nbsp;&nbsp;${$child.dateCreated}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${$child.useTimeString}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;${$child.getScore}&nbsp;&nbsp;&nbsp;<button type="button" style="${icve.btncommonstyle('float: right;')}" onclick="${icve.descbtnclick('this.parentElement.parentElement', 'data-homeworkRecordInfo')}">详细信息</button></summary>`;
+									html += `\n${"\t".repeat(2)}<hr style="width: 40%;" />`;
+									html += `\n${"\t".repeat(1)}</details>`;
+									if($index < (plen - 1))
+									{
+										html += `\n${"\t".repeat(1)}<hr style="width: 40%;" />`;
+									}
+								});
+								html += `\n${"\t".repeat(1)}<hr style="width: 40%;" />`;
+								html += `\n</aside>`;
+								$mainel.html($mainel.html() + html);
+								// 添加展开事件
+								$mainel.find("[name='homework_record_list']")
+								.find("[name='homework_record_list_child']")
+								.each(function($index, $el)
+								{
+									$el.ontoggle = function($e)
+									{
+										$el.open && !$el.isdo && (function()
+										{
+											$el.isdo = true;
+											icve.icveapp["newmobileapi/homework/stuGetHkPreview"]($($el), $el.getAttribute("data-openClassId"), $el.getAttribute("data-courseOpenId"), $el.getAttribute("data-homeworkId"), $el.getAttribute("data-homeworkStuId"));
+										})();
+									};
+								});
+							}
+						}
+						else
+						{
+							$mainel[0].isdo = false;
+						}
+					})
+					.fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/homework/getHomeworkStuRecord", $xhr, $status, $e);
+						$mainel[0].isdo = false;
+					});
+				};
+				icve.icveapp["newmobileapi/homework/stuGetHkPreview"] = function($mainel, $openClassId, $courseOpenId, $homeWorkId, $homeworkStuId, $stuId, $newToken)
+				{
+					// 获取作业预览
+					$.post(icve.icveapp.baseurl + "newmobileapi/homework/stuGetHkPreview", "courseOpenId=" + $courseOpenId + "&openClassId=" + $openClassId + "&homeWorkId=" + $homeWorkId + "&homeworkStuId=" + $homeworkStuId + "&stuId=" + ($stuId || icve.stuId) + "&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json")
+					.done(function($data, $status, $xhr)
+					{
+						// console.log("icve icveapp newmobileapi/homework/stuGetHkPreview", $data, $xhr.responseText);
+						if($data.code == 1)
+						{
+							if($data.data.questions.length > 0)
+							{
+								let html = `<aside name="homework_record_data">`;
+								html += `\n${"\t".repeat(1)}<center name="homework_record_data_dl" data-homeworkRecordDataInfo="${encodeURIComponent(JSON.stringify($data))}"><button type="button" style="${icve.btncommonstyle()}" value="${encodeURIComponent($xhr.responseText)}" onclick="javascript: parser.api.download(decodeURIComponent(this.value), '${encodeURIComponent($data.data.homeworkTitle)}.json', 'application/json');">下载数据</button>&nbsp;&nbsp;&nbsp;<button type="button" style="${icve.btncommonstyle()}" onclick="${icve.descbtnclick('this.parentElement', 'data-homeworkRecordDataInfo')}">详细信息</button></center>`;
+								html += `\n</aside>`;
+								$mainel.html($mainel.html() + html);
+							}
+							else
+							{
+								icve.icveapp["newmobileapi/homework/getStuFileHomeworkPreview"]($mainel, $openClassId, $courseOpenId, $homeWorkId, $homeworkStuId, $stuId, $newToken);
+							}
+						}
+						else
+						{
+							$mainel[0].isdo = false;
+						}
+					})
+					.fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/homework/stuGetHkPreview", $xhr, $status, $e);
+						$mainel[0].isdo = false;
+					});
+				};
+				icve.icveapp["newmobileapi/homework/getStuFileHomeworkPreview"] = function($mainel, $openClassId, $courseOpenId, $homeWorkId, $homeworkStuId, $stuId, $newToken)
+				{
+					// 获取作业文件预览
+					$.post(icve.icveapp.baseurl + "newmobileapi/homework/getStuFileHomeworkPreview", "openClassId=" + $openClassId + "&courseOpenId=" + $courseOpenId + "&homeWorkId=" + $homeWorkId + "&stuId=" + ($stuId || icve.stuId) + "&homeworkStuId=" + $homeworkStuId + "&type=1&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json")
+					.done(function($data, $status, $xhr)
+					{
+						// console.log("icve icveapp newmobileapi/homework/getStuFileHomeworkPreview", $data, $xhr.responseText);
+						if($data.code == 1)
+						{
+							if($data.data.stuAnswers.length > 0)
+							{
+								let html = `<aside name="homework_record_data">`;
+								html += `\n${"\t".repeat(1)}<center name="homework_record_data_dl" data-homeworkRecordDataInfo="${encodeURIComponent(JSON.stringify($data))}"><button type="button" style="${icve.btncommonstyle()}" value="${encodeURIComponent($xhr.responseText)}" onclick="javascript: parser.api.download(decodeURIComponent(this.value), '${encodeURIComponent($data.data.homeworkTitle)}.json', 'application/json');">下载数据</button>&nbsp;&nbsp;&nbsp;<button type="button" style="${icve.btncommonstyle()}" onclick="${icve.descbtnclick('this.parentElement', 'data-homeworkRecordDataInfo')}">详细信息</button></center>`;
+								html += `\n</aside>`;
+								// 文件列表
+								html += `<aside name="homework_record_file_list">`;
+								html += `\n${"\t".repeat(1)}<hr style="width: 40%;" />`;
+								let plen = $data.data.stuAnswers.length;
+								$($data.data.stuAnswers).each(function($index, $child)
+								{
+									html += `\n${"\t".repeat(1)}<center name="homework_record_file_dl" data-Id="${$child.Id}" data-fileName="${encodeURIComponent($child.fileName)}" data-homeworkRecordFileInfo=""><span data-info="${encodeURIComponent(JSON.stringify($child))}" onclick="${icve.descbtnclick('this', 'data-info')}">${$child.fileName}</span><br /><button type="button" style="${icve.btncommonstyle()}" value="" onclick="javascript: icve.onclickordbl('click', this, function(){ parser.api.downloadWithUrl(this.value, true); });" ondblclick="javascript: icve.onclickordbl('dblclick', this, function(){ alert('若网页跳转后提示“403 Forbidden”，点击地址栏链接回车会取消“referrer”信息，之后即可正常下载！'); });">下载文件</button>&nbsp;&nbsp;&nbsp;<button type="button" style="${icve.btncommonstyle()}" onclick="${icve.descbtnclick('this.parentElement', 'data-homeworkRecordFileInfo')}">详细信息</button></center>`;
+									if($index < (plen - 1))
+									{
+										html += `\n${"\t".repeat(1)}<hr style="width: 40%;" />`;
+									}
+								});
+								html += `\n${"\t".repeat(1)}<hr style="width: 40%;" />`;
+								html += `\n</aside>`;
+								$mainel.html($mainel.html() + html);
+								// 添加列表事件
+								$mainel.find("[name='homework_record_file_list']")
+								.find("[name='homework_record_file_dl']")
+								.each(function($index, $el)
+								{
+									icve.icveapp["newmobileapi/Homework/getFileHomeworkUrlById"]($($el), $el.getAttribute("data-Id"));
+								});
+							}
+						}
+					})
+					.fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/homework/getStuFileHomeworkPreview", $xhr, $status, $e);
+					});
+				};
+				icve.icveapp["newmobileapi/Homework/getFileHomeworkUrlById"] = function($mainel, $Id, $newToken)
+				{
+					// 获取作业文件信息
+					$.post(icve.icveapp.baseurl + "newmobileapi/Homework/getFileHomeworkUrlById", "Id=" + $Id + "&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json")
+					.done(function($data, $status, $xhr)
+					{
+						// console.log("icve icveapp newmobileapi/Homework/getFileHomeworkUrlById", $data, $xhr.responseText);
+						if($data.code == 1)
+						{
+							let url = JSON.parse($data.url);
+							$mainel[0].setAttribute("data-homeworkRecordFileInfo", encodeURIComponent(JSON.stringify($data)));
+							$mainel.find("button[value]")[0].value = url.urls.download.replace(/(\;filename\=)(.+)/, ";filename=" + $mainel[0].getAttribute("data-fileName"));
+						}
+					})
+					.fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/Homework/getFileHomeworkUrlById", $xhr, $status, $e);
+					});
+				};
+				/**
+				icve.icveapp["newmobileapi/onlineExam/getExamList_new"] = function($openClassId, $courseOpenId, $page, $stuId, $newToken)
+				{
+					// 获取考试列表
+					$.post(icve.icveapp.baseurl + "newmobileapi/onlineExam/getExamList_new", "openClassId=" + $openClassId + "&courseOpenId=" + $courseOpenId + "&pageSize=10&page=" + $page + "&exType=0&examState=0&stuId=" + ($stuId || icve.stuId) + "&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json").done(function($data, $status, $xhr)
+					{
+						console.log("icve icveapp newmobileapi/onlineExam/getExamList_new", $data, $xhr.responseText);
+						if($data.code == 1)
+						{
+							if($data.examList.length > 0)
+							{
+								icve.icveapp["newmobileapi/onlineExam/getExamList_new"]($openClassId, $courseOpenId, $page + 1, $stuId, $newToken);
+							}
+						}
+					}).fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/onlineExam/getExamList_new", $xhr, $status, $e);
+					});
+				};
+				
+				icve.icveapp["newmobileapi/onlineExam/getStuExamPreviewNew"] = function($openClassId, $courseOpenId, $examId, $examStuId, $newToken)
+				{
+					// 获取考试预览
+					$.post(icveapp_baseurl + "newmobileapi/onlineExam/getStuExamPreviewNew", "examStuId=" + $examStuId + "&openClassId=" + $openClassId + "&courseOpenId=" + $courseOpenId + "&examId=" + $examId + "&" + icve.common + "&newToken=" + ($newToken || icve.newToken), null, "json").done(function($data, $status, $xhr)
+					{
+						console.log("icve icveapp newmobileapi/onlineExam/getStuExamPreviewNew", $data, $xhr.responseText);
+						if($data.code == 1)
+						{
+							if($data.data.questions.length > 0)
+							{
+								if($data.data.ztWay == 2)
+								{
+									
+								}
+							}
+						}
+					}).fail(function($xhr, $status, $e)
+					{
+						console.warn("icve icveapp newmobileapi/onlineExam/getStuExamPreviewNew", $xhr, $status, $e);
+					});
+				};
+				*/
+			}
+			catch(e)
+			{
+				console.warn(e);
+			}
+			</script>
+			<hr />
+		</fieldset>
+	</body>
+</html>

@@ -37,6 +37,31 @@ Safari safari.png https://support.apple.com/zh-cn/guide/safari/sfri40598/mac
 360安全浏览器 360.png https://browser.360.cn/
 */
 self.parser = {
+	/** 适配苹果，苹果 localStorage 最大2.5M，sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
+	*/
+	setStorageItem: function($key, $val)
+	{
+		try
+		{
+			return localStorage.setItem($key, $val);
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+		return sessionStorage.setItem($key, $val);
+	},
+	getStorageItem: function($key)
+	{
+		if(sessionStorage.getItem($key))
+		{
+			return sessionStorage.getItem($key);
+		}
+		else
+		{
+			return localStorage.getItem($key);
+		}
+	},
 	api: {}, txt: {}, xml: {}, json: {},
 	type: {
 		// 单选题 isSCQ
@@ -232,9 +257,9 @@ parser.api.init = (function()
 	{
 		if(arguments.length > 0)
 		{
-			localStorage.setItem("queslib-compress-res", $d);
+			parser.setStorageItem("queslib-compress-res", $d);
 		}
-		return localStorage.getItem("queslib-compress-res");
+		return parser.getStorageItem("queslib-compress-res");
 	});
 	$.LoadingOverlay("show");
 	try
