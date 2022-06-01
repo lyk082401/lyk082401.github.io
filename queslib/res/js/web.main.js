@@ -37,7 +37,7 @@ Safari safari.png https://support.apple.com/zh-cn/guide/safari/sfri40598/mac
 360安全浏览器 360.png https://browser.360.cn/
 */
 self.parser = {
-	/** 适配苹果，苹果 localStorage 最大2.5M，sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
+	/** 适配苹果，苹果 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."），sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
 	*/
 	setStorageItem: function($key, $val)
 	{
@@ -49,7 +49,15 @@ self.parser = {
 		{
 			console.warn(e);
 		}
-		return sessionStorage.setItem($key, $val);
+		try
+		{
+			return sessionStorage.setItem($key, $val);
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+		return parser["$storageItem$" + $key] = $val;
 	},
 	getStorageItem: function($key)
 	{
@@ -57,10 +65,15 @@ self.parser = {
 		{
 			return sessionStorage.getItem($key);
 		}
-		else
+		else if(localStorage.getItem($key))
 		{
 			return localStorage.getItem($key);
 		}
+		else if(parser["$storagetmp$" + $key])
+		{
+			return parser["$storagetmp$" + $key];
+		}
+		return null;
 	},
 	api: {}, txt: {}, xml: {}, json: {},
 	type: {
