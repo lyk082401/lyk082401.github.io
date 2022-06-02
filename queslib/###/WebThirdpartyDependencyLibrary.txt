@@ -1,61 +1,64 @@
-<!-- Dexie JS -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/dexie/3.2.1/dexie.min.js?https://cdn.staticfile.org/dexie/3.2.1/dexie.min.js"></script>
-
-<!-- Dexie JS -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/dexie/3.2.1/dexie.min.js?https://cdn.staticfile.org/dexie/3.2.1/dexie.min.js"></script>
-
-<!-- Eruda Console doc"https://eruda.liriliri.io/, https://github.com/liriliri/eruda/blob/master/doc/API.md, https://unpkg.com/browse/eruda@2.4.1/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js?https://cdn.staticfile.org/eruda/2.4.1/eruda.min.js" onload="javascript: self.eruda && (eruda._isInit || eruda.init({tool: [], autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"></script>
-
-<!-- vConsole doc"http://wechatfe.github.io/vconsole/demo.html, https://github.com/Tencent/vConsole/blob/dev/README_CN.md, https://unpkg.com/browse/vconsole@3.11.0/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vConsole/3.12.1/vconsole.min.js?https://cdn.staticfile.org/vConsole/3.12.1/vconsole.min.js" onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({defaultPlugins: ['system', 'network', 'element', 'storage'], 'storage.defaultStorages': ['cookies', 'localStorage', 'sessionStorage'], theme: 'dark', disableLogScrolling: true, 'log.showTimestamps': true, onReady: function(){}}))); /**@close (location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"></script>
-
-<!-- Vue -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vue/2.6.14/vue.min.js?https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
-
-<!-- Vue vConsole Devtools Plugin -->
-<script type="text/javascript" charset="UTF-8" src="res/cdn.jsdelivr.net/npm/vue-vconsole-devtools@1.0.5/dist/vue_plugin.js" onload="javascript: self.vConsole && self.vueVconsoleDevtools && (self.vueVconsoleDevtools.initPlugin(self.vConsole), self.Vue && self.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('init', self.Vue));" defer></script>
-
-<!-- JSON Minify doc"https://github.com/fkei/JSON.minify/, https://github.com/getify/JSON.minify/tree/javascript/" -->
-<script type="text/javascript" charset="UTF-8" src="res/web.omeo.top/JSON.minify/minify.json.js"></script>
-
-<!-- JSZip doc"https://stuk.github.io/jszip/, sync-mode@https://github.com/Stuk/jszip/issues/375#issuecomment-258969023" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip/3.6.0/jszip.min.js?https://cdn.staticfile.org/jszip/3.6.0/jszip.min.js"></script>
-
-<!-- JSZip Utils doc"http://stuk.github.io/jszip-utils/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js?https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils.min.js"></script><!--[if IE]><script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils-ie.min.js?https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils-ie.min.js"></script><![endif]-->
-
-<!-- jQuery doc"https://www.jquery123.com/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js?https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js" onload="javascript: self.jQuery && jQuery(document).ready(function(){ self.parser && (parser.api.init.apply(this, arguments), eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\\\/\\\\*\\\\*@close(.+?)\\\\*\\\\/'))[1].trim())); }));"></script>
-
-<!-- jQuery Loading Overlay doc"https://gasparesganga.com/labs/jquery-loading-overlay/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js?https://cdn.staticfile.org/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
-
-<!-- jQuery Easy Loading doc"https://carlosbonetti.github.io/jquery-loading/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js?https://cdn.staticfile.org/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js"></script>
-
-<!-- Zepto JS doc"https://zeptojs.bootcss.com/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/zepto/1.2.0/zepto.min.js?https://cdn.staticfile.org/zepto/1.2.0/zepto.min.js"></script>
-
-<!-- Lodash JS doc"https://www.lodashjs.com/" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/lodash.js/4.17.21/lodash.min.js?https://cdn.staticfile.org/lodash.js/4.17.21/lodash.min.js"></script>
-
-<!-- Zebra Dialog JS doc"https://stefangabos.github.io/Zebra_Dialog/index.html" -->
-<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/zebra_dialog.src.min.js?https://cdn.staticfile.org/zebra_dialog/3.0.5/zebra_dialog.src.min.js"></script>
-
-<!-- Zebra Dialog CSS doc"https://stefangabos.github.io/Zebra_Dialog/index.html" -->
-<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css" />
-
-<!-- Zebra Dialog CSS doc"https://stefangabos.github.io/Zebra_Dialog/materialize.html" -->
-<!--link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css" /-->
-
-<!-- Zebra Dialog CSS doc"https://stefangabos.github.io/Zebra_Dialog/flat.html" -->
-<!--link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css" /-->
-
-<!-- jBox doc"https://stephanwagner.me/jBox/documentation" -->
-<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.js"></script>
-<link rel="stylesheet" charset="UTF-8" href="https://cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.css" />
-
+		<!-- JSON Minify --><!-- doc"https://github.com/fkei/JSON.minify/, https://github.com/getify/JSON.minify/tree/javascript/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://web.omeo.top/JSON.minify/minify.json.js"></script>
+		
+		<!-- Eruda Console --><!-- doc"https://eruda.liriliri.io/, https://github.com/liriliri/eruda/blob/master/doc/API.md, https://unpkg.com/browse/eruda@2.4.1/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js?https://cdn.staticfile.org/eruda/2.4.1/eruda.min.js" onload="javascript: self.eruda && (eruda._isInit || eruda.init({container: (function(){ let el = document.createElement('div'); el.name = 'el-eruda-container'; document.documentElement.appendChild(el); return el; })(), tool: [], autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"></script>
+		
+		<!-- vConsole --><!-- doc"http://wechatfe.github.io/vconsole/demo.html, https://github.com/Tencent/vConsole/blob/dev/README_CN.md, https://unpkg.com/browse/vconsole@3.11.0/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/vConsole/3.14.6/vconsole.min.js?https://cdn.staticfile.org/vConsole/3.14.6/vconsole.min.js" onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({target: (function(){ let el = document.createElement('div'); el.name = 'el-vc-container'; document.documentElement.appendChild(el); return el; })(), defaultPlugins: ['system', 'network', 'element', 'storage'], pluginOrder: [], storage: {defaultStorages: ['cookies', 'localStorage', 'sessionStorage']}, theme: 'dark', disableLogScrolling: true, log: {showTimestamps: true}, onReady: function(){}}))); /**@close (location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"></script>
+		
+		<!-- jQuery --><!-- doc"https://www.jquery123.com/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js?https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js" onload="javascript: self.jQuery && jQuery(document).ready(function(){ $.ajaxSetup({timeout: 5000}); $('body').on('click', function($e){ if(self.eruda && eruda.get()._isShow){ eruda.hide(); return false; } return true; }); /**eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\/\\*\\*@close(.+?)\\*\\/'))[1].trim());*/"></script>
+		
+		<!-- jBox --><!-- doc"https://stephanwagner.me/jBox/documentation" -->
+		<link rel="stylesheet" charset="UTF-8" href="https://cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.css?https://cdn.staticfile.org/jBox/1.3.3/jBox.all.min.css" />
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.js?https://cdn.staticfile.org/jBox/1.3.3/jBox.all.min.js"></script>
+		
+		<!-- JSZip --><!-- doc"https://stuk.github.io/jszip/, sync-mode@https://github.com/Stuk/jszip/issues/375#issuecomment-258969023" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jszip/3.6.0/jszip.min.js?https://cdn.staticfile.org/jszip/3.6.0/jszip.min.js"></script>
+		
+		<!-- Zebra Dialog --><!-- doc"https://stefangabos.github.io/Zebra_Dialog/index.html" -->
+		<link rel="stylesheet" charset="UTF-8" href="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css" />
+		<!-- doc"https://stefangabos.github.io/Zebra_Dialog/materialize.html" -->
+		<!--link rel="stylesheet" charset="UTF-8" href="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/materialize/zebra_dialog.min.css" /-->
+		<!-- doc"https://stefangabos.github.io/Zebra_Dialog/flat.html" -->
+		<!--link rel="stylesheet" charset="UTF-8" href="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/flat/zebra_dialog.min.css" /-->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/zebra_dialog.src.min.js?https://cdn.staticfile.org/zebra_dialog/3.0.5/zebra_dialog.src.min.js"></script>
+		
+		<!-- jQuery Loading Overlay --><!-- doc"https://gasparesganga.com/labs/jquery-loading-overlay/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js?https://cdn.staticfile.org/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
+		
+		<!-- JSZip Utils --><!-- doc"http://stuk.github.io/jszip-utils/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils.min.js?https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils.min.js"></script>
+		<!--[if IE]>
+			<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jszip-utils/0.1.0/jszip-utils-ie.min.js?https://cdn.staticfile.org/jszip-utils/0.1.0/jszip-utils-ie.min.js"></script>
+		<![endif]-->
+		
+		<!-- jQuery Easy Loading --><!-- doc"https://carlosbonetti.github.io/jquery-loading/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js?https://cdn.staticfile.org/jquery-easy-loading/2.0.0-rc.2/jquery.loading.min.js"></script>
+		
+		<!-- Zepto JS --><!-- doc"https://zeptojs.bootcss.com/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/zepto/1.2.0/zepto.min.js?https://cdn.staticfile.org/zepto/1.2.0/zepto.min.js"></script>
+		
+		<!-- Lodash JS --><!-- doc"https://www.lodashjs.com/" -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/lodash.js/4.17.21/lodash.min.js?https://cdn.staticfile.org/lodash.js/4.17.21/lodash.min.js"></script>
+		
+		<!-- Dexie JS -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/dexie/3.2.1/dexie.min.js?https://cdn.staticfile.org/dexie/3.2.1/dexie.min.js"></script>
+		
+		<!-- Vue -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/vue/2.6.14/vue.min.js?https://cdn.staticfile.org/vue/2.6.14/vue.min.js"></script>
+		
+		<!-- Vue vConsole Devtools Plugin -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdn.jsdelivr.net/npm/vue-vconsole-devtools@1.0.5/dist/vue_plugin.js" onload="javascript: self.vConsole && self.vueVconsoleDevtools && (self.vueVconsoleDevtools.initPlugin(self.vConsole), self.Vue && self.__VUE_DEVTOOLS_GLOBAL_HOOK__.emit('init', self.Vue));" defer></script>
+		
+		<!-- Popper.js -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/popper.js/2.11.5/umd/popper.min.js?https://unpkg.com/@popperjs/core@2.11.5/dist/umd/popper.min.js"></script>
+		
+		<!-- Bootstrap -->
+		<link rel="stylesheet" charset="UTF-8" href="https://cdnjs.cat.net/ajax/libs/bootstrap/5.1.3/css/?https://cdn.staticfile.org/bootstrap/5.1.3/css/bootstrap.min.css" />
+		<script type="text/javascript" charset="UTF-8" src="https://cdnjs.cat.net/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js?https://cdn.staticfile.org/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+		
 		<script type="text/javascript">
 		try
 		{

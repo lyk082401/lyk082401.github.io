@@ -40,27 +40,29 @@
 			font-family: "AndroidClock";
 		}
 		</style>
-		<!-- Eruda Console -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js?https://cdn.staticfile.org/eruda/2.4.1/eruda.min.js" onload="javascript: self.eruda && (eruda._isInit || eruda.init({tool: [], autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"></script>
-		<!-- vConsole -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vConsole/3.12.1/vconsole.min.js?https://cdn.staticfile.org/vConsole/3.12.1/vconsole.min.js" onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({defaultPlugins: ['system', 'network', 'element', 'storage'], 'storage.defaultStorages': ['cookies', 'localStorage', 'sessionStorage'], theme: 'dark', disableLogScrolling: true, 'log.showTimestamps': true, onReady: function(){}}))); /**@close (location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"></script>
-		<!-- jQuery -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js?https://cdn.staticfile.org/jquery/1.12.4/jquery.min.js" onload="javascript: self.jQuery && jQuery(document).ready(function(){ $.ajaxSetup({timeout: 5000}); $('body').on('click', function($e){ self.eruda && eruda.hide(); }); /**eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\/\\*\\*@close(.+?)\\*\\/'))[1].trim());*/ self.parser && parser.api.init.apply(this, arguments); });"></script>
 		<!-- JSON Minify -->
 		<script type="text/javascript" charset="UTF-8" src="res/web.omeo.top/JSON.minify/minify.json.js"></script>
+		<!-- Eruda Console -->
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js" onload="javascript: self.eruda && (eruda._isInit || eruda.init({container: (function(){ let el = document.createElement('div'); el.name = 'el-eruda-container'; document.documentElement.appendChild(el); return el; })(), tool: [], autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"></script>
+		<!-- vConsole -->
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vConsole/3.14.6/vconsole.min.js" onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({target: (function(){ let el = document.createElement('div'); el.name = 'el-vc-container'; document.documentElement.appendChild(el); return el; })(), defaultPlugins: ['system', 'network', 'element', 'storage'], pluginOrder: [], storage: {defaultStorages: ['cookies', 'localStorage', 'sessionStorage']}, theme: 'dark', disableLogScrolling: true, log: {showTimestamps: true}, onReady: function(){}}))); /**@close (location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"></script>
+		<!-- jQuery -->
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js" onload="javascript: self.jQuery && jQuery(document).ready(function(){ $.ajaxSetup({timeout: 5000}); $('body').on('click', function($e){ if(self.eruda && eruda.get()._isShow){ eruda.hide(); return false; } return true; }); /**eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\/\\*\\*@close(.+?)\\*\\/'))[1].trim());*/ self.parser && parser.api.init.apply(this, arguments); });"></script>
+		<!-- jBox -->
+		<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.css" />
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.js"></script>
 		<!-- JSZip -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip/3.6.0/jszip.min.js?https://cdn.staticfile.org/jszip/3.6.0/jszip.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jszip/3.6.0/jszip.min.js"></script>
+		<!-- Zebra Dialog -->
+		<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css" />
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/zebra_dialog.src.min.js"></script>
 		<!-- jQuery Loading Overlay -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js?https://cdn.staticfile.org/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
-		<!-- Zebra Dialog JS -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/zebra_dialog.src.min.js?https://cdn.staticfile.org/zebra_dialog/3.0.5/zebra_dialog.src.min.js"></script>
-		<!-- Zebra Dialog CSS -->
-		<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css?https://cdn.staticfile.org/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css" />
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
 		<!-- Web Main Reference -->
-		<!--script type="text/javascript" charset="UTF-8" src="res/js/web.tools.js"></script-->
 		<link rel="stylesheet" charset="UTF-8" href="res/css/web.main.css" />
-		<script type="text/javascript" charset="UTF-8" src="res/js/web.plugins.js"></script>
 		<script type="text/javascript" charset="UTF-8" src="res/js/web.main.js"></script>
+		<!--script type="text/javascript" charset="UTF-8" src="res/js/web.tools.js"></script-->
+		<script type="text/javascript" charset="UTF-8" src="res/js/web.plugins.js"></script>
 	</head>
 	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 12px; opacity: 0.50;">
 		<fieldset name="queslib">

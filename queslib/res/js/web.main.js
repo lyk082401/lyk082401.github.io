@@ -322,7 +322,7 @@ parser.api.init = (function()
 					<p name="cloneSelect_container">${select.outerHTML.replace(/eruda\.util\.\$\.cloneSelect/, "$(document).find('[name=\\'queslib\\'] select').get(0)")}</p><hr />
 					<button name="autoread" style="color: grey;">自动浏览</button><hr />
 					<button name="changebg" style="color: grey;">日间模式</button><hr />
-					<!--button name="assignto" style="color: grey;">${(/indexnew\.html/).test(location.pathname) ? "访问旧版" : "访问新版"}</button><hr /-->
+					<button name="icveview" style="color: grey;">${(/index\.html/).test(location.pathname) ? "职教云数据查看" : "返回复习题库"}</button><hr />
 					每章题量&nbsp;&nbsp;&nbsp;
 					<button name="quesnum">➖</button>
 					<input name="quesnum" type="range" min="10" max="200" step="5" value="${localStorage.getItem('queslib-question-num') ? localStorage.getItem('queslib-question-num') : '50'}" />
@@ -459,12 +459,11 @@ parser.api.init = (function()
 						}
 					});
 				})();
-				/**
-				$el.find("button[name='assignto']").get(0).onclick = (function($e)
+				// 职教云数据查看
+				$el.find("button[name='icveview']").get(0).onclick = (function($e)
 				{
-					(/indexnew\.html/).test(location.pathname) ? location.assign("index.html") : location.assign("indexnew.html");
+					(/index\.html/).test(location.pathname) ? location.assign("icve-data-view.html") : location.assign("index.html");
 				});
-				*/
 				$el.css("position", "absolute");
 				$el.css("overflow", "auto");
 				this._$el = $el;
@@ -693,6 +692,76 @@ parser.api.init = (function()
 		});
 		// 优先显示
 		eruda.show("题库菜单");
+	}
+	catch(e)
+	{
+		console.warn(e);
+	}
+	try
+	{
+		let vcPlugin = new VConsole.VConsolePlugin("vc_plugin", "vcPlugin");
+		vcPlugin.on("init", function()
+		{
+			console.log("vconsole plugin init");
+		});
+		vcPlugin.on("renderTab", function($callback)
+		{
+			let html = "<center><div>Click the tool button below</div></center>";
+			$callback(html);
+		});
+		vcPlugin.on("addTool", function($callback)
+		{
+			let button = {
+				name: "Reload",
+				global: false,
+				data: {},
+				onClick: function($event)
+				{
+					location.reload();
+				}
+			};
+			$callback([button]);
+		});
+		let type;
+		vcPlugin.on("addTopBar", function($callback)
+		{
+			let btnList = [];
+			btnList.push({
+				name: "Apple",
+				className: "",
+				data: {type: "apple"},
+				onClick: function($event, $data)
+				{
+					if(type != $data.type)
+					{
+						// `this` points to current button
+						type = $data.type;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			});
+			btnList.push({
+				name: "Orange",
+				className: "",
+				data: {type: "orange"},
+				onClick: function($event, $data)
+				{
+					type = $data.type;
+				}
+			});
+			$callback(btnList);
+		});
+		vcPlugin.on("ready", function(){});
+		vcPlugin.on("remove", function(){});
+		vcPlugin.on("show", function(){});
+		vcPlugin.on("hide", function(){});
+		vcPlugin.on("showConsole", function(){});
+		vcPlugin.on("hideConsole", function(){});
+		vcPlugin.on("updateOption", function(){});
+		vConsole.addPlugin(vcPlugin);
 	}
 	catch(e)
 	{
@@ -1125,7 +1194,18 @@ parser.api.download = (function($data, $name, $type, $target)
 		.replace(/\\/g, "%25255C");
 	}
 	// 创建内存引用
-	let d = (URL || webkitURL).createObjectURL(new Blob([$data || document.documentElement.outerHTML], {type: $type || "application/octet-stream"})),
+	let d = (URL || webkitURL).createObjectURL(new Blob([$data || document.documentElement.outerHTML || (function()
+	{
+		try
+		{
+			return (new XMLSerializer()).serializeToString(document);
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+		return document.documentElement.innerHTML;
+	})()], {type: $type || "application/octet-stream"})),
 	a = document.createElement("a");
 	// IE 浏览器
 	if(navigator.msSaveOrOpenBlob)
