@@ -694,7 +694,7 @@ self.catalog = [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/10.下半学期综合试题5.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/11.第二章  水、电解质及酸碱平衡失调病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/12.第2章 水、电解质及酸碱平衡失调病人的护理.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/13.第三至五章  营养支持病人的护理、 外科休克病人的护理、麻醉病 人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/13.第三至五章  营养支持病人的护理、 外科休克病人的护理、麻醉病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/14.第七章 手术前后病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/15.第九章 损伤病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/16.第十一章 颅脑疾病病人的护理.json"},
