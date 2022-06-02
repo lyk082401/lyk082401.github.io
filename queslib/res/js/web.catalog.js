@@ -631,7 +631,7 @@ self.catalog = [
 	},
 	{
 		optname: "综合题库",
-		options: [
+		prop: {disabled: true}, options: [
 			{
 				name: "第三学期-护理心理学-复习题",
 				vals: [{"type": "plain-txt", "file": "其他/第三学期/2021年12月-护理心理学复习题.txt"}]
@@ -680,6 +680,36 @@ self.catalog = [
 		optname: "云课堂智慧职教",
 		options: [
 			{
+				name: "第四学期-冯博--外科护理学",
+				vals: [
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/01.泌尿系统损伤病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/02.尿石症病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/03.第二十九章 良性前列腺增生病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/04.第三十一章 骨折病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/05.第三十二章 关节脱位患者的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/06.外科护理学下半学期综合1.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/07.下半学期综合试题2.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/08.下半学期综合试题3.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/09.下半学期综合试题4.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/10.下半学期综合试题5.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/11.第二章  水、电解质及酸碱平衡失调病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/12.第2章 水、电解质及酸碱平衡失调病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/13.第三至五章  营养支持病人的护理、 外科休克病人的护理、麻醉病 人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/14.第七章 手术前后病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/15.第九章 损伤病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/16.第十一章 颅脑疾病病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/17.第十二章 颈部疾病病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/18.第十三章 胸部疾病病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/19.第十四章  乳房疾病病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/20.第十五章 腹外疝病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/21.第十六章 急性化脓性腹膜炎和腹部损伤病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/22.第十七章 胃十二指肠疾病病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/23.第十八章 肠疾病病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/24.第十七章 胃十二指肠疾病病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/25.第十九章 肛管疾病病人的护理.json"}
+				]
+			},
+			/****{
 				name: "第一学期-梁英梅--病原生物与免疫学（护理专业）",
 				vals: [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第一学期/梁英梅--病原生物与免疫学（护理专业）/考试/病面前8章知识测验.json"}
@@ -712,7 +742,7 @@ self.catalog = [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第二章.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第二学期/黄淑燕--2020级《毛泽东思想和中国特色社会主义理论体系概论》/第一章.json"}
 				]
-			},
+			},****/
 			/**{
 				name: "第二学期-关小丽--药理学",
 				vals: [
@@ -732,7 +762,7 @@ self.catalog = [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第二学期/关小丽--药理学/.json"}
 				]
-			},*/
+			},*//****
 			{
 				name: "第二学期-蔡姗珊--大学英语2",
 				vals: [
@@ -754,7 +784,7 @@ self.catalog = [
 					
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第二学期/梁英梅--病免补考/考试/2020级护理病免补考试题.json"}
 				]
-			},
+			},****/
 			/**{
 				name: "第一学期-陆海帆--护理学导论",
 				vals: [
@@ -778,7 +808,7 @@ self.catalog = [
 					
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第二学期/陆海帆--基础护理学课程/考试/.json"}
 				]
-			},*/
+			},*//****
 			{
 				name: "第二学期-车少冬--20级生理学",
 				vals: [
@@ -989,12 +1019,12 @@ self.catalog = [
 					
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/第三学期/⑥施秋桃--内科护理学/考试/第2章 呼吸系统.json"}
 				]
-			}
+			}****/
 		]
 	},
 	{
 		optname: "《基础护理学实训与学习指导》",
-		options: [
+		prop: {disabled: true}, options: [
 			{
 				name: "第二学期-基础护理学-全章习题",
 				vals: [
@@ -1046,7 +1076,7 @@ self.catalog = [
 	},
 	{
 		optname: "《健康评估实训与学习指导》",
-		options: [
+		prop: {disabled: true}, options: [
 			{
 				name: "第三学期-健康评估-全章习题",
 				vals: [
@@ -1065,7 +1095,7 @@ self.catalog = [
 	},
 	{
 		optname: "《护理管理学（第二版）》",
-		options: [
+		prop: {disabled: true}, options: [
 			{
 				name: "第三学期-护理管理学-全章习题",
 				vals: [

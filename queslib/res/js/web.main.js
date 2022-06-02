@@ -1111,7 +1111,16 @@ parser.api.download = (function($data, $name, $type, $target)
 {
 	if(typeof($name) === "string")
 	{
-		$name = decodeURIComponent($name);
+		$name = decodeURIComponent($name)
+		// 编码（进行3次"encodeURIComponent(encodeURIComponent(encodeURIComponent()))"）不可作为路径的字符
+		// "/"
+		.replace(/\//g, "%25252F")
+		// "?"
+		.replace(/\?/g, "%25253F")
+		// ":"
+		.replace(/\:/g, "%25253A")
+		// "\"
+		.replace(/\\/g, "%25255C");
 	}
 	// 创建内存引用
 	let d = (URL || webkitURL).createObjectURL(new Blob([$data || document.documentElement.outerHTML], {type: $type || "application/octet-stream"})),
