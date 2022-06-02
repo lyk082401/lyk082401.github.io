@@ -968,6 +968,8 @@ parser.api.init = (function()
 				queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
 				self.parser && confirm("库数据更新失败！是否进行缓存？") && (parser.api.downloadWithUrl(url), setTimeout(function()
 				{
+					localStorage.clear();
+					sessionStorage.clear();
 					location.reload(false);
 				}, 100));
 			}),
