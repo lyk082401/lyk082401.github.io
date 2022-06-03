@@ -4,7 +4,7 @@
 	// https://cdnjs.cat.net/ajax/libs/highlight.js/11.5.0/highlight.min.js?https://cdn.staticfile.org/highlight.js/11.5.0/highlight.min.js
 	if(1)return;
 	g.tools = f.bind(f)(g);
-	console.info(Dexie)
+	console.log(Dexie)
 	
 	
 	
@@ -76,7 +76,7 @@
 								t.oncomplete = t.onerror = t.onabort = function(e)
 								{
 									// (IDBTransaction)e.target
-									(e.type.includes("complete") ? console.info : console.warn)(`[db][${method}][transaction]`, e.type, e.target, e);
+									(e.type.includes("complete") ? console.log : console.warn)(`[db][${method}][transaction]`, e.type, e.target, e);
 									e.type.includes("complete") || reject([e.target.error, e]);
 								};
 								let s = t.objectStore(dbtable);
@@ -84,7 +84,7 @@
 								r.onsuccess = r.onerror = function(e)
 								{
 									// (IDBRequest)e.target
-									(e.type.includes("success") ? console.info : console.warn)(`[db][${method}][transaction][objectStore]`, e.type, e.target, e);
+									(e.type.includes("success") ? console.log : console.warn)(`[db][${method}][transaction][objectStore]`, e.type, e.target, e);
 									e.type.includes("success") ? resolve([e.target.result, e]) : reject([e.target.error, e]);
 								};
 							});
@@ -127,11 +127,11 @@
 					dbimpl.onupgradeneeded = dbimpl.onblocked = dbimpl.onsuccess = dbimpl.onerror = function(e)
 					{
 						// (IDBOpenDBRequest)e.target
-						(Array.from(["upgradeneeded", "success"]).includes(e.type) ? console.info : console.warn)(`[db][impl]`, e.type, e.target, e);
+						(Array.from(["upgradeneeded", "success"]).includes(e.type) ? console.log : console.warn)(`[db][impl]`, e.type, e.target, e);
 						e.target.result && (dbobj = e.target.result);
 						e.target.result.onversionchange = e.target.result.onclose = e.target.result.onabort = e.target.result.onerror = function(e)
 						{
-							(["versionchange", "close"].includes(e.type) ? console.info : console.warn)(`[db][impl][database]`, e.type, e.target, e);
+							(["versionchange", "close"].includes(e.type) ? console.log : console.warn)(`[db][impl][database]`, e.type, e.target, e);
 						};
 						let retobj = {
 							status: e.target.readyState,
@@ -156,7 +156,7 @@
 											autoIncrement: true,
 											keyPath: "id"
 										}*/);
-										console.info(`[db][impl][createObjectStore]`, os.name, os);
+										console.log(`[db][impl][createObjectStore]`, os.name, os);
 									}
 									catch(ex)
 									{

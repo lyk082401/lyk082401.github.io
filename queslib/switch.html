@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html> 
+   <head> 
+      <title>demo</title> 
+      <script type="text/javascript" src="jquery.min.js"></script> 
+      <script type="text/javascript" src="on_off_switch.js"></script> 
+      <link rel="stylesheet" href="on_off_switch.css" type="text/css"> 
+   </head> 
+   <body> <span>方法</span>
+      <div class="testswitch"> 
+        屏幕常亮 <input class="testswitch-checkbox" id="onoffswitch" type="checkbox">
+         <label class="testswitch-label" for="onoffswitch">吧VC
+            <span class="testswitch-inner" data-on="ON" data-off="OFF"></span>
+            <span class="testswitch-switch"></span>
+         </label> 
+      </div>  
+      <span>方法</span>
+   </body>
+</html>
+
+(function tryKeepScreenAlive($minutes)
+{
+	if(navigator.tryKeepScreenAlive)
+	{
+		return;
+	}
+	navigator.wakeLock && navigator.wakeLock.request("screen").then(function($lock)
+	{
+		console.log($lock, "唤醒锁已打开");
+		navigator.tryKeepScreenAlive = true;
+		$lock.onrelease = function($e)
+		{
+			console.log($e, "唤醒锁已关闭");
+		};
+		let visibilitychange = function($e2)
+		{
+			if(["visible", "hidden"].includes(document.visibilityState) || !document.hidden || document.hidden)
+			{
+				let extra = $lock.released ? "唤醒锁已释放" : "唤醒锁未释放";
+				if((document.visibilityState === "visible") || !document.hidden)
+				{
+					console.log($e2, "当前页面已可视", extra);
+					navigator.tryKeepScreenAlive = false;
+					document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
+					tryKeepScreenAlive(10);
+				}
+				if((document.visibilityState === "hidden") || document.hidden)
+				{
+					console.log($e2, "当前页面不可视", extra);
+				}
+			}
+		};
+		document.addEventListener ? document.addEventListener("visibilitychange", visibilitychange) : document.attachEvent("onvisibilitychange", visibilitychange);
+		setTimeout(function()
+		{
+			$lock.released || $lock.release("screen").then(console.log, console.warn);
+		}, (($minutes != null) ? $minutes : 10) * 60 * 1000);
+  }, console.warn);
+})(10);

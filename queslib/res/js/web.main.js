@@ -38,6 +38,57 @@ Safari safari.png https://support.apple.com/zh-cn/guide/safari/sfri40598/mac
 */
 self.parser = {
 	cssForDisableSelect: "-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none;",
+	tryKeepScreenAlive: function($minutes)
+	{
+		navigator.tryKeepScreenAlive || (navigator.wakeLock && (!document.hidden ? navigator.wakeLock.request("screen").then(function($lock)
+		{
+			console.log($lock, "唤醒锁已打开");
+			navigator.tryKeepScreenAlive = true;
+			$lock.onrelease = function($e)
+			{
+				console.log($e, "唤醒锁已关闭");
+			};
+			let visibilitychange = function($e2)
+			{
+				if(["visible", "hidden"].includes(document.visibilityState))
+				{
+					let extra = $lock.released ? "唤醒锁已释放" : "唤醒锁未释放";
+					if(document.visibilityState === "visible")
+					{
+						console.log($e2, "当前页面已可视", extra);
+						document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
+						setTimeout(function()
+						{
+							navigator.tryKeepScreenAlive = false;
+							parser.tryKeepScreenAlive($minutes);
+						}, 100);
+					}
+					if(document.visibilityState === "hidden")
+					{
+						console.log($e2, "当前页面不可视", extra);
+					}
+				}
+			};
+			document.addEventListener ? document.addEventListener("visibilitychange", visibilitychange) : document.attachEvent("onvisibilitychange", visibilitychange);
+			setTimeout(function()
+			{
+				$lock.released || $lock.release("screen").then(console.log, console.warn);
+			}, (($minutes != null) ? $minutes : 10) * 60 * 1000);
+		}, console.warn) : (function()
+		{
+			let visibilitychange = function($e)
+			{
+				if(document.visibilityState === "visible")
+				{
+					console.log($e, "当前页面已可视", "尝试开启唤醒锁");
+					document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
+					parser.tryKeepScreenAlive($minutes);
+				}
+			};
+			document.addEventListener ? document.addEventListener("visibilitychange", visibilitychange) : document.attachEvent("onvisibilitychange", visibilitychange);
+			console.log({minutes: $minutes}, "当前页面不可视", "将等待页面可视");
+		})()));
+	},
 	/** 适配苹果，苹果 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."），sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
 	*/
 	setStorageItem: function($key, $val)
@@ -254,6 +305,7 @@ parser.api.init = (function()
 	{
 		return alert("JSZip 未加载");
 	}
+	parser.tryKeepScreenAlive(10);
 	let queslib = $(document).find("[name='queslib']").get(0),
 	select = $(queslib).find("select").get(0),
 	cloneSelect = null,

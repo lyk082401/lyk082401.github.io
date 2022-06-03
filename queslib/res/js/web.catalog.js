@@ -1183,7 +1183,7 @@ catalog.init = function($select)
 	// 重新添加选项
 	catalog.forEach(function($group, $i, $ars)
 	{
-		console.info("群组", $group.optname);
+		console.log("群组", $group.optname);
 		$select.append(document.createTextNode("\n" + ("\t").repeat(5)));
 		let group = document.createElement("optgroup");
 		($group.optname != null) && (group.label = $group.optname);
@@ -1191,7 +1191,7 @@ catalog.init = function($select)
 		catalog.updateAttr($group.attr, group), catalog.updateProp($group.prop, group);
 		$group.options && $group.options.forEach(function($opt, $i2, $ars2)
 		{
-			console.info("群组选项", $opt.name);
+			console.log("群组选项", $opt.name);
 			group.append(document.createTextNode("\n" + ("\t").repeat(6)));
 			let opt = document.createElement("option");
 			($opt.name != null) && (opt.label = $opt.name);
