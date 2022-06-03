@@ -334,7 +334,7 @@ parser.api.init = (function()
 					<p name="cloneSelect_container">${select.outerHTML.replace(/eruda\.util\.\$\.cloneSelect/, "$(document).find('[name=\\'queslib\\'] select').get(0)")}</p><hr />
 					<button name="autoread" style="color: grey;">自动浏览</button><hr />
 					<button name="changebg" style="color: grey;">日间模式</button><hr />
-					<button name="icveview" style="color: grey;">${(/index\.html/).test(location.pathname) ? "职教云数据查看" : "返回复习题库"}</button><hr />
+					<button name="icveview" style="color: grey;">${(/icve\-data\-view/).test(location.pathname) ? "返回复习题库" : "职教云数据查看"}</button><hr />
 					每章题量&nbsp;&nbsp;&nbsp;
 					<button name="quesnum">➖</button>
 					<input name="quesnum" type="range" min="10" max="200" step="5" value="${localStorage.getItem('queslib-question-num') ? localStorage.getItem('queslib-question-num') : '50'}" />
@@ -474,7 +474,7 @@ parser.api.init = (function()
 				// 职教云数据查看
 				$el.find("button[name='icveview']").get(0).onclick = (function($e)
 				{
-					(/index\.html/).test(location.pathname) ? location.assign("icve-data-view.html") : location.assign("index.html");
+					(/icve\-data\-view/).test(location.pathname) ? location.assign("index.html") : location.assign("icve-data-view.html");
 				});
 				$el.css("position", "absolute");
 				$el.css("overflow", "auto");
