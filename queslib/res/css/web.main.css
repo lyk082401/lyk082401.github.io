@@ -1,3 +1,122 @@
+.non-user-select, select, button
+{
+	/** 禁止元素文字长按选择 */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+.can-user-select
+{
+	/** 启用元素文字长按选择 */
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	-o-user-select: text;
+	user-select: text;
+}
+.non-text-size-adjust
+{
+	/** 禁用浏览器文字大小调整功能 */
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+.can-text-size-adjust
+{
+	/** 启用浏览器文字大小调整功能 */
+	-webkit-text-size-adjust: auto;
+	-moz-text-size-adjust: auto;
+	-ms-text-size-adjust: auto;
+	-o-text-size-adjust: auto;
+	text-size-adjust: auto;
+}
+.red-text-stroke
+{
+	color: #ffffff;
+	/** 红色镂空字体 */
+	-webkit-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	-moz-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	-ms-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	-o-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	text-stroke: 0.8px rgba(255, 0, 0, 1);
+}
+.transparent-text-stroke
+{
+	/** 平滑文字 */
+	-webkit-text-stroke: 1px transparent;
+	-moz-text-stroke: 1px transparent;
+	-ms-text-stroke: 1px transparent;
+	-o-text-stroke: 1px transparent;
+	text-stroke: 1px transparent;
+}
+.non-overflow-scrolling
+{
+	/** iOS 手指移开，滚动立即停止 */
+	-webkit-overflow-scrolling: auto;
+	-moz-overflow-scrolling: auto;
+	-ms-overflow-scrolling: auto;
+	-o-overflow-scrolling: auto;
+	overflow-scrolling: auto;
+}
+.can-overflow-scrolling
+{
+	/** iOS 手指移开，继续滚动一段距离 */
+	-webkit-overflow-scrolling: touch;
+	-moz-overflow-scrolling: touch;
+	-ms-overflow-scrolling: touch;
+	-o-overflow-scrolling: touch;
+	overflow-scrolling: touch;
+}
+.transparent-tap-highlight-color
+{
+	/** iOS 禁用点击出现半透明灰色背景 */
+	-webkit-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	-moz-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	-ms-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	-o-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+}
+.non-touch-callout
+{
+	/** iOS 禁用长按页面时的弹出菜单 */
+	-webkit-touch-callout: none;
+	-moz-touch-callout: none;
+	-ms-touch-callout: none;
+	-o-touch-callout: none;
+	touch-callout: none;
+}
+.can-touch-callout
+{
+	/** iOS 启用长按页面时的弹出菜单 */
+	-webkit-touch-callout: default;
+	-moz-touch-callout: default;
+	-ms-touch-callout: default;
+	-o-touch-callout: default;
+	touch-callout: default;
+}
+.non-appearance, select, button, input[type="button"], details, summary, hr
+{
+	/** 去除默认样式 */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+}
+.use-appearance
+{
+	/** 启用默认样式 */
+	-webkit-appearance: normal;
+	-moz-appearance: normal;
+	-ms-appearance: normal;
+	-o-appearance: normal;
+	appearance: normal;
+}
+
 /** <style type="text/css"> */
 /** --- 复选框 */
 [name="queslib"] [type=checkbox]
@@ -125,7 +244,7 @@
 	content: attr(title);
 	position: absolute;
 	left: 50%;
-	/** 正数显示在上方，负数显示在下方 */
+	/** 正号显示在上方，负号显示在下方 */
 	bottom: -100%;
 	transform: translate(-50%, 0);
 	color: #fff;
@@ -162,8 +281,16 @@
 	overflow: auto;
 	/** 禁用浏览器文字大小调整功能 */
 	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
 	/** 平滑文字 */
 	-webkit-text-stroke: 1px transparent;
+	-moz-text-stroke: 1px transparent;
+	-ms-text-stroke: 1px transparent;
+	-o-text-stroke: 1px transparent;
+	text-stroke: 1px transparent;
 }
 [name="queslib"] textarea
 {
@@ -175,6 +302,10 @@
 	color: #ffffff;
 	/** 红色镂空字体 */
 	-webkit-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	-moz-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	-ms-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	-o-text-stroke: 0.8px rgba(255, 0, 0, 1);
+	text-stroke: 0.8px rgba(255, 0, 0, 1);
 }
 [name="queslib"] aside[name="todo"]
 {
@@ -188,10 +319,14 @@
 	border: 0 solid black;
 	border-spacing: 10px 0;
 }
-[name="queslib"] aside[name="todo"] b, [name="queslib"] summary, [name="queslib"] select
+[name="queslib"] aside[name="todo"] b, /**[name="queslib"] summary, */[name="queslib"] select, .vc-switch
 {
 	/** 禁止页面文字长按选择 */
 	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 [name="queslib"] aside[name="todo"] button
 {
@@ -199,6 +334,10 @@
 	color: #337ab7;
 	/** 禁止页面文字长按选择 */
 	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 [name="queslib"] dl, [name="queslib"] ul
 {
@@ -271,16 +410,28 @@
 /** iOS Safari 浏览器样式测试适配 */
 [name="queslib"]
 {
-	-webkit-overflow-scrolling: touch;
+	-webkit-overflow-scrolling: auto;
 	/** 禁用点击出现半透明灰色背景 */
 	-webkit-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	-moz-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	-ms-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	-o-tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
+	tap-highlight-color: transparent; /** rgba(0, 0, 0, 0) */
 	/** 禁用长按页面时的弹出菜单 */
-	webkit-touch-callout: none;
+	-webkit-touch-callout: none;
+	-moz-touch-callout: none;
+	-ms-touch-callout: none;
+	-o-touch-callout: none;
+	touch-callout: none;
 }
 [name="queslib"] select, [name="queslib"] input, [name="queslib"] textarea
 {
 	/** 去除默认样式 */
 	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
 }
 [name="queslib"] [name="question"] [name="child"] [name="option"]
 {

@@ -37,6 +37,7 @@ Safari safari.png https://support.apple.com/zh-cn/guide/safari/sfri40598/mac
 360安全浏览器 360.png https://browser.360.cn/
 */
 self.parser = {
+	cssForDisableSelect: "-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none;",
 	/** 适配苹果，苹果 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."），sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
 	*/
 	setStorageItem: function($key, $val)
@@ -310,6 +311,17 @@ parser.api.init = (function()
 	{
 		console.warn(e);
 	}
+	let nonAppearanceCss = `<style type="text/css">
+	select, button, input[type="button"], details, summary, hr
+	{
+		/** 去除默认样式 */
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		-ms-appearance: none;
+		-o-appearance: none;
+		appearance: none;
+	}
+	</style>`;
 	try
 	{
 		// eruda.util.$ eruda._$el eruda._devTools._tools eruda._devTools._tools.network._requests
@@ -318,7 +330,7 @@ parser.api.init = (function()
 			name: "题库菜单",
 			init: (function($el)
 			{
-				$el.html((`<center><hr />
+				$el.html((`${nonAppearanceCss}<center><hr />
 					<p name="cloneSelect_container">${select.outerHTML.replace(/eruda\.util\.\$\.cloneSelect/, "$(document).find('[name=\\'queslib\\'] select').get(0)")}</p><hr />
 					<button name="autoread" style="color: grey;">自动浏览</button><hr />
 					<button name="changebg" style="color: grey;">日间模式</button><hr />
@@ -488,7 +500,7 @@ parser.api.init = (function()
 					select.selectedIndex = $i;
 					select.onchange();
 				});
-				let html = `<aside name="switchques">`;
+				let html = `${nonAppearanceCss}<aside name="switchques">`;
 				html += `\n${"\t".repeat(1)}<hr />`;
 				let plen = $(select).find("optgroup").length;
 				$(select).find("optgroup").each(function($index, $optgroup)
@@ -634,7 +646,7 @@ parser.api.init = (function()
 				];
 				$el.timer_func = (function()
 				{
-					$el.html("<center><hr />" + exams.map(function($val, $index, $arrs)
+					$el.html(nonAppearanceCss + "<center><hr />" + exams.map(function($val, $index, $arrs)
 					{
 						/**let args = [];
 						$val.date[0].split("-").forEach(function($v, $i, $arrs)
@@ -699,20 +711,20 @@ parser.api.init = (function()
 	}
 	try
 	{
-		let vcPlugin = new VConsole.VConsolePlugin("vc_plugin", "vcPlugin");
+		let vcPlugin = new VConsole.VConsolePlugin("vcplugin", "网页菜单");
 		vcPlugin.on("init", function()
 		{
 			console.log("vconsole plugin init");
 		});
 		vcPlugin.on("renderTab", function($callback)
 		{
-			let html = "<center><div>Click the tool button below</div></center>";
+			let html = nonAppearanceCss + "<center><div>Click the tool button below</div></center>";
 			$callback(html);
 		});
 		vcPlugin.on("addTool", function($callback)
 		{
 			let button = {
-				name: "Reload",
+				name: "刷新网页",
 				global: false,
 				data: {},
 				onClick: function($event)
@@ -720,7 +732,16 @@ parser.api.init = (function()
 					location.reload();
 				}
 			};
-			$callback([button]);
+			let button2 = {
+				name: "强制刷新",
+				global: false,
+				data: {},
+				onClick: function($event)
+				{
+					location.reload(true);
+				}
+			};
+			$callback([button, button2]);
 		});
 		let type;
 		vcPlugin.on("addTopBar", function($callback)
@@ -762,6 +783,19 @@ parser.api.init = (function()
 		vcPlugin.on("hideConsole", function(){});
 		vcPlugin.on("updateOption", function(){});
 		vConsole.addPlugin(vcPlugin);
+		/**
+		// 添加其他剩余工具
+		((location.protocol === "file:") ? ["system", "network", "element", "storage"] : []).forEach(function($val, $index, $arrs)
+		{
+			if(vConsole.pluginList)
+			{
+				if(!vConsole.pluginList[$val] || (vConsole.pluginList[$val] && !vConsole.pluginList[$val].isReady))
+				{
+					VConsole["VConsole" + eruda.util.upperFirst($val) + "Plugin"] && vConsole.addPlugin(new VConsole["VConsole" + eruda.util.upperFirst($val) + "Plugin"]($val, eruda.util.upperFirst($val)));
+				}
+			}
+		});
+		*/
 	}
 	catch(e)
 	{
@@ -2373,7 +2407,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 		let htmls = [], html = "";
 		html = `${"\t".repeat(4)}<article name="chapter">`;
 		html += `\n${"\t".repeat(5)}<details ontoggle="javascript: parser.onToggleDetails(this);"${_isOpen ? " open" : ""}>`;
-		html += `\n${"\t".repeat(6)}<summary name="name" oncopy="javascript: return false;">${__data.name}{{chapter_total_quesnum}}</summary>`;
+		html += `\n${"\t".repeat(6)}<summary name="name" oncopy="javascript: return true;">${__data.name}{{chapter_total_quesnum}}</summary>`;
 		html += `\n${"\t".repeat(6)}<aside name="todo">`;
 		html += `\n${"\t".repeat(7)}<center>`;
 		html += `\n${"\t".repeat(8)}<table>`;
