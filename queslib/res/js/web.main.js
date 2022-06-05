@@ -55,12 +55,15 @@ self.parser = {
 				console.log($e, "唤醒锁已关闭", (new Date()).toTimeString());
 				setTimeout(function()
 				{
-					if(confirm("屏幕唤醒锁已关闭，为防止屏幕自动黑屏，是否需要打开？") && navigator.wakeLock.wakeLockOnvisibilitychange)
+					if(!document.hidden && confirm("屏幕唤醒锁已关闭，为防止屏幕自动黑屏，是否需要打开？"))
 					{
-						document.removeEventListener ? document.removeEventListener("visibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange) : document.detachEvent("onvisibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange);
-						navigator.wakeLock.wakeLockOnvisibilitychange = null;
-						navigator.wakeLock.currentKeepScreenIsAlive = false;
-						parser.tryKeepScreenAlive($minutes);
+						if(navigator.wakeLock.wakeLockOnvisibilitychange)
+						{
+							document.removeEventListener ? document.removeEventListener("visibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange) : document.detachEvent("onvisibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange);
+							navigator.wakeLock.wakeLockOnvisibilitychange = null;
+							navigator.wakeLock.currentKeepScreenIsAlive = false;
+							parser.tryKeepScreenAlive($minutes);
+						}
 					}
 				}, 30 * 1000);
 			};
