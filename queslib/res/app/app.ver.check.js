@@ -48,7 +48,7 @@
 							}
 							else
 							{
-								new $.Zebra_Dialog(`<code>${url}</code><br /><input style="width: 100%; height: 50px;" value="${url}" />`, {
+								new $.Zebra_Dialog(`<code>${url}</code><br /><br /><input style="width: 100%; height: 50px;" value="${url}" />`, {
 									type: "information",
 									title: "请手动复制下载链接到浏览器",
 									buttons: [{caption: "好的"}],
