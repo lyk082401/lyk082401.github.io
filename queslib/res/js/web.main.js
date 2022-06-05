@@ -305,6 +305,7 @@ parser.api.init = (function()
 	{
 		return alert("JSZip 未加载");
 	}
+	// 让屏幕保持常亮
 	parser.tryKeepScreenAlive(10);
 	let queslib = $(document).find("[name='queslib']").get(0),
 	select = $(queslib).find("select").get(0),

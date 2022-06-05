@@ -1,3 +1,4 @@
+@import url("web.switch.css");
 .non-user-select, select, button
 {
 	/** 禁止元素文字长按选择 */
