@@ -10,23 +10,23 @@
 			let currentVerCode = api.AppUtil().getVerCode();
 			let desc = $data.release.latest.desc;
 			let url = $data.release.latest.dlPath;
-			if(!(/(http)|(https)/).test(dlPath))
+			if(!(/(http)|(https)/).test(url))
 			{
 				// "//"
-				if((/^\/\//).test(dlPath))
+				if((/^\/\//).test(url))
 				{
-					url = location.protocol + dlPath;
+					url = location.protocol + url;
 				}
 				else
 				{
 					// "/"
-					if((/^\//).test(dlPath))
+					if((/^\//).test(url))
 					{
-						url = location.origin + dlPath;
+						url = location.origin + url;
 					}
 					else
 					{
-						url = location.origin + "/" + dlPath;
+						url = location.origin + "/" + url;
 					}
 				}
 			}
@@ -80,7 +80,7 @@
 							});
 						}
 				});
-				new $.Zebra_Dialog(msg.replace(/\n/g, "<br />"), {
+				new $.Zebra_Dialog(`<span><b>${currentVerCode} --> ${latestVerCode}</b></span><br /><p>` + desc.replace(/\n|\\n/g, "<br />") + "</p>", {
 					type: "information",
 					title: "版本更新",
 					buttons: btns,
