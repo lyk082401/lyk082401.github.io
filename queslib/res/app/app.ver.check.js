@@ -22,11 +22,11 @@
 					// "/"
 					if((/^\//).test(url))
 					{
-						url = location.origin + url;
+						url = location.origin + "/queslib" + url;
 					}
 					else
 					{
-						url = location.origin + "/" + url;
+						url = location.origin + "/queslib/" + url;
 					}
 				}
 			}
