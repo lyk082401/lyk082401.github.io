@@ -40,14 +40,29 @@ self.parser = {
 	cssForDisableSelect: "-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none;",
 	tryKeepScreenAlive: function($minutes)
 	{
-		navigator.currentKeepScreenIsAlive || (navigator.wakeLock && (!document.hidden ? navigator.wakeLock.request("screen").then(function($lock)
+		if(!navigator.wakeLock)
 		{
-			console.log($lock, "唤醒锁已打开");
-			(navigator.savekeepScreenWakeLocks || (navigator.savekeepScreenWakeLocks = [])).push({lock: $lock, alive: $lock.released});
-			navigator.currentKeepScreenIsAlive = true;
+			console.warn("浏览器不支持唤醒锁");
+			return;
+		}
+		(!navigator.wakeLock.currentKeepScreenIsAlive && (!document.hidden ? navigator.wakeLock.request("screen").then(function($lock)
+		{
+			console.log($lock, "唤醒锁已打开", (new Date()).toTimeString());
+			(navigator.wakeLock.savekeepScreenWakeLocks || (navigator.wakeLock.savekeepScreenWakeLocks = [])).push({lock: $lock, alive: $lock.released});
+			navigator.wakeLock.currentKeepScreenIsAlive = true;
 			$lock.onrelease = function($e)
 			{
-				console.log($e, "唤醒锁已关闭");
+				console.log($e, "唤醒锁已关闭", (new Date()).toTimeString());
+				setTimeout(function()
+				{
+					if(confirm("屏幕唤醒锁已关闭，为防止屏幕自动黑屏，是否需要打开？") && navigator.wakeLock.wakeLockOnvisibilitychange)
+					{
+						document.removeEventListener ? document.removeEventListener("visibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange) : document.detachEvent("onvisibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange);
+						navigator.wakeLock.wakeLockOnvisibilitychange = null;
+						navigator.wakeLock.currentKeepScreenIsAlive = false;
+						parser.tryKeepScreenAlive($minutes);
+					}
+				}, 30 * 1000);
 			};
 			let visibilitychange = function($e2)
 			{
@@ -56,38 +71,41 @@ self.parser = {
 					let extra = $lock.released ? "唤醒锁已释放" : "唤醒锁未释放";
 					if(document.visibilityState === "visible")
 					{
-						console.log($e2, "当前页面已可视", extra);
+						console.log($e2, "当前页面已可视", extra, (new Date()).toTimeString());
 						document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
+						navigator.wakeLock.wakeLockOnvisibilitychange = null;
 						setTimeout(function()
 						{
-							navigator.currentKeepScreenIsAlive = false;
+							navigator.wakeLock.currentKeepScreenIsAlive = false;
 							parser.tryKeepScreenAlive($minutes);
 						}, 100);
 					}
 					if(document.visibilityState === "hidden")
 					{
-						console.log($e2, "当前页面不可视", extra);
+						console.log($e2, "当前页面不可视", extra, (new Date()).toTimeString());
 					}
 				}
 			};
+			navigator.wakeLock.wakeLockOnvisibilitychange = visibilitychange;
 			document.addEventListener ? document.addEventListener("visibilitychange", visibilitychange) : document.attachEvent("onvisibilitychange", visibilitychange);
+			// 默认20分钟后自动关闭
 			setTimeout(function()
 			{
 				$lock.released || $lock.release("screen").then(console.log, console.warn);
-			}, (($minutes != null) ? $minutes : 10) * 60 * 1000);
+			}, (($minutes != null) ? $minutes : 20) * 60 * 1000);
 		}, console.warn) : (function()
 		{
 			let visibilitychange = function($e)
 			{
 				if(document.visibilityState === "visible")
 				{
-					console.log($e, "当前页面已可视", "尝试开启唤醒锁");
+					console.log($e, "当前页面已可视", "尝试开启唤醒锁", (new Date()).toTimeString());
 					document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
 					parser.tryKeepScreenAlive($minutes);
 				}
 			};
 			document.addEventListener ? document.addEventListener("visibilitychange", visibilitychange) : document.attachEvent("onvisibilitychange", visibilitychange);
-			console.log({minutes: $minutes}, "当前页面不可视", "将等待页面可视");
+			console.log({minutes: $minutes}, "当前页面不可视", "将等待页面可视", (new Date()).toTimeString());
 		})()));
 	},
 	/** 适配苹果，苹果 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."），sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
@@ -307,7 +325,7 @@ parser.api.init = (function()
 		return alert("JSZip 未加载");
 	}
 	// 让屏幕保持常亮
-	parser.tryKeepScreenAlive(10);
+	parser.tryKeepScreenAlive(20);
 	let queslib = $(document).find("[name='queslib']").get(0),
 	select = $(queslib).find("select").get(0),
 	cloneSelect = null,
