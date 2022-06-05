@@ -40,10 +40,11 @@ self.parser = {
 	cssForDisableSelect: "-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none;",
 	tryKeepScreenAlive: function($minutes)
 	{
-		navigator.tryKeepScreenAlive || (navigator.wakeLock && (!document.hidden ? navigator.wakeLock.request("screen").then(function($lock)
+		navigator.currentKeepScreenIsAlive || (navigator.wakeLock && (!document.hidden ? navigator.wakeLock.request("screen").then(function($lock)
 		{
 			console.log($lock, "唤醒锁已打开");
-			navigator.tryKeepScreenAlive = true;
+			(navigator.savekeepScreenWakeLocks || (navigator.savekeepScreenWakeLocks = [])).push({lock: $lock, alive: $lock.released});
+			navigator.currentKeepScreenIsAlive = true;
 			$lock.onrelease = function($e)
 			{
 				console.log($e, "唤醒锁已关闭");
@@ -59,7 +60,7 @@ self.parser = {
 						document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
 						setTimeout(function()
 						{
-							navigator.tryKeepScreenAlive = false;
+							navigator.currentKeepScreenIsAlive = false;
 							parser.tryKeepScreenAlive($minutes);
 						}, 100);
 					}
