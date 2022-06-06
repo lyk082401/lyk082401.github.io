@@ -111,6 +111,20 @@ self.parser = {
 			console.log({minutes: $minutes}, "当前页面不可视", "将等待页面可视", (new Date()).toTimeString());
 		})()));
 	},
+	event: {
+		stopCapturing: function($e)
+		{
+			
+		},
+		stopBubbling: function($e)
+		{
+			
+		},
+		stopHere: function($e)
+		{
+			$e.stopImmediatePropagation();
+		}
+	},
 	/** 适配苹果，苹果 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."），sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
 	*/
 	setStorageItem: function($key, $val)
