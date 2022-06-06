@@ -1,5 +1,21 @@
 self.catalog = [
 	{
+		optname: "重点复习-第四学期-外科护理学（第4版）",
+		options: [
+			{
+				name: "人卫扫一扫-第二十章 职教云作业-综合试题",
+				vals: [
+					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第二十章 肝胆疾病病人的护理.xml"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/06.外科护理学下半学期综合1.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/07.下半学期综合试题2.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/08.下半学期综合试题3.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/09.下半学期综合试题4.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/10.下半学期综合试题5.json"}
+				]
+			}
+		]
+	},
+	{
 		optname: "人卫图书增值（扫一扫，测一测）",
 		options: [
 			{
@@ -455,12 +471,6 @@ self.catalog = [
 				]
 			},
 			{
-				name: "第四学期-外科护理学（第4版）-第二十章-重点复习",
-				vals: [
-					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第二十章 肝胆疾病病人的护理.xml"}
-				]
-			},
-			{
 				name: "第四学期-外科护理学（第4版）-第十九至四十四章",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第十九章 肛管疾病病人的护理.xml"},
@@ -713,16 +723,6 @@ self.catalog = [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/23.第十八章 肠疾病病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/24.第十七章 胃十二指肠疾病病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/25.第十九章 肛管疾病病人的护理.json"}
-				]
-			},
-			{
-				name: "第四学期-冯博--外科护理学-下半学期综合试题-重点复习",
-				vals: [
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/06.外科护理学下半学期综合1.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/07.下半学期综合试题2.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/08.下半学期综合试题3.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/09.下半学期综合试题4.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/10.下半学期综合试题5.json"}
 				]
 			},
 			/****{
