@@ -3,7 +3,7 @@ self.catalog = [
 		optname: "重点复习-第四学期-外科护理学（第4版）",
 		options: [
 			{
-				name: "人卫扫一扫-第二十章 职教云作业-综合试题",
+				name: "人卫扫一扫-第二十章   职教云作业-综合试题",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第二十章 肝胆疾病病人的护理.xml"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/06.外科护理学下半学期综合1.json"},
@@ -11,6 +11,17 @@ self.catalog = [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/08.下半学期综合试题3.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/09.下半学期综合试题4.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/10.下半学期综合试题5.json"}
+				]
+			}
+		]
+	},
+	{
+		optname: "重点复习-第四学期-社区护理学复习题",
+		options: [
+			{
+				name: "社区护理学复习题",
+				vals: [
+					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-社区护理学复习题.txt"}
 				]
 			}
 		]
