@@ -1,12 +1,27 @@
-// <script type="text/javascript">
-(typeof(Element.prototype.matches) !== "function") && (Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function(s)
+window.type = function($obj)
+{
+	try
+	{
+		if(typeof($obj) !== "string")
+		{
+			return typeof($obj);
+		}
+		return typeof(eval($obj));
+	}
+	catch(e)
+	{
+		console.warn(e);
+	}
+	return "undefined";
+};
+(type("Element.prototype.matches") !== "function") && (Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function(s)
 {
 	let matches = (this.document || this.ownerDocument).querySelectorAll(s),
 	i = matches.length;
 	while((--i >= 0) && (matches.item(i) !== this)){}
 	return i > -1;
 });
-(typeof(Element.prototype.closest) !== "function") && (Element.prototype.closest = function(selector)
+(type("Element.prototype.closest") !== "function") && (Element.prototype.closest = function(selector)
 {
 	let el = this;
 	while(el)
@@ -19,8 +34,6 @@
 	}
 	return el;
 });
-// </script>
-// <script type="text/javascript">
 /**
 http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginByH5?userName=${username}&userPwd=${password}&appVersion=2.8.25")
 http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginOut?newToken=${newToken}&userId=${userId}")
@@ -1142,11 +1155,13 @@ parser.api.init = (function()
 			type: "GET",
 			async: true,
 			cache: false,
+			timeout: 10000,
 			processData: false,
 			// crossDomain: true,
 			xhrFields: {
 				// withCredentials: true,
-				overrideMimeType: "text/plain; charset=x-user-defined"
+				// overrideMimeType: "text/plain; charset=x-user-defined"
+				overrideMimeType: "application/octet-stream; charset=x-user-defined"
 			},
 			dataType: "binary",
 			responseType: "arraybuffer",
@@ -1188,11 +1203,11 @@ parser.api.init = (function()
 			{
 				console.warn("题库数据更新失败", arguments);
 				queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
-				self.parser && confirm("库数据更新失败！是否进行缓存？") && (parser.api.downloadWithUrl(url), setTimeout(function()
+				self.parser && confirm("库数据更新失败！是否进行缓存？") && (location.assign(url), setTimeout(function()
 				{
 					localStorage.clear();
 					sessionStorage.clear();
-					location.reload(false);
+					location.reload(true);
 				}, 100));
 			}),
 			complete: (function($xhr, $status){})
@@ -2857,4 +2872,3 @@ parser.api.test = (function($data)
 	fragment.appendChild(tpl.content);
 	$(document).find("[name='queslib'] main").html(fragment);
 });
-// </script>
