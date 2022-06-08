@@ -8,26 +8,96 @@
 		<title>梧职院 | 护理专业 | 复习题库</title>
 		<!-- ("SRI Hash Generator")["https://www.srihash.org/"] -->
 		<script type="text/javascript">
-		try
+		(function()
 		{
-			window.onerror = (function($message, $url, $line, $column, $error)
+			try
 			{
-				console.warn($message, $url, $line, $column, $error);
-				$error && Object.getOwnPropertyNames($error).forEach(function($key, $index, $arrs)
+				if(!window.addEventListener)
 				{
-					$error["$" + $key] = $error[$key];
-				});
-				alert(JSON.stringify({message: $message, url: $url, line: $line, column: $column, error: $error}, null, "\t"));
-			});
-			window.onbeforeunload = window.onunload = (function($e)
+					if(confirm(document.title = "当前浏览器不被支持，建议更换浏览器访问，已停止网页继续载入，点击确定前往下载建议的浏览器！"))
+					{
+						location.assign("https://www.microsoft.com/zh-cn/edge");
+					}
+					else
+					{
+						if(window.stop)
+						{
+							window.stop();
+						}
+						else
+						{
+							document.execCommand && document.execCommand("Stop");
+						}
+					}
+				}
+			}
+			catch(e)
 			{
-				return ($e || window.event || document.event).returnValue = "确定离开当前页面吗？";
-			});
-		}
-		catch(e)
+				console.warn(e);
+			}
+		})();
+		(function()
 		{
-			console.warn(e);
-		}
+			try
+			{
+				window.addEventListener("error", function($e)
+				{
+					console.warn($e);
+					if($e)
+					{
+						let target = $e.target || $e.srcElement || $e.currentTarget;
+						let forJson = {};
+						// 转为普通数组
+						Array.from(
+							// 去重
+							new Set(
+								Object.getOwnPropertyNames(Object.getPrototypeOf($e))
+								// 合并
+								.concat(Object.getOwnPropertyNames($e))
+							)
+						).forEach(function($k, $i, $all)
+						{
+							try
+							{
+								JSON.stringify($e[$k]);
+								forJson[$k] = $e[$k];
+							}
+							catch(e)
+							{
+								// console.warn(e);
+							}
+						});
+						if($e.error)
+						{
+							forJson.error = {
+								message: $e.error.message,
+								stack: $e.error.stack
+							};
+						}
+						alert(JSON.stringify(forJson, null, "\t"));
+					}
+				}, true);
+				window.addEventListener("unhandledrejection", function($e)
+				{
+					// 只有 Chrome 浏览器支持，拦截全局未 catch 的 Promise 错误
+					console.warn($e);
+				}, true);
+				window.addEventListener("beforeunload", function($e)
+				{
+					console.log($e);
+					return $e.returnValue = "确定离开当前页面吗？";
+				}, true);
+				window.addEventListener("unload", function($e)
+				{
+					console.log($e);
+					document.title = "已离开当前页面，即将载入新页面……";
+				}, true);
+			}
+			catch(e)
+			{
+				console.warn(e);
+			}
+		})();
 		</script>
 		<style type="text/css">
 		@font-face

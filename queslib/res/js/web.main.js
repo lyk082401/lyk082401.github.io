@@ -1,3 +1,45 @@
+		/** 使用 eruda 时可能不可用
+		(function()
+		{
+			try
+			{
+				// https://blog.sentry.io/2016/01/04/client-javascript-reporting-window-onerror https://my.oschina.net/qcloudcommunity/blog/2963894
+				const originAddEventListener = EventTarget.prototype.addEventListener;
+				EventTarget.prototype.addEventListener = function($type, $listener, $options)
+				{
+					let args = Array.prototype.slice.apply(arguments);
+					// 捕获添加事件时的堆栈
+					const addStack = (new Error("Event (" + $type + ")")).stack;
+					const wrappedListener = function($arg)
+					{
+						try
+						{
+							if($listener.apply)
+							{
+								return $listener.apply(this, Array.prototype.slice.apply(arguments));
+							}
+							else
+							{
+								console.warn("inject-event-target", "no apply function", Array.prototype.slice.apply(arguments), args);
+							}
+						}
+						catch(e)
+						{
+							// 异常发生时，扩展堆栈
+							e.stack += "\n" + addStack;
+							console.warn("inject-event-target", e);
+							throw e;
+						}
+					};
+					return originAddEventListener.call(this, $type, wrappedListener, $options);
+				};
+			}
+			catch(e)
+			{
+				console.warn(e);
+			}
+		})();
+		*/
 window.type = function($obj)
 {
 	try
@@ -14,26 +56,32 @@ window.type = function($obj)
 	}
 	return "undefined";
 };
-(type("Element.prototype.matches") !== "function") && (Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function(s)
+if(!Element.prototype.matches)
 {
-	let matches = (this.document || this.ownerDocument).querySelectorAll(s),
-	i = matches.length;
-	while((--i >= 0) && (matches.item(i) !== this)){}
-	return i > -1;
-});
-(type("Element.prototype.closest") !== "function") && (Element.prototype.closest = function(selector)
-{
-	let el = this;
-	while(el)
+	Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function(s)
 	{
-		if(this.matches.call(el, selector))
+		let matches = (this.document || this.ownerDocument).querySelectorAll(s);
+		let i = matches.length;
+		while((--i >= 0) && (matches.item(i) !== this)){}
+		return i > -1;
+	};
+}
+if(!Element.prototype.closest)
+{
+	Element.prototype.closest = function(selector)
+	{
+		let el = this;
+		while(el)
 		{
-			break;
+			if(this.matches.call(el, selector))
+			{
+				break;
+			}
+			el = el.parentElement;
 		}
-		el = el.parentElement;
-	}
-	return el;
-});
+		return el;
+	};
+}
 /**
 http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginByH5?userName=${username}&userPwd=${password}&appVersion=2.8.25")
 http.get("https://zjy2.icve.com.cn/api/NewMobileAPI/mobilelogin/loginOut?newToken=${newToken}&userId=${userId}")
@@ -58,7 +106,7 @@ self.parser = {
 			console.warn("浏览器不支持唤醒锁");
 			return;
 		}
-		(!navigator.wakeLock.currentKeepScreenIsAlive && (!document.hidden ? navigator.wakeLock.request("screen").then(function($lock)
+		(!navigator.wakeLock.currentKeepScreenIsAlive && ((document.visibilityState === "visible") ? navigator.wakeLock.request("screen").then(function($lock)
 		{
 			console.log($lock, "唤醒锁已打开", (new Date()).toTimeString());
 			(navigator.wakeLock.savekeepScreenWakeLocks || (navigator.wakeLock.savekeepScreenWakeLocks = [])).push({lock: $lock, alive: $lock.released});
@@ -68,7 +116,7 @@ self.parser = {
 				console.log($e, "唤醒锁已关闭", (new Date()).toTimeString());
 				setTimeout(function()
 				{
-					if(!document.hidden && confirm("屏幕唤醒锁已关闭，为防止屏幕自动黑屏，是否需要打开？"))
+					if(document.visibilityState === "visible"/** && confirm("屏幕唤醒锁已关闭，为防止屏幕自动黑屏，是否需要打开？")*/)
 					{
 						if(navigator.wakeLock.wakeLockOnvisibilitychange)
 						{
@@ -77,6 +125,10 @@ self.parser = {
 							navigator.wakeLock.currentKeepScreenIsAlive = false;
 							parser.tryKeepScreenAlive($minutes);
 						}
+					}
+					else
+					{
+						$lock.onrelease();
 					}
 				}, 30 * 1000);
 			};
@@ -1113,7 +1165,14 @@ parser.api.init = (function()
 			// 禁用
 			$($val).attr("disabled", "disabled").prop("disabled", true);
 		});
-		let url = ["https://web.omeo.top/queslib/res/quesdata.bin", `https://hn-1252239881.${["file", "cos.ap-guangzhou", "cos.accelerate"][0]}.myqcloud.com/res/html/queslib/res/quesdata.bin`][1],
+		let urls = [
+			"https://hn-1252239881.file.myqcloud.com/res/html/queslib/res/quesdata.bin",
+			"https://web.omeo.top/queslib/res/quesdata.bin", // 移动和电信用户可能访问不稳定
+			"https://omeo.vercel.app/queslib/res/quesdata.bin",
+			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/res/html/queslib/res/quesdata.bin", // 需要签名
+			"https://hn-1252239881.cos.accelerate.myqcloud.com/res/html/queslib/res/quesdata.bin" // 需要签名
+		],
+		url = urls[0],
 		initdata = (function($obj)
 		{
 			console.log("本地题库数据信息", $obj.date);
@@ -1203,12 +1262,14 @@ parser.api.init = (function()
 			{
 				console.warn("题库数据更新失败", arguments);
 				queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+				/**
 				self.parser && confirm("库数据更新失败！是否进行缓存？") && (location.assign(url), setTimeout(function()
 				{
 					localStorage.clear();
 					sessionStorage.clear();
 					location.reload(true);
-				}, 100));
+				}, 100));*/
+				confirm("库数据更新失败！是否进行刷新？") && location.reload(true);
 			}),
 			complete: (function($xhr, $status){})
 		});
