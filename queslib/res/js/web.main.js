@@ -907,54 +907,57 @@ parser.api.init = (function()
 		});
 		vcPlugin.on("addTool", function($callback)
 		{
-			let button = {
+			let button1 = {
 				name: "刷新网页",
 				global: false,
 				data: {},
-				onClick: function($event)
+				onClick: function($event, $data)
 				{
-					location.reload();
+					console.log(arguments);
+					if(confirm("确定要" + button1.name + "？"))
+					{
+						location.reload(false);
+					}
 				}
 			};
 			let button2 = {
 				name: "强制刷新",
 				global: false,
 				data: {},
-				onClick: function($event)
+				onClick: function($event, $data)
 				{
-					location.reload(true);
+					console.log(arguments);
+					if(confirm("确定要" + button2.name + "？"))
+					{
+						sessionStorage.clear();
+						localStorage.clear();
+						location.reload(true);
+					}
 				}
 			};
-			$callback([button, button2]);
+			$callback([button1, button2]);
 		});
-		let type;
 		vcPlugin.on("addTopBar", function($callback)
 		{
 			let btnList = [];
-			btnList.push({
-				name: "Apple",
+			btnList.push(
+			{
+				name: "测试一",
 				className: "",
-				data: {type: "apple"},
+				data: {type: "test1"},
 				onClick: function($event, $data)
 				{
-					if(type != $data.type)
-					{
-						// `this` points to current button
-						type = $data.type;
-					}
-					else
-					{
-						return false;
-					}
+					console.log(arguments);
 				}
 			});
-			btnList.push({
-				name: "Orange",
+			btnList.push(
+			{
+				name: "测试二",
 				className: "",
-				data: {type: "orange"},
+				data: {type: "test2"},
 				onClick: function($event, $data)
 				{
-					type = $data.type;
+					console.log(arguments);
 				}
 			});
 			$callback(btnList);
