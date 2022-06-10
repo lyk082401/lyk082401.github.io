@@ -120,7 +120,7 @@ self.parser = {
 					{
 						if(navigator.wakeLock.wakeLockOnvisibilitychange)
 						{
-							document.removeEventListener ? document.removeEventListener("visibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange) : document.detachEvent("onvisibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange);
+							document.removeEventListener("visibilitychange", navigator.wakeLock.wakeLockOnvisibilitychange);
 							navigator.wakeLock.wakeLockOnvisibilitychange = null;
 							navigator.wakeLock.currentKeepScreenIsAlive = false;
 							parser.tryKeepScreenAlive($minutes);
@@ -140,7 +140,7 @@ self.parser = {
 					if(document.visibilityState === "visible")
 					{
 						console.log($e2, "当前页面已可视", extra, (new Date()).toTimeString());
-						document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
+						document.removeEventListener("visibilitychange", visibilitychange);
 						navigator.wakeLock.wakeLockOnvisibilitychange = null;
 						setTimeout(function()
 						{
@@ -155,7 +155,7 @@ self.parser = {
 				}
 			};
 			navigator.wakeLock.wakeLockOnvisibilitychange = visibilitychange;
-			document.addEventListener ? document.addEventListener("visibilitychange", visibilitychange) : document.attachEvent("onvisibilitychange", visibilitychange);
+			document.addEventListener("visibilitychange", visibilitychange);
 			// 默认20分钟后自动关闭
 			setTimeout(function()
 			{
@@ -168,26 +168,43 @@ self.parser = {
 				if(document.visibilityState === "visible")
 				{
 					console.log($e, "当前页面已可视", "尝试开启唤醒锁", (new Date()).toTimeString());
-					document.removeEventListener ? document.removeEventListener("visibilitychange", visibilitychange) : document.detachEvent("onvisibilitychange", visibilitychange);
+					document.removeEventListener("visibilitychange", visibilitychange);
 					parser.tryKeepScreenAlive($minutes);
 				}
 			};
-			document.addEventListener ? document.addEventListener("visibilitychange", visibilitychange) : document.attachEvent("onvisibilitychange", visibilitychange);
+			document.addEventListener("visibilitychange", visibilitychange);
 			console.log({minutes: $minutes}, "当前页面不可视", "将等待页面可视", (new Date()).toTimeString());
 		})()));
 	},
 	event: {
 		stopCapturing: function($e)
 		{
-			
+			if($e.preventDefault)
+			{
+				$e.preventDefault();
+			}
+			else
+			{
+				$e.returnValue = false;
+			}
+			return false;
 		},
 		stopBubbling: function($e)
 		{
-			
+			if($e.stopPropagation)
+			{
+				$e.stopPropagation();
+			}
+			else
+			{
+				$e.cancelBubble = true;
+			}
+			return false;
 		},
 		stopHere: function($e)
 		{
 			$e.stopImmediatePropagation();
+			return false;
 		}
 	},
 	/** 适配苹果，苹果 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."），sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
@@ -1008,39 +1025,40 @@ parser.api.init = (function()
 		(function($, undefined)
 		{
 			"use strict";
+			// https://api.jquery.com/jQuery.ajaxTransport/
 			// use this transport for "binary" data type
 			$.ajaxTransport("+binary", function($options, $originalOptions, $jqXHR)
 			{
 				// check for conditions and support for blob / arraybuffer response type
 				if((typeof(FormData) !== "undefined") && (($options.dataType && ($options.dataType === "binary")) || ($options.data && (((typeof(ArrayBuffer) !== "undefined") && ($options.data instanceof ArrayBuffer)) || ((typeof(Blob) !== "undefined") && ($options.data instanceof Blob))))))
 				{
+					let xhr = jQuery.ajaxSettings.xhr() || ((typeof(XMLHttpRequest) !== "undefined") ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"));
 					return {
 						// create new XMLHttpRequest
 						send: (function(headers, callback)
 						{
 							// setup all variables
-							let xhr = (typeof(XMLHttpRequest) !== "undefined") ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"),
-							url = $options.url,
-							type = $options.type,
-							async = $options.async || true,
+							let url = $options.url;
+							let type = $options.type.toUpperCase();
+							let async = (typeof($options.async) === "boolean") ? $options.async : true;
 							// blob or arraybuffer. Default is blob
-							dataType = $options.responseType || "blob",
-							data = $options.data || null,
-							username = $options.username || null,
-							password = $options.password || null;
-							xhr.addEventListener("load", function()
+							let dataType = $options.responseType || "blob";
+							let data = $options.data || null;
+							let username = $options.username || null;
+							let password = $options.password || null;
+							Array.from(["load", "error", "timeout", "abort"]).forEach(function($eventType)
 							{
-								let data = {};
-								data[$options.dataType] = $options.response = $jqXHR.response = xhr.response;
-								// make callback and send data
-								callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+								xhr.addEventListener($eventType, function($e)
+								{
+									let responses = {};
+									responses[$options.dataType] = $options.response = $jqXHR.response = xhr.response;
+									// make callback and send data
+									callback(xhr.status, xhr.statusText, responses, xhr.getAllResponseHeaders());
+								});
 							});
-							xhr.addEventListener("error", function()
+							xhr.addEventListener("readystatechange", function($e)
 							{
-								let data = {};
-								data[$options.dataType] = $options.response = $jqXHR.response = xhr.response;
-								// make callback and send data
-								callback(xhr.status, xhr.statusText, data, xhr.getAllResponseHeaders());
+								(location.protocol === "file:") && console.info($e.type, {event: $e, options: $options, originalOptions: $originalOptions, jqXHR: $jqXHR}, url);
 							});
 							xhr.open(type, url, async, username, password);
 							// setup custom headers
@@ -1048,12 +1066,25 @@ parser.api.init = (function()
 							{
 								xhr.setRequestHeader(i, headers[i]);
 							}
+							if(typeof($options.timeout) === "number")
+							{
+								xhr.timeout = $options.timeout;
+							}
+							if($options.xhrFields.withCredentials)
+							{
+								xhr.withCredentials = true;
+							}
+							if(typeof($options.xhrFields.overrideMimeType) === "string")
+							{
+								xhr.overrideMimeType($options.xhrFields.overrideMimeType);
+							}
 							xhr.responseType = dataType;
 							xhr.send(data);
 						}),
 						abort: (function()
 						{
 							console.warn("二进制数据解析中断", arguments);
+							xhr = null;
 						})
 					};
 				}
@@ -1225,7 +1256,6 @@ parser.api.init = (function()
 				// overrideMimeType: "text/plain; charset=x-user-defined"
 				overrideMimeType: "application/octet-stream; charset=x-user-defined"
 			},
-			// crossDomain: true,
 			dataType: "binary",
 			responseType: "arraybuffer",
 			// contentType: false,
@@ -1326,6 +1356,11 @@ parser.api.init = (function()
 	// 每隔15秒刷新访问数据的显示
 	setInterval(function()
 	{
+		// 当页面不可见时不执行
+		if(document.visibilityState !== "visible")
+		{
+			return;
+		}
 		try
 		{
 			if(window.LA && window.LA.config)
@@ -1446,7 +1481,7 @@ parser.api.init = (function()
 			let s = document.createElement("script");
 			s.type = "text/javascript";
 			s.src = "res/js/web.patcher.js?_=" + Date.now();
-			s.onload = s.onerror = s.onabort = (function($$e)
+			s.onload = s.onerror = s.onabort = s.ontimeout = (function($$e)
 			{
 				this.remove();
 			});
