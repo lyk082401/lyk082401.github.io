@@ -20,7 +20,7 @@ self.catalog = [
 				]
 			},
 			{
-				name: "06/16 卫生法律法规复习题",
+				name: "06/16 卫生法律法规复习题 <更新中>",
 				prop: {disabled: true}, vals: [
 					// {"type": "plain-txt", "file": "其他/第四学期/2022年06月-护理伦理与法律法规复习题.txt"}
 				]
