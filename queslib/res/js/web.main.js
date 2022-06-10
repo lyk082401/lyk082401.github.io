@@ -1058,7 +1058,7 @@ parser.api.init = (function()
 							});
 							xhr.addEventListener("readystatechange", function($e)
 							{
-								(location.protocol === "file:") && console.info($e.type, {event: $e, options: $options, originalOptions: $originalOptions, jqXHR: $jqXHR}, url);
+								(location.protocol === "file:") && console.log($e.type, {event: $e, options: $options, originalOptions: $originalOptions, jqXHR: $jqXHR}, url);
 							});
 							xhr.open(type, url, async, username, password);
 							// setup custom headers
@@ -1353,7 +1353,7 @@ parser.api.init = (function()
 	{
 		console.warn(e);
 	}
-	// 每隔15秒刷新访问数据的显示
+	// 每隔30秒刷新访问数据的显示
 	setInterval(function()
 	{
 		// 当页面不可见时不执行
@@ -1491,14 +1491,144 @@ parser.api.init = (function()
 		{
 			console.warn(e);
 		}
-	}, 15000);
+		try
+		{
+			if(window.eruda && eruda.get)
+			{
+				// 定量清理控制台日志，防止卡顿
+				if(eruda.get("console") && eruda.get("console")._logger && eruda.get("console")._logger._logs)
+				{
+					if(eruda.get("console")._logger._logs.length > 100)
+					{
+						eruda.get("console").clear();
+						console.log("eruda", "console records", "was cleaned.");
+					}
+				}
+				// 定量清理网络请求日志，防止卡顿
+				if(eruda.get("network") && eruda.get("network").requests)
+				{
+					if(eruda.get("network").requests().length > 100)
+					{
+						eruda.get("network").clear();
+						console.log("eruda", "network records", "was cleaned.");
+					}
+				}
+				if(eruda.get("console") && eruda.get("console").config && eruda.get("console").config.set && !eruda.get("console").config.set.ok)
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#console
+					eruda.get("console").config.set("asyncRender", true);
+					eruda.get("console").config.set("jsExecution", true);
+					eruda.get("console").config.set("catchGlobalErr", true);
+					eruda.get("console").config.set("overrideConsole", true);
+					eruda.get("console").config.set("displayIfErr", false);
+					eruda.get("console").config.set("displayExtraInfo", false);
+					eruda.get("console").config.set("displayUnenumerable", true);
+					eruda.get("console").config.set("displayGetterVal", true);
+					eruda.get("console").config.set("lazyEvaluation", true);
+					eruda.get("console").config.set("maxLogNum", "125");
+					eruda.get("console").config.set.ok = true;
+					console.log("eruda", "console config", "was updated.");
+				}
+				if(eruda.get("resources") && eruda.get("resources").config && eruda.get("resources").config.set && !eruda.get("resources").config.set.ok)
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#resources
+					eruda.get("resources").config.set("hideErudaSetting", true);
+					eruda.get("resources").config.set("observeElement", true);
+					eruda.get("resources").config.set.ok = true;
+					console.log("eruda", "resources config", "was updated.");
+				}
+				if(eruda.get("elements") && eruda.get("elements").config && eruda.get("elements").config.set && !eruda.get("elements").config.set.ok)
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#elements
+					eruda.get("elements").config.set("overrideEventTarget", true);
+					eruda.get("elements").config.set("observeElement", true);
+					eruda.get("elements").config.set.ok = true;
+					console.log("eruda", "elements config", "was updated.");
+				}
+				if(eruda.get("sources") && eruda.get("sources").config && eruda.get("sources").config.set && !eruda.get("sources").config.set.ok)
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#sources
+					eruda.get("sources").config.set("showLineNum", true);
+					eruda.get("sources").config.set("formatCode", true);
+					eruda.get("sources").config.set("indentSize", "3");
+					eruda.get("sources").config.set.ok = true;
+					console.log("eruda", "sources config", "was updated.");
+				}
+			}
+			if(window.vConsole)
+			{
+				if(vConsole.log && vConsole.log.clear)
+				{
+					if(vConsole.pluginList && vConsole.pluginList.default && vConsole.pluginList.default.compInstance && vConsole.pluginList.default.compInstance.$$ && vConsole.pluginList.default.compInstance.$$.ctx && vConsole.pluginList.default.compInstance.$$.ctx[5] && vConsole.pluginList.default.compInstance.$$.ctx[5].logList)
+					{
+						if(vConsole.pluginList.default.compInstance.$$.ctx[5].logList.length > 100)
+						{
+							vConsole.log.clear();
+							console.log("vConsole", "log records", "was cleaned.");
+						}
+					}
+					else
+					{
+						vConsole.log.clear();
+						console.log("vConsole", "log records", "was cleaned.");
+					}
+				}
+				if(vConsole.system && vConsole.system.clear)
+				{
+					if(vConsole.pluginList && vConsole.pluginList.system && vConsole.pluginList.system.compInstance && vConsole.pluginList.system.compInstance.$$ && vConsole.pluginList.system.compInstance.$$.ctx && vConsole.pluginList.system.compInstance.$$.ctx[5] && vConsole.pluginList.system.compInstance.$$.ctx[5].logList)
+					{
+						if(vConsole.pluginList.system.compInstance.$$.ctx[5].logList.length > 100)
+						{
+							vConsole.system.clear();
+							console.log("vConsole", "system records", "was cleaned.");
+						}
+					}
+					else
+					{
+						vConsole.system.clear();
+						console.log("vConsole", "system records", "was cleaned.");
+					}
+				}
+				if(vConsole.network && vConsole.network.clear)
+				{
+					if(vConsole.pluginList && vConsole.pluginList.network && vConsole.pluginList.network.compInstance && vConsole.pluginList.network.compInstance.$$ && vConsole.pluginList.network.compInstance.$$.ctx && vConsole.pluginList.network.compInstance.$$.ctx[1])
+					{
+						if(Object.keys(vConsole.pluginList.network.compInstance.$$.ctx[1]).length > 100)
+						{
+							vConsole.network.clear();
+							console.log("vConsole", "network records", "was cleaned.");
+						}
+					}
+					else
+					{
+						vConsole.network.clear();
+						console.log("vConsole", "network records", "was cleaned.");
+					}
+				}
+				if(!vConsole.setOption.ok)
+				{
+					vConsole.setOption("log.maxLogNumber", 125);
+					vConsole.setOption("log.maxNetworkNumber", 125);
+					vConsole.setOption.ok = true;
+					console.log("vConsole", "option", "was updated.");
+				}
+			}
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+	}, 30000);
 });
 parser.api.cnzzPush = (function($arrs)
 {
+	/**
 	this.cnzzPush.datas = this.cnzzPush.datas || [];
 	this.cnzzPush.datas.push($arrs.slice(0));
 	(typeof(_czc) !== "undefined") && _czc.push && _czc.push($arrs.slice(0));
 	return this.cnzzPush.datas;
+	*/
+	return [];
 });
 parser.api.getUrlParam = (function($name)
 {
