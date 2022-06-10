@@ -1222,6 +1222,7 @@ parser.api.init = (function()
 				// overrideMimeType: "text/plain; charset=x-user-defined"
 				overrideMimeType: "application/octet-stream; charset=x-user-defined"
 			},
+			// crossDomain: true,
 			dataType: "binary",
 			responseType: "arraybuffer",
 			// contentType: false,
