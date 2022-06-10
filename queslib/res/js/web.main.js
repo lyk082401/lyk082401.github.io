@@ -1165,12 +1165,13 @@ parser.api.init = (function()
 			// 禁用
 			$($val).attr("disabled", "disabled").prop("disabled", true);
 		});
+		let datafilename = "quesdata.nosign.zip";
 		let urls = [
-			"https://hn-1252239881.file.myqcloud.com/res/html/queslib/res/quesdata.bin",
-			"https://web.omeo.top/queslib/res/quesdata.bin", // 移动和电信用户可能访问不稳定
-			"https://omeo.vercel.app/queslib/res/quesdata.bin",
-			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/res/html/queslib/res/quesdata.bin", // 需要签名
-			"https://hn-1252239881.cos.accelerate.myqcloud.com/res/html/queslib/res/quesdata.bin" // 需要签名
+			"https://hn-1252239881.file.myqcloud.com/res/html/queslib/res/" + datafilename,
+			"https://web.omeo.top/queslib/res/" + datafilename, // 移动和电信用户可能访问不稳定
+			"https://omeo.vercel.app/queslib/res/" + datafilename,
+			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/res/html/queslib/res/" + datafilename, // 需要签名
+			"https://hn-1252239881.cos.accelerate.myqcloud.com/res/html/queslib/res/" + datafilename // 需要签名
 		],
 		url = urls[0],
 		initdata = (function($obj)
@@ -1214,7 +1215,6 @@ parser.api.init = (function()
 			type: "GET",
 			async: true,
 			cache: false,
-			timeout: 10000,
 			processData: false,
 			// crossDomain: true,
 			xhrFields: {
@@ -1319,52 +1319,140 @@ parser.api.init = (function()
 	{
 		console.warn(e);
 	}
-	if((typeof(_cz_account) != "undefined") && (typeof(_cz_loaded) != "undefined") && _cz_loaded[_cz_account])
+	// 每隔15秒刷新访问数据的显示
+	setInterval(function()
 	{
-		// 每隔15秒刷新访问数据的显示
-		setInterval(function()
+		try
 		{
-			try
+			if(window.LA && window.LA.config)
 			{
-				let s = document.createElement("script");
-				s.type = "text/javascript";
-				s.src = "https://online.cnzz.com/online/online_v3.php?id=" + _cz_account + "&h=z13.cnzz.com&on=1&s=line&_=" + Date.now();
-				s.onload = s.onerror = s.onabort = (function($$e)
+				$.get(("https://v6-widget.51.la/v6/JeaQ7widyBhiJfwS/quote.js?_=" + Date.now() + "&theme=#1690FF,#333333,#1690FF,#1690FF,#FFFFFF,#1690FF,10&f=10&display=0,1,1,1,1,1,1,1").replace(/\#/g, "%23")/**.replace(/\&/g, "%26").replace(/\=/g, "%3D")*/, null, null, "text")
+				.done(function($data)
 				{
-					this.remove();
-					if($$e.type === "load")
+					let newMatchs = $data.match(/r\.innerHTML\=\"(.+?)\"\,/m);
+					if(newMatchs && (newMatchs.length >= 2))
 					{
-						let onlineMatch = $("#cnzz_stat_icon_" + _cz_account).text().match(/当前在线\[(\d+)\]/);
-						if(onlineMatch && onlineMatch[1])
+						/**
+						<p>网站数据概况</p>
+						<p>
+							<span>0</span><span>1</span>
+						</p>
+						<p>
+							<span>1</span><span>30</span>
+						</p>
+						<p>
+							<span>2</span><span>31</span>
+						</p>
+						<p>
+							<span>3</span><span>96</span>
+						</p>
+						<p>
+							<span>4</span><span>139</span>
+						</p>
+						<p>
+							<span>5</span><span>758</span>
+						</p>
+						<p>
+							<span>6</span><span>1103</span>
+						</p>
+						*/
+						let newHTML = newMatchs[1];
+						let newBody = (new DOMParser()).parseFromString(newHTML, "text/html").body;
+						let newData = [];
+						Array.from(newBody.children).forEach(function($paragraph)
 						{
-							(sessionStorage.getItem("queslib-online-num") !== onlineMatch[1]) && parser.api.tipmsg("当前有 " + onlineMatch[1] + " 人在线", null, null, 3000);
-							sessionStorage.setItem("queslib-online-num", onlineMatch[1]);
+							// 若有两个以上的`<span></span>`
+							if($paragraph.querySelectorAll("span").item(1))
+							{
+								// 添加返回的文本值
+								newData.push($paragraph.querySelectorAll("span").item(1).innerText);
+							};
+						});
+						// console.log("newData", newData);
+						if(newData.length > 0)
+						{
+							/**
+							<span class="la-widget la-data-widget__container">
+								<span>
+									<span>最近活跃访客</span><span>0</span>
+								</span>
+								<span>
+									<span>今日访问人数</span><span>29</span>
+								</span>
+								<span>
+									<span>今日访问量</span><span>30</span>
+								</span>
+								<span>
+									<span>昨日访问人数</span><span>96</span>
+								</span>
+								<span>
+									<span>昨日访问量</span><span>139</span>
+								</span>
+								<span>
+									<span>本月访问量</span><span>757</span>
+								</span>
+								<span>
+									<span>总访问量</span><span>1,102</span>
+								</span>
+							</span>
+							*/
+							let oldHTML = document.querySelector("[name='la-widget'] [name='la-widget-show'] [name='la-widget-text'] .la-widget.la-data-widget__container");
+							if(oldHTML != null)
+							{
+								let toBankNum = function($num)
+								{
+									return String($num).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, "$&,");
+								};
+								let oldData = [];
+								Array.from(oldHTML.children).forEach(function($span, $i)
+								{
+									// 若有两个以上的`<span></span>`
+									if($span.querySelectorAll("span").item(1))
+									{
+										// 添加返回的文本值
+										oldData.push($span.querySelectorAll("span").item(1).innerText);
+										$span.querySelectorAll("span").item(1).innerText = toBankNum(Number(newData[$i]));
+									}
+								});
+								// console.log("oldData", oldData);
+								if(oldData.length > 0)
+								{
+									let newOnline = Number(newData[0]);
+									let oldOnline = Number(oldData[0]);
+									// 活跃用户增加或活跃用户减少
+									if((newOnline > oldOnline) || (newOnline < oldOnline))
+									{
+										parser.api.tipmsg("当前有 " + newOnline + " 人在线", null, null, 3000);
+									}
+									sessionStorage.setItem("queslib-online-num", String(newOnline));
+								}
+							}
 						}
 					}
-				});
-				document.body.appendChild(s);
+				})
+				.fail(console.warn);
 			}
-			catch(e)
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+		try
+		{
+			let s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "res/js/web.patcher.js?_=" + Date.now();
+			s.onload = s.onerror = s.onabort = (function($$e)
 			{
-				console.warn(e);
-			}
-			try
-			{
-				let s = document.createElement("script");
-				s.type = "text/javascript";
-				s.src = "res/js/web.patcher.js?_=" + Date.now();
-				s.onload = s.onerror = s.onabort = (function($$e)
-				{
-					this.remove();
-				});
-				document.body.appendChild(s);
-			}
-			catch(e)
-			{
-				console.warn(e);
-			}
-		}, 15000);
-	}
+				this.remove();
+			});
+			document.body.appendChild(s);
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+	}, 15000);
 });
 parser.api.cnzzPush = (function($arrs)
 {
@@ -1409,6 +1497,11 @@ parser.api.dump = (function($obj)
 });
 parser.api.download = (function($data, $name, $type, $target)
 {
+	let objURL = window.URL || window.webkitURL || window.mozURL || window.msURL || window.oURL;
+	if(!objURL)
+	{
+		return null;
+	}
 	if(typeof($name) === "string")
 	{
 		$name = decodeURIComponent($name)
@@ -1423,7 +1516,7 @@ parser.api.download = (function($data, $name, $type, $target)
 		.replace(/\\/g, "%25255C");
 	}
 	// 创建内存引用
-	let d = (URL || webkitURL).createObjectURL(new Blob([$data || document.documentElement.outerHTML || (function()
+	let d = objURL.createObjectURL(new Blob([$data || document.documentElement.outerHTML || (function()
 	{
 		try
 		{
@@ -1434,8 +1527,8 @@ parser.api.download = (function($data, $name, $type, $target)
 			console.warn(e);
 		}
 		return document.documentElement.innerHTML;
-	})()], {type: $type || "application/octet-stream"})),
-	a = document.createElement("a");
+	})()], {type: $type || "application/octet-stream"}));
+	let a = document.createElement("a");
 	// IE 浏览器
 	if(navigator.msSaveOrOpenBlob)
 	{
@@ -1447,12 +1540,15 @@ parser.api.download = (function($data, $name, $type, $target)
 		a.download = $name || (d.toString().match(/([^:\/]+)/g).reverse()[0] + ".bin");
 		a.target = $target || "_self";
 		a.style.display = "none";
-		document.body.appendChild(a);
+		document.documentElement.appendChild(a);
 		a.click();
-		document.body.removeChild(a);
+		setTimeout(function()
+		{
+			document.documentElement.removeChild(a);
+		}, 500);
 	}
 	// 释放内存引用
-	(URL || webkitURL).revokeObjectURL(d);
+	objURL.revokeObjectURL(d);
 	return a;
 });
 parser.api.downloadWithUrl = (function($url, $noreferrer, $target)
@@ -1465,9 +1561,12 @@ parser.api.downloadWithUrl = (function($url, $noreferrer, $target)
 		a.rel = "noreferrer";
 	}
 	a.style.display = "none";
-	document.body.appendChild(a);
+	document.documentElement.appendChild(a);
 	a.click();
-	document.body.removeChild(a);
+	setTimeout(function()
+	{
+		document.documentElement.removeChild(a);
+	}, 500);
 	return a;
 });
 parser.api.check_answers = (function(_answer_text)

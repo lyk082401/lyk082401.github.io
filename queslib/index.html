@@ -6,7 +6,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>梧职院 | 护理专业 | 复习题库</title>
-		<!-- ("SRI Hash Generator")["https://www.srihash.org/"] -->
 		<script type="text/javascript">
 		(function()
 		{
@@ -74,6 +73,10 @@
 								stack: $e.error.stack
 							};
 						}
+						if(target && (target.href || target.src))
+						{
+							forJson.url = target.href || target.src;
+						}
 						alert(JSON.stringify(forJson, null, "\t"));
 					}
 				}, true);
@@ -103,21 +106,81 @@
 		@font-face
 		{
 			font-family: "AndroidClock";
-			src: url("res/fonts/AndroidClock.ttf");
+			src: local("AndroidClock"), url("res/fonts/AndroidClock.ttf") format("opentype");
+			font-display: swap;
 		}
-		html, body
+		*:not(input[type="text"]):not(input[type="password"]):not(textarea)
 		{
-			font-family: "AndroidClock";
+			font-family: "AndroidClock", sans-serif;
 		}
 		</style>
 		<!-- JSON Minify -->
 		<script type="text/javascript" charset="UTF-8" src="res/web.omeo.top/JSON.minify/minify.json.js"></script>
 		<!-- Eruda Console -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js" onload="javascript: self.eruda && (eruda._isInit || eruda.init({container: (function(){ let el = document.createElement('div'); el.name = 'el-eruda-container'; document.documentElement.appendChild(el); return el; })(), tool: [], autoScale: true, useShadowDom: true, defaults: {displaySize: 60, transparency: 0.9, theme: 'Dark'}})); /**@close (location.protocol === 'file:') || self.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */ /**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container') */"></script>
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/eruda/2.4.1/eruda.min.js" onload="javascript:
+			window.eruda && (eruda._isInit || eruda.init(
+			{
+				container: (function()
+				{
+					let el = document.createElement('div');
+					el.name = 'el-eruda-container';
+					document.documentElement.appendChild(el);
+					return el;
+				})(),
+				tool: [], autoScale: true, useShadowDom: true, defaults: {
+					displaySize: 60, transparency: 0.9, theme: 'Dark'
+				}
+			}));
+			/**@close (location.protocol === 'file:') || window.eruda && (eruda._isInit && (eruda.destroy && eruda.destroy(), eruda._isInit && (eruda._$el && eruda._$el.remove && eruda._$el.remove()))); */
+			/**@el (eruda._shadowRoot && $(eruda._$el.parent()).find('#eruda.eruda-container')) || $('#eruda.eruda-container'); */"></script>
 		<!-- vConsole -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vConsole/3.14.6/vconsole.min.js" onload="javascript: self.VConsole && ((self.vConsole && vConsole.isInited) || (self.vConsole = new VConsole({target: (function(){ let el = document.createElement('div'); el.name = 'el-vc-container'; document.documentElement.appendChild(el); return el; })(), defaultPlugins: ['system', 'network', 'element', 'storage'], pluginOrder: ['default', 'log', 'system', 'network', 'element', 'storage'], storage: {defaultStorages: ['cookies', 'localStorage', 'sessionStorage']}, theme: 'dark', disableLogScrolling: true, log: {showTimestamps: true}, network: {}, onReady: function(){ /** 优先显示 */vConsole.showPlugin('vcplugin'); }}))); /**@close (location.protocol === 'file:') || setTimeout(function(){ self.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove()))); }, 1000); */ /**@el $('#__vconsole') */"></script>
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/vConsole/3.14.6/vconsole.min.js" onload="javascript:
+			window.VConsole && ((window.vConsole && vConsole.isInited) || (window.vConsole = new VConsole(
+			{
+				target: (function()
+				{
+					let el = document.createElement('div');
+					el.name = 'el-vc-container';
+					document.documentElement.appendChild(el);
+					return el;
+				})(),
+				defaultPlugins: ['system', 'network', 'element', 'storage'],
+				pluginOrder: ['default', 'log', 'system', 'network', 'element', 'storage'],
+				storage: {
+					defaultStorages: ['cookies', 'localStorage', 'sessionStorage']
+				}, theme: 'dark', disableLogScrolling: true, log: {
+					showTimestamps: true
+				}, network: {}, onReady: function()
+				{
+					/** 优先显示 */
+					vConsole.showPlugin('vcplugin');
+				}})
+			));
+			/**@close (location.protocol === 'file:') || setTimeout(function()
+			{
+				window.vConsole && (vConsole.isInited && (vConsole.destroy && vConsole.destroy(), vConsole.isInited && (vConsole.$dom && vConsole.$dom.remove && vConsole.$dom.remove())));
+			}, 1000); */
+			/**@el $('#__vconsole'); */"></script>
 		<!-- jQuery -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js" onload="javascript: self.jQuery && jQuery(document).ready(function(){ $.ajaxSetup({timeout: 5000}); $('body').on('click', function($e){ if(self.eruda && eruda.get()._isShow){ eruda.hide(); return false; } return true; }); /**eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\/\\*\\*@close(.+?)\\*\\/'))[1].trim());*/ self.parser && parser.api.init.apply(this, arguments); });"></script>
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery/1.12.4/jquery.min.js" onload="javascript:
+			window.jQuery && jQuery(document).ready(function()
+			{
+				$.ajaxSetup(
+				{
+					timeout: 30000, error: console.warn
+				});
+				$('body').on('click', function($e)
+				{
+					if(window.eruda && eruda.get()._isShow)
+					{
+						eruda.hide();
+						return false;
+					}
+					return true;
+				});
+				/**eval($(`script[src*='vconsole']`).attr('onload').match(new RegExp('\\/\\*\\*@close(.+?)\\*\\/'))[1].trim());*/
+				window.parser && parser.api.init.apply(this, arguments);
+			});"></script>
 		<!-- jBox -->
 		<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.css" />
 		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jBox/1.3.3/jBox.all.min.js"></script>
@@ -138,34 +201,52 @@
 	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 12px; opacity: 0.50;">
 		<fieldset name="queslib">
 			<legend>
-				<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; height: 20px;" onchange="javascript: eruda.util.$.cloneSelect.selectedIndex = this.selectedIndex; parser.api.get(this, (new Function('return ' + this.value + ';')).apply(null));" oncopy="javascript: return false;">
+				<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; height: 20px;" onchange="javascript:
+					eruda.util.$.cloneSelect.selectedIndex = this.selectedIndex;
+					parser.api.get(this, (new Function('return ' + this.value + ';')).apply(null));
+				" oncopy="javascript: return false;">
 				</select>
-				<script type="text/javascript" charset="UTF-8" src="res/js/web.catalog.js" onload="javascript: self.catalog && catalog.init(this.parentElement.querySelector('select'));"></script>
+				<script type="text/javascript" charset="UTF-8" src="res/js/web.catalog.js" onload="javascript:
+					window.catalog && catalog.init(this.parentElement.querySelector('select'));
+				"></script>
 			</legend>
 			<hr />
-			<main oncopy="javascript: self.clipboardData && setTimeout(function()
-			{
-				let text = clipboardData.getData('text');
-				if(text)
+			<main oncopy="javascript:
+				window.clipboardData && clipboardData.getData && clipboardData.setData && setTimeout(function()
 				{
-					text = text.replace(/^([0-9]{1,})\./g, '\n$1');
-					clipboardData.setData('text', text);
-				}
-			}, 100); return true;">
+					let text = clipboardData.getData('text');
+					if(text)
+					{
+						text = text.replace(/^([0-9]{1,})\./g, '\n$1');
+						clipboardData.setData('text', text);
+					}
+				}, 100);
+				return true;">
 			</main>
 			<hr />
 			<div style="text-align: center; margin: 0 auto; font-size: 10px;">
 				<style type="text/css">
-				#cnzz_stat_icon_1261167642 a, a.la-widget-container
+				[name="la-widget"] [name="la-widget-show"] a
 				{
 					text-decoration: none;
 				}
 				</style>
-				<!--span id="cnzz_stat_icon_1261167642"></span>
-				<script type="text/javascript" charset="UTF-8" src="https://s11.cnzz.com/z_stat.php?id=1261167642&online=1&show=line" onload="javascript: parser.api.cnzzPush(['_setCustomVar', '浏览器标识', navigator.userAgent, 0]); parser.api.cnzzPush(['_trackEvent', '题库', '浏览器标识', navigator.userAgent, 0, 'queslib']);" crossOrigin="anonymous"></script>
-				<br /-->
-				<script id="LA_COLLECT" type="text/javascript" charset="UTF-8" src="https://sdk.51.la/js-sdk-pro.min.js" onload="javascript: self.LA && LA.init({id: 'JeaQ7widyBhiJfwS', ck: 'JeaQ7widyBhiJfwS'});" crossOrigin="anonymous"></script><script id="LA-DATA-WIDGET" type="text/javascript" charset="UTF-8" src="https://v6-widget.51.la/v6/JeaQ7widyBhiJfwS/quote.js?theme=#1690FF,#333333,#1690FF,#1690FF,#FFFFFF,#1690FF,10&f=10&display=0,1,1,1,1,1,1,1" onload="javascript: this.la = document.querySelector('span.la-widget.la-data-widget__container'); this.la.outerHTML = `<a class='la-widget-container' href='https://v6.51.la/s/49r3cCTTzEv9Gdy' target='_blank'>` + this.la.outerHTML + '</a>';" crossorigin="anonymous"></script>
-				<!--script type="text/javascript">document.write('<script type="text/javascript" charset="UTF-8" src="https://us2.centcount.com/ca.php?sid=2204110000001001&ct=' + (new Date).getTime() + "&HTTP_REFERER=" + encodeURIComponent(location.href) + `" onload="javascript:;" crossOrigin="anonymous"><\/script>`);/** <a href="http://www.centcount.com/visitor.php?id=2204110000001&siteid=2204110000001001" target="_blank"></a> */</script-->
+				<div name="la-widget">
+					<div name="la-widget-push">
+						<script id="LA_COLLECT" type="text/javascript" charset="UTF-8" src="https://sdk.51.la/js-sdk-pro.min.js" onload="javascript:
+							window.LA && LA.init(
+							{
+								id: 'JeaQ7widyBhiJfwS', ck: 'JeaQ7widyBhiJfwS', autoTrack: true, hashMode: true
+							});
+						" crossOrigin="anonymous" defer></script>
+					</div>
+					<div name="la-widget-show">
+						<script id="LA-DATA-WIDGET" type="text/javascript" charset="UTF-8" src="https://v6-widget.51.la/v6/JeaQ7widyBhiJfwS/quote.js?theme=%231690FF,%23333333,%231690FF,%231690FF,%23FFFFFF,%231690FF,10&f=10&display=0,1,1,1,1,1,1,1" onload="javascript:
+							this.la = this.parentElement.querySelector('.la-widget.la-data-widget__container');
+							this.la.outerHTML = `<a name='la-widget-text' href='https://v6.51.la/s/49r3cCTTzEv9Gdy' target='_blank'>` + this.la.outerHTML + '</a>';
+						" crossorigin="anonymous" defer></script>
+					</div>
+				</div>
 			</div>
 			<hr />
 		</fieldset>
