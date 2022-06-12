@@ -1199,13 +1199,13 @@ parser.api.init = (function()
 			// 禁用
 			$($val).attr("disabled", "disabled").prop("disabled", true);
 		});
-		let datafilename = "quesdata.nosign.zip";
+		let datafilename = "queslib/res/quesdata.nosign.zip";
 		let urls = [
-			"https://hn-1252239881.file.myqcloud.com/res/html/queslib/res/" + datafilename,
-			"https://web.omeo.top/queslib/res/" + datafilename, // 移动和电信用户可能访问不稳定
-			"https://omeo.vercel.app/queslib/res/" + datafilename,
-			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/res/html/queslib/res/" + datafilename, // 需要签名
-			"https://hn-1252239881.cos.accelerate.myqcloud.com/res/html/queslib/res/" + datafilename // 需要签名
+			"https://hn-1252239881.file.myqcloud.com/res/html/" + datafilename,
+			"https://web.omeo.top/" + datafilename, // 移动和电信用户可能访问不稳定
+			"https://omeo.vercel.app/" + datafilename,
+			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/res/html/" + datafilename, // 需要签名
+			"https://hn-1252239881.cos.accelerate.myqcloud.com/res/html/" + datafilename // 需要签名
 		],
 		url = urls[0],
 		initdata = (function($obj)
@@ -1249,16 +1249,19 @@ parser.api.init = (function()
 			type: "GET",
 			async: true,
 			cache: false,
+			// 是否自动处理发送的数据
 			processData: false,
+			// 是否自动设置`Content-Type`的请求头
+			contentType: false,
 			// crossDomain: true,
 			xhrFields: {
 				// withCredentials: true,
 				// overrideMimeType: "text/plain; charset=x-user-defined"
-				overrideMimeType: "application/octet-stream; charset=x-user-defined"
+				// overrideMimeType: "application/octet-stream"
+				overrideMimeType: "application/zip"
 			},
 			dataType: "binary",
 			responseType: "arraybuffer",
-			// contentType: false,
 			beforeSend: (function($xhr, $options){}),
 			dataFilter: (function($data, $type)
 			{
