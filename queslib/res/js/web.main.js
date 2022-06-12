@@ -896,7 +896,7 @@ parser.api.init = (function()
 			})
 		});
 		// 添加其他剩余工具
-		((location.protocol === "file:") ? ["console", "network", "resources", "info", "elements", "sources", "snippets"] : ["console", "snippets"]).forEach(function($val, $index, $arrs)
+		((location.protocol === "file:") ? ["console", "network", "resources", "info", "elements", "sources", "snippets"] : ["console", "network", "snippets"]).forEach(function($val, $index, $arrs)
 		{
 			if(eruda[eruda.util.upperFirst($val)])
 			{
