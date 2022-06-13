@@ -1199,13 +1199,18 @@ parser.api.init = (function()
 			// 禁用
 			$($val).attr("disabled", "disabled").prop("disabled", true);
 		});
-		let datafilename = "queslib/res/quesdata.nosign.zip";
+		let dataBaseName = "quesdata";
+		let dataFileLocal = "queslib/res/zip/" + dataBaseName + ".zip";
+		let dataFileCos = "res/nosign/zip/" + dataBaseName + ".zip";
+		let dataFileCdn = "res/zip/" + dataBaseName + ".nosign.zip";
 		let urls = [
-			"https://hn-1252239881.file.myqcloud.com/res/html/" + datafilename,
-			"https://web.omeo.top/" + datafilename, // 移动和电信用户可能访问不稳定
-			"https://omeo.vercel.app/" + datafilename,
-			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/res/html/" + datafilename, // 需要签名
-			"https://hn-1252239881.cos.accelerate.myqcloud.com/res/html/" + datafilename // 需要签名
+			"https://hn-1252239881.file.myqcloud.com/" + dataFileCdn,
+			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/" + dataFileCos, // 需要签名
+			"https://hn-1252239881.cos.accelerate.myqcloud.com/" + dataFileCos, // 需要签名
+			"https://hn-1252239881.cos-website.ap-guangzhou.myqcloud.com/" + dataFileCos, // 需要签名
+			"https://web.omeo.top/" + dataFileLocal, // 移动和电信用户可能访问不稳定
+			"https://web.omeo.eu.org/" + dataFileLocal,
+			"https://omeo.vercel.app/" + dataFileLocal
 		],
 		url = urls[0],
 		initdata = (function($obj)
