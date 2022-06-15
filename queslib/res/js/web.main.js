@@ -1212,7 +1212,7 @@ parser.api.init = (function()
 			"https://web.omeo.eu.org/" + dataFileLocal,
 			"https://omeo.vercel.app/" + dataFileLocal
 		],
-		url = urls[0],
+		url = urls[1],
 		initdata = (function($obj)
 		{
 			console.log("本地题库数据信息", $obj.date);
