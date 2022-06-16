@@ -503,7 +503,8 @@ parser.api.init = (function()
 			{
 				$el.html((`${nonAppearanceCss}<center><hr />
 					<p name="cloneSelect_container">${select.outerHTML.replace(/eruda\.util\.\$\.cloneSelect/, "$(document).find('[name=\\'queslib\\'] select').get(0)")}</p><hr />
-					<button name="autoread" style="color: grey;">自动浏览</button><hr />
+					<button name="autoread" style="color: grey;">自动浏览</button>&nbsp;&nbsp;&nbsp;
+					<button name="autoread-switch" style="color: grey;">${localStorage.getItem("queslib-autoread-switch") ? localStorage.getItem("queslib-autoread-switch") : "开"}</button><hr />
 					<button name="changebg" style="color: grey;">日间模式</button><hr />
 					<button name="icveview" style="color: grey;">${(/icve\-data\-view/).test(location.pathname) ? "返回复习题库" : "职教云数据查看"}</button><hr />
 					每章题量&nbsp;&nbsp;&nbsp;
@@ -538,8 +539,38 @@ parser.api.init = (function()
 				})();
 				// 克隆的副本
 				cloneSelect = eruda.util.$.cloneSelect = $el.find("[name='cloneSelect_container'] select").get(0);
+				function autoreadSwitchGetOrSet($setval)
+				{
+					if($setval != null)
+					{
+						return localStorage.setItem("queslib-autoread-switch", $setval);
+					}
+					else if(localStorage.getItem("queslib-autoread-switch") === "关")
+					{
+						return false;
+					}
+					return true;
+				}
+				$el.find("button[name='autoread-switch']").get(0).onclick = function($e)
+				{
+					let btn = this;
+					if(autoreadSwitchGetOrSet() === "开")
+					{
+						autoreadSwitchGetOrSet("关");
+						btn.innerText = "开";
+					}
+					else
+					{
+						autoreadSwitchGetOrSet("开");
+						btn.innerText = "关";
+					}
+				};
 				$el.find("button[name='autoread']").get(0).onclick = (function($e)
 				{
+					if(!autoreadSwitchGetOrSet())
+					{
+						return;
+					}
 					let btn = this;
 					if(btn.start)
 					{
@@ -573,7 +604,10 @@ parser.api.init = (function()
 				});
 				$(document).on("dblclick", function($e)
 				{
-					$el.find("button[name='autoread']").get(0).onclick();
+					if(autoreadSwitchGetOrSet())
+					{
+						$el.find("button[name='autoread']").get(0).onclick();
+					}
 				});
 				// 显示方式
 				(function()
