@@ -314,7 +314,7 @@ parser.api.toChineseNum = (function(num)
 	num = parseInt(num, 10);
 	let getWan = (function(temp)
 	{
-		let strArr = temp.toString().split("").reverse();
+		let strArr = temp.toString().split("").slice().reverse();
 		let newNum = "";
 		let newArr = [];
 		strArr.forEach(function(item, index)
@@ -787,6 +787,15 @@ parser.api.init = (function()
 						},
 						place: ["三期2号楼301", "三期2号楼202"]
 					},
+					{
+						name: "中医护理学",
+						time: [2022, 06, 22, 18, 30, 00],
+						date: {
+							day: ["2022-06-22", "星期四"],
+							range: ["18:30", "20:00"]
+						},
+						place: ["三期2号楼301", "三期2号楼202"]
+					},
 					
 					
 					
@@ -800,7 +809,7 @@ parser.api.init = (function()
 						place: ["三期2号楼301", "三期2号楼202"]
 					},
 					{
-						name: "心理护理学",
+						name: "护理心理学基础",
 						time: [2021, 12, 23, 16, 10, 00],
 						date: {
 							day: ["2021-12-23", "星期四"],
@@ -818,7 +827,7 @@ parser.api.init = (function()
 						place: ["三期2号楼301", "三期2号楼202"]
 					},
 					{
-						name: "五官科护理学",
+						name: "眼耳鼻咽喉口腔科护理学",
 						time: [2021, 12, 30, 16, 10, 00],
 						date: {
 							day: ["2021-12-30", "星期四"],
@@ -855,7 +864,7 @@ parser.api.init = (function()
 						place: ["三期2号楼301", "三期2号楼202"]
 					},
 					{
-						name: "妇产科护理",
+						name: "妇产科护理学",
 						time: [2022, 01, 04, 08, 10, 00],
 						date: {
 							day: ["2022-01-04", "星期二"],
@@ -1748,7 +1757,7 @@ parser.api.download = (function($data, $name, $type, $target)
 	else
 	{
 		a.href = d;
-		a.download = $name || (d.toString().match(/([^:\/]+)/g).reverse()[0] + ".bin");
+		a.download = $name || (d.toString().match(/([^:\/]+)/g).slice().reverse()[0] + ".bin");
 		a.target = $target || "_self";
 		a.style.display = "none";
 		document.documentElement.appendChild(a);
@@ -3164,11 +3173,14 @@ parser.api.get = (function(_el, _data)
 		}
 		if(Array.isArray(_data))
 		{
-			// 全部满足指定条件即反转数组顺序
-			_data.every(function($$val, $$i, $$arrs)
+			// 全部满足指定条件即反转数组顺序，从后往前处理
+			if(_data.every(function($$val, $$i, $$arrs)
 			{
 				return $$val.type === "icveappzjy2-json";
-			}) && _data.reverse();
+			}))
+			{
+				_data = _data.slice().reverse();
+			}
 			var obj = {};
 			obj.name = _el.item(_el.selectedIndex).innerText || _el.item(_el.selectedIndex).label || _el.item(_el.selectedIndex).text;
 			obj.data = [];
