@@ -557,12 +557,12 @@ parser.api.init = (function()
 					if(autoreadSwitchGetOrSet() === "开")
 					{
 						autoreadSwitchGetOrSet("关");
-						btn.innerText = "开";
+						btn.innerText = "关";
 					}
 					else
 					{
 						autoreadSwitchGetOrSet("开");
-						btn.innerText = "关";
+						btn.innerText = "开";
 					}
 				};
 				$el.find("button[name='autoread']").get(0).onclick = (function($e)
