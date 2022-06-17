@@ -13,16 +13,33 @@ self.catalog = [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/10.下半学期综合试题5.json"}
 				]
 			},
-			{
+			prop: {disabled: true}, {
 				name: "06/15 社区护理学复习题",
 				vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-社区护理学复习题.txt"}
 				]
 			},
-			{
+			prop: {disabled: true}, {
 				name: "06/16 卫生法律法规复习题",
 				vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-护理伦理与法律法规复习题.txt"}
+				]
+			},
+			{
+				name: "06/22 中医护理学复习题-第八、十章和第十一章有关推拿法部分已删",
+				vals: [
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/绪论.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第一章 阴阳五行.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第二章 藏象.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第三章 精、气、血、津液.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第四章 经络腧穴.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第五章 病因病机.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第六章 中药与方剂基本知识.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第七章 诊法与辨证.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第九章 中药用药护理.xml"},
+					{"type": "pmph-xml", "file": "其他/第四学期/2022年06月-中医护理学复习题-人卫图书增值-第十一章 中医特色护理技术-拔罐法与刮痧法.xml"},
+					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第十一章 中医特色护理技术.xml"},
+					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-中医护理学复习题.txt"}
 				]
 			}
 		]
@@ -464,7 +481,7 @@ self.catalog = [
 			},
 			{
 				name: "第四学期-社区护理学（第4版）",
-				vals: [
+				prop: {disabled: true}, vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/19.社区护理学（第4版）/第一章 社区护理概述.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/19.社区护理学（第4版）/第二章 社区护理程序.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/19.社区护理学（第4版）/第三章 流行病学方法在社区护理中的应用.xml"},
@@ -481,7 +498,7 @@ self.catalog = [
 			},
 			{
 				name: "第四学期-卫生法律法规（第2版）",
-				vals: [
+				prop: {disabled: true}, vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/20.卫生法律法规（第2版）/第一章 卫生法律法规的基本理论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/20.卫生法律法规（第2版）/第二章 卫生行政执法与卫生行政救济.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/20.卫生法律法规（第2版）/第三章 公民健康权益保护法律制度.xml"},
