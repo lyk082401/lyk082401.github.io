@@ -13,15 +13,15 @@ self.catalog = [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/10.下半学期综合试题5.json"}
 				]
 			},
-			prop: {disabled: true}, {
+			{
 				name: "06/15 社区护理学复习题",
-				vals: [
+				prop: {disabled: true}, vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-社区护理学复习题.txt"}
 				]
 			},
-			prop: {disabled: true}, {
+			{
 				name: "06/16 卫生法律法规复习题",
-				vals: [
+				prop: {disabled: true}, vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-护理伦理与法律法规复习题.txt"}
 				]
 			},
