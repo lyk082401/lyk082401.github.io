@@ -751,6 +751,10 @@ parser.api.init = (function()
 			name: "距离考试",
 			init: (function($el)
 			{
+				let whichWeek = function($date)
+				{
+					return (new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"))[(new Date($date)).getDay()];
+				};
 				let remain = (function($range, $year, $month, $day, $hour, $minute, $second)
 				{
 					let sec = Math.round((new Date($year, $month - 1, $day, $hour, $minute, $second).getTime() - Date.now()) / 1000),
@@ -762,162 +766,77 @@ parser.api.init = (function()
 				}), exams = [
 					{
 						name: "外科护理学",
-						time: [2022, 06, 06, 18, 30, 00],
 						date: {
-							day: ["2022-06-06", "星期一"],
-							range: ["18:30", "20:30"]
+							day: "2022-06-06",
+							hour: "18:30",
+							until: "20:30"
 						},
-						place: ["三期2号楼301", "三期2号楼202"]
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
 					},
 					{
 						name: "社区护理学",
-						time: [2022, 06, 15, 18, 30, 00],
 						date: {
-							day: ["2022-06-15", "星期三"],
-							range: ["18:30", "20:00"]
+							day: "2022-06-15",
+							hour: "18:30",
+							until: "20:00"
 						},
-						place: ["三期2号楼301", "三期2号楼202"]
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
 					},
 					{
 						name: "护理伦理与法律法规",
-						time: [2022, 06, 16, 18, 30, 00],
 						date: {
-							day: ["2022-06-16", "星期四"],
-							range: ["18:30", "20:00"]
+							day: "2022-06-16",
+							hour: "18:30",
+							until: "20:00"
 						},
-						place: ["三期2号楼301", "三期2号楼202"]
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
 					},
 					{
 						name: "中医护理学",
-						time: [2022, 06, 22, 18, 30, 00],
 						date: {
-							day: ["2022-06-22", "星期四"],
-							range: ["18:30", "20:00"]
+							day: "2022-06-23",
+							hour: "18:30",
+							until: "20:00"
 						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					
-					
-					
-					{
-						name: "健康评估",
-						time: [2021, 12, 16, 16, 10, 00],
-						date: {
-							day: ["2021-12-16", "星期四"],
-							range: ["16:10", "17:40"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "护理心理学基础",
-						time: [2021, 12, 23, 16, 10, 00],
-						date: {
-							day: ["2021-12-23", "星期四"],
-							range: ["16:10", "17:40"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "护理管理学",
-						time: [2021, 12, 24, 16, 10, 00],
-						date: {
-							day: ["2021-12-24", "星期五"],
-							range: ["16:10", "17:40"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "眼耳鼻咽喉口腔科护理学",
-						time: [2021, 12, 30, 16, 10, 00],
-						date: {
-							day: ["2021-12-30", "星期四"],
-							range: ["16:10", "17:40"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "精神科护理",
-						time: [2021, 12, 31, 16, 10, 00],
-						date: {
-							day: ["2021-12-31", "星期五"],
-							range: ["16:10", "17:40"]
-						},
-						type: "开卷",
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "护理学基础",
-						time: [2022, 01, 02, 14, 30, 00],
-						date: {
-							day: ["2022-01-02", "星期日"],
-							range: ["14:30", "16:30"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "内科护理学",
-						time: [2022, 01, 03, 14, 30, 00],
-						date: {
-							day: ["2022-01-03", "星期一"],
-							range: ["14:30", "16:30"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "妇产科护理学",
-						time: [2022, 01, 04, 08, 10, 00],
-						date: {
-							day: ["2022-01-04", "星期二"],
-							range: ["08:10", "10:10"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					},
-					{
-						name: "外科护理学",
-						time: [2022, 01, 05, 08, 10, 00],
-						date: {
-							day: ["2022-01-05", "星期三"],
-							range: ["08:10", "10:10"]
-						},
-						place: ["三期2号楼301", "三期2号楼202"]
-					}/**,
-					{
-						name: "外科护理学",
-						date: ["2022-01-05", "星期五"],
-						time: ["08:10", "10:10"],
-						place: ["三期2号楼301", "三期2号楼202"]
-					}*/
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
+					}
 				];
 				$el.timer_func = (function()
 				{
 					$el.html(nonAppearanceCss + "<center><hr />" + exams.map(function($val, $index, $arrs)
 					{
-						/**let args = [];
-						$val.date[0].split("-").forEach(function($v, $i, $arrs)
-						{
-							args.push(parseInt($v, 10));
-						});
-						$val.time[0].split(":").forEach(function($v, $i, $arrs)
-						{
-							args.push(parseInt($v, 10));
-						});
-						args.push(00);
-						remain.apply(null, [$val.time].concat(args));
-						*/
+						let params = [[$val.date.hour, $val.date.until]].concat(($val.date.day + " " + $val.date.hour).split(/[\-\s:]/).map(Number).concat([0]));
 						return (`<h1>${$val.name}
-								<b>（${remain.apply(null, [$val.date.range].concat($val.time))}）</b>
+								<b>（${remain.apply(null, params)}）</b>
 							</h1>
 							<h3>
-								<b style="color: blue;">${$val.date.day[0]}（${$val.date.day[1]}）<br />
-									<b style="color: #bec936;">${$val.date.range.join("～")}</b>
+								<b style="color: blue;">${$val.date.day}（${whichWeek($val.date.day)}）<br />
+									<b style="color: #bec936;">${[$val.date.hour, $val.date.until].join("～")}</b>
 									${$val.type ? ('<br /><b style="color: #9eccab;">' + $val.type + "</b>") : ""}
 								</b>
 							</h3>
 							<h6>
-								<b style="color: green;">${$val.place.join(" / ")}</b>
+								<b style="color: green;">${Object.values($val.room).join("")}</b>
 							</h6>`).replace(/^\s+/g, "");
 					}).join("<hr />") + "<hr /></center>");
 				});
+				$el.get(0).contentEditable = false;
 				$el.css("position", "absolute");
 				$el.css("overflow", "auto");
 				this._$el = $el;
@@ -2864,7 +2783,8 @@ parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
 						if($(_val2).val() != "")
 						{
 							_el.right[_val2.name] = true;
-							var rate = (parser.api.similar($(_val2).val(), $(_val2)[0].defaultValue, 2) * 100) + "%";
+							let delStr = /([\s⓪①②③④⑤⑥⑦⑧⑨⑩，。？！：；…～“”、（）‘’一二三四五六七八九十]+)|(（[零〇一二三四五六七八九十]+）)|(（[0-9]+）)/gm;
+							let rate = (parser.api.similar($(_val2).val().replace(delStr, ""), $(_val2)[0].defaultValue.replace(delStr, ""), 2) * 100) + "%";
 							_el.textScore.push(titleno + ".〔" + _val.type + "〕答案匹配度	" + rate);
 							$(_val2)[0].nextElementSibling.nextElementSibling.style.display = "inline";
 							$(_val2)[0].nextElementSibling.nextElementSibling.value = $(_val2)[0].defaultValue;
