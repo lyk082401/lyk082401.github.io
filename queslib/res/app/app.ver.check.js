@@ -4,13 +4,14 @@
 	api && self.$ && $.get && $.get("res/app/app.ver.conf.json", null, "json")
 	.done(function($data, $status, $xhr)
 	{
+		console.log(arguments);
 		try
 		{
 			let latestVerName = $data.release.latest.verName;
 			let latestVerCode = Number($data.release.latest.verCode);
 			let currentVerName = api.AppUtil().getVerName();
 			let currentVerCode = api.AppUtil().getVerCode();
-			let uplog = $data.release.uplogs[latestVerName + "\t" + latestVerCode];
+			let uplog = $data.release.uplogs[$data.release.latest.verName + "\t" + $data.release.latest.verCode];
 			let desc = uplog.desc;
 			let url = uplog.dlPath;
 			if(!(/(http)|(https)/).test(url))
