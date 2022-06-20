@@ -8,10 +8,12 @@
 		try
 		{
 			let latestVerName = $data.release.latest.verName;
-			let latestVerCode = Number($data.release.latest.verCode);
+			let latestVerCode = $data.release.latest.verCode;
+			let latestVerCodeInt = Number(latestVerCode);
 			let currentVerName = api.AppUtil().getVerName();
 			let currentVerCode = api.AppUtil().getVerCode();
-			let uplog = $data.release.uplogs[$data.release.latest.verName + "\\t" + $data.release.latest.verCode];
+			let uplogs = $data.release.uplogs;
+			let uplog = uplogs[latestVerName + "\t" + latestVerCode] || uplogs[latestVerName + "\\t" + latestVerCode];
 			let desc = uplog.desc;
 			let url = uplog.dlPath;
 			if(!(/(http)|(https)/).test(url))
@@ -34,7 +36,7 @@
 					}
 				}
 			}
-			if(currentVerCode < latestVerCode)
+			if(currentVerCode < latestVerCodeInt)
 			{
 				console.log(
 				{
