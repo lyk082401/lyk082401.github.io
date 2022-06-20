@@ -12,6 +12,7 @@
 			let latestVerCodeInt = Number(latestVerCode);
 			let currentVerName = api.AppUtil().getVerName();
 			let currentVerCode = api.AppUtil().getVerCode();
+			let currentVerCodeInt = Number(api.AppUtil().getVerCode());
 			let uplogs = $data.release.uplogs;
 			let uplog = uplogs[latestVerName + "\t" + latestVerCode] || uplogs[latestVerName + "\\t" + latestVerCode];
 			let desc = uplog.desc;
@@ -36,7 +37,7 @@
 					}
 				}
 			}
-			if(currentVerCode < latestVerCodeInt)
+			if(currentVerCodeInt < latestVerCodeInt)
 			{
 				console.log(
 				{
