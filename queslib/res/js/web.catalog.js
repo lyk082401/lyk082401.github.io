@@ -14,19 +14,19 @@ self.catalog = [
 				]
 			},
 			{
-				name: "06/15 社区护理学复习题",
+				name: "06/15 社区护理学-复习题",
 				prop: {disabled: true}, vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-社区护理学复习题.txt"}
 				]
 			},
 			{
-				name: "06/16 卫生法律法规复习题",
+				name: "06/16 护理伦理与法律法规-复习题",
 				prop: {disabled: true}, vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-护理伦理与法律法规复习题.txt"}
 				]
 			},
 			{
-				name: "06/23 中医护理学复习题-第八、十章和第十一章有关推拿法部分已删",
+				name: "06/23 中医护理学-复习题-第八、十章和第十一章有关推拿法部分已删",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/绪论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第一章 阴阳五行.xml"},
@@ -39,6 +39,31 @@ self.catalog = [
 					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/第九章 中药用药护理.xml"},
 					{"type": "pmph-xml", "file": "其他/第四学期/2022年06月-中医护理学复习题-人卫图书增值-第十一章 中医特色护理技术-拔罐法与刮痧法.xml"},
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-中医护理学复习题.txt"}
+				]
+			},
+			{
+				name: "06/27 传染病护理学-复习题",
+				prop: {disabled: true}, vals: [
+				]
+			},
+			{
+				name: "06/30 老年护理学-复习题",
+				prop: {disabled: true}, vals: [
+				]
+			},
+			{
+				name: "07/04 内科护理学-复习题",
+				prop: {disabled: true}, vals: [
+				]
+			},
+			{
+				name: "07/05 儿科护理学-复习题",
+				prop: {disabled: true}, vals: [
+				]
+			},
+			{
+				name: "07/05 急危重症护理学-复习题",
+				prop: {disabled: true}, vals: [
 				]
 			}
 		]
