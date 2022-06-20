@@ -1,10 +1,8 @@
 {
    "release": {
       "latest": {
-         "verName": "1.0.0",
-         "verCode": 22060500,
-         "dlPath": "res/app/vers/复习题库-1.0.0-release-22060500.apk",
-         "desc": "1.修复了一些已知问题。\\n2.优化了软件使用体验。"
+         "verName": "1.0.0-release-fixed",
+         "verCode": "22062000"
       },
       "uplogs": {
          "1.0.0\\t22060100": {
@@ -18,6 +16,10 @@
          "1.0.0-release\\t22060500": {
             "dlPath": "res/app/vers/复习题库-1.0.0-release-22060500.apk",
             "desc": "1.修复了一些已知问题。\\n2.优化了软件使用体验。"
+         },
+         "1.0.0-release-fixed\\t22062000": {
+            "dlPath": "res/app/vers/复习题库-1.0.0-release-fixed-22062000.apk",
+            "desc": "回退了未完善的手势前进后退。"
          }
       }
    },

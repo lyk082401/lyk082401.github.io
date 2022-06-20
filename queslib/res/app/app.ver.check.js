@@ -6,10 +6,13 @@
 	{
 		try
 		{
-			let latestVerCode = $data.release.latest.verCode;
+			let latestVerName = $data.release.latest.verName;
+			let latestVerCode = Number($data.release.latest.verCode);
+			let currentVerName = api.AppUtil().getVerName();
 			let currentVerCode = api.AppUtil().getVerCode();
-			let desc = $data.release.latest.desc;
-			let url = $data.release.latest.dlPath;
+			let uplog = $data.release.uplogs[latestVerName + "\t" + latestVerCode];
+			let desc = uplog.desc;
+			let url = uplog.dlPath;
 			if(!(/(http)|(https)/).test(url))
 			{
 				// "//"
@@ -32,6 +35,20 @@
 			}
 			if(currentVerCode < latestVerCode)
 			{
+				console.log(
+				{
+					latest: {
+						verName: latestVerName,
+						verCode: latestVerCode
+					},
+					current: {
+						verName: currentVerName,
+						verCode: currentVerCode
+					},
+					uplog,
+					url,
+					desc
+				});
 				let btns = [];
 				btns.push(
 					{
@@ -80,7 +97,7 @@
 							});
 						}
 				});
-				new $.Zebra_Dialog(`<span><b>${currentVerCode} --> ${latestVerCode}</b></span><br /><p>` + desc.replace(/\n|\\n/g, "<br />") + "</p>", {
+				new $.Zebra_Dialog(`<span><b>${currentVerCode} --> ${latestVerCode}</b></span><br /><p>` + desc.replace(/\n|\r\n/g, "<br />") + "</p>", {
 					type: "information",
 					title: "版本更新",
 					buttons: btns,
