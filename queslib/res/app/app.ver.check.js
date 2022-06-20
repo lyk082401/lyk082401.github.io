@@ -11,7 +11,7 @@
 			let latestVerCode = Number($data.release.latest.verCode);
 			let currentVerName = api.AppUtil().getVerName();
 			let currentVerCode = api.AppUtil().getVerCode();
-			let uplog = $data.release.uplogs[$data.release.latest.verName + "\t" + $data.release.latest.verCode];
+			let uplog = $data.release.uplogs[$data.release.latest.verName + "\\t" + $data.release.latest.verCode];
 			let desc = uplog.desc;
 			let url = uplog.dlPath;
 			if(!(/(http)|(https)/).test(url))
@@ -98,7 +98,7 @@
 							});
 						}
 				});
-				new $.Zebra_Dialog(`<span><b>${currentVerCode} --> ${latestVerCode}</b></span><br /><p>` + desc.replace(/\n|\r\n/g, "<br />") + "</p>", {
+				new $.Zebra_Dialog(`<span><b>${currentVerCode} --> ${latestVerCode}</b></span><br /><p>` + desc.replace(/\n|\r\n|\\n|\\r\\n/g, "<br />") + "</p>", {
 					type: "information",
 					title: "版本更新",
 					buttons: btns,
