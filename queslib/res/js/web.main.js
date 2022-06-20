@@ -815,6 +815,71 @@ parser.api.init = (function()
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
 						}
+					},
+					{
+						name: "传染病护理学",
+						date: {
+							day: "2022-06-27",
+							hour: "18:30",
+							until: "20:00"
+						},
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
+					},
+					{
+						name: "老年护理学",
+						date: {
+							day: "2022-06-30",
+							hour: "18:30",
+							until: "20:00"
+						},
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
+					},
+					{
+						name: "内科护理学",
+						date: {
+							day: "2022-07-04",
+							hour: "08:00",
+							until: "10:00"
+						},
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
+					},
+					{
+						name: "儿科护理学",
+						date: {
+							day: "2022-07-05",
+							hour: "08:00",
+							until: "10:00"
+						},
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
+					},
+					{
+						name: "急危重症护理学",
+						date: {
+							day: "2022-07-05",
+							hour: "14:30",
+							until: "16:30"
+						},
+						room:
+						{
+							single: "『单』三期2号楼301",
+							double: "『双』三期2号楼202"
+						}
 					}
 				];
 				$el.timer_func = (function()
