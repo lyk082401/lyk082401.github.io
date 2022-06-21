@@ -1,10 +1,11 @@
 self.catalog = [
 	{
-		optname: "第四学期-重点复习-期末考试复习题",
+		optname: "第四学期-期末考试-复习题",
 		options: [
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "06/06 外科护理学-人卫扫一扫第二十章＋职教云作业综合试题",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第二十章 肝胆疾病病人的护理.xml"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/06.外科护理学下半学期综合1.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/07.下半学期综合试题2.json"},
@@ -14,14 +15,16 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "06/15 社区护理学-复习题",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-社区护理学复习题.txt"}
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "06/16 护理伦理与法律法规-复习题",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-护理伦理与法律法规复习题.txt"}
 				]
 			},
@@ -42,28 +45,33 @@ self.catalog = [
 				]
 			},
 			{
-				name: "06/27 传染病护理学-复习题",
-				prop: {disabled: true}, vals: [
+				prop: {disabled: true},
+				name: "06/27 传染病护理学-复习题〈更新中〉",
+				vals: [
 				]
 			},
 			{
-				name: "06/30 老年护理学-复习题",
-				prop: {disabled: true}, vals: [
+				prop: {disabled: true},
+				name: "06/30 老年护理学-复习题〈更新中〉",
+				vals: [
 				]
 			},
 			{
-				name: "07/04 内科护理学-复习题",
-				prop: {disabled: true}, vals: [
+				prop: {disabled: true},
+				name: "07/04 内科护理学-复习题〈更新中〉",
+				vals: [
 				]
 			},
 			{
-				name: "07/05 儿科护理学-复习题",
-				prop: {disabled: true}, vals: [
+				prop: {disabled: true},
+				name: "07/05 儿科护理学-复习题〈更新中〉",
+				vals: [
 				]
 			},
 			{
-				name: "07/05 急危重症护理学-复习题",
-				prop: {disabled: true}, vals: [
+				prop: {disabled: true},
+				name: "07/05 急危重症护理学-复习题〈更新中〉",
+				vals: [
 				]
 			}
 		]
@@ -72,8 +80,9 @@ self.catalog = [
 		optname: "人卫图书增值（扫一扫，测一测）",
 		options: [
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第一学期-护理礼仪与人际沟通（第2版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/01.护理礼仪与人际沟通（第2版）/第一章 礼仪及护理礼仪.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/01.护理礼仪与人际沟通（第2版）/第二章 日常社交礼仪.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/01.护理礼仪与人际沟通（第2版）/第三章 护士实用礼仪.xml"},
@@ -86,8 +95,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第一学期-护理学导论（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/02.护理学导论（第4版）/第一章 绪论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/02.护理学导论（第4版）/第二章 健康与疾病.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/02.护理学导论（第4版）/第三章 护士与病人.xml"},
@@ -99,8 +109,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第一学期-人体解剖学与组织胚胎学",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/03.人体解剖学与组织胚胎学/绪论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/03.人体解剖学与组织胚胎学/第一章 运动系统.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/03.人体解剖学与组织胚胎学/第二章 消化系统.xml"},
@@ -117,8 +128,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第二学期-病理学与病理生理学（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/04.病理学与病理生理学（第4版）/第一章 疾病概论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/04.病理学与病理生理学（第4版）/第二章 应激.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/04.病理学与病理生理学（第4版）/第三章 缺氧.xml"},
@@ -145,8 +157,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第二学期-护用药理学（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/05.护用药理学（第4版）/第一章 绪言.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/05.护用药理学（第4版）/第二章 药物效应动力学.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/05.护用药理学（第4版）/第三章 药物代谢动力学.xml"},
@@ -195,7 +208,8 @@ self.catalog = [
 				]
 			},
 			{
-				name: "第二/三/四学期-基础护理学（第4版）",
+				prop: {disabled: true, style: "display: none;"},
+				name: "第二/三学期-基础护理学（第4版）",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/06.基础护理学（第4版）/第一章 医院和住院环境.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/06.基础护理学（第4版）/第二章 入院和出院护理.xml"},
@@ -215,8 +229,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第二学期-生理学（第2版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/07.生理学（第2版）/第一章 绪论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/07.生理学（第2版）/第二章 细胞的基本功能.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/07.生理学（第2版）/第三章 血液.xml"},
@@ -232,8 +247,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第三学期-妇产科护理学（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/08.妇产科护理学（第4版）/第一章 女性生殖系统解剖与生理.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/08.妇产科护理学（第4版）/第二章 妊娠期妇女的护理.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/08.妇产科护理学（第4版）/第三章 分娩期妇女的护理.xml"},
@@ -259,8 +275,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第三学期-护理心理学基础（第3版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/09.护理心理学基础（第3版）/第一章 绪论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/09.护理心理学基础（第3版）/第二章 心理过程.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/09.护理心理学基础（第3版）/第三章 人格.xml"},
@@ -274,8 +291,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第三学期-健康评估（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/10.健康评估（第4版）/第一章 健康资料.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/10.健康评估（第4版）/第二章 健康史评估.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/10.健康评估（第4版）/第三章 常见症状评估.xml"},
@@ -290,8 +308,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第三学期-精神科护理学（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/11.精神科护理学（第4版）/第一章 绪论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/11.精神科护理学（第4版）/第二章 精神疾病的病因及症状学.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/11.精神科护理学（第4版）/第三章 精神障碍病人的治疗环境.xml"},
@@ -365,8 +384,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第三/四学期-外科护理学（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第一章 绪论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第二章 水、电解质及酸碱平衡失调病人的护理.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/13.外科护理学（第4版）/第三章 营养支持病人的护理.xml"},
@@ -414,8 +434,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第三学期-眼耳鼻咽喉口腔科护理学（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/14.眼耳鼻咽喉口腔科护理学（第4版）/第一章 眼的应用解剖生理.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/14.眼耳鼻咽喉口腔科护理学（第4版）/第二章 眼科病人的护理概述.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/14.眼耳鼻咽喉口腔科护理学（第4版）/第三章 眼睑及泪器病病人的护理.xml"},
@@ -504,8 +525,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第四学期-社区护理学（第4版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/19.社区护理学（第4版）/第一章 社区护理概述.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/19.社区护理学（第4版）/第二章 社区护理程序.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/19.社区护理学（第4版）/第三章 流行病学方法在社区护理中的应用.xml"},
@@ -521,8 +543,9 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第四学期-卫生法律法规（第2版）",
-				prop: {disabled: true}, vals: [
+				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/20.卫生法律法规（第2版）/第一章 卫生法律法规的基本理论.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/20.卫生法律法规（第2版）/第二章 卫生行政执法与卫生行政救济.xml"},
 					{"type": "pmph-xml", "file": "人卫图书增值/20.卫生法律法规（第2版）/第三章 公民健康权益保护法律制度.xml"},
@@ -558,31 +581,44 @@ self.catalog = [
 		]
 	},
 	{
+		prop: {disabled: true, style: "display: none;"},
 		optname: "综合题库",
-		prop: {disabled: true}, options: [
+		options: [
 			{
 				name: "第三学期-护理心理学-复习题",
-				vals: [{"type": "plain-txt", "file": "其他/第三学期/2021年12月-护理心理学复习题.txt"}]
+				vals: [
+					{"type": "plain-txt", "file": "其他/第三学期/2021年12月-护理心理学复习题.txt"}
+				]
 			},
 			{
 				name: "第三学期-护理管理学-复习题",
-				vals: [{"type": "plain-txt", "file": "其他/第三学期/2021年12月-护理管理学复习题.txt"}]
+				vals: [
+					{"type": "plain-txt", "file": "其他/第三学期/2021年12月-护理管理学复习题.txt"}
+				]
 			},
 			{
 				name: "第三学期-五官科护理-复习题",
-				vals: [{"type": "plain-txt", "file": "其他/第三学期/2021年12月-五官科护理复习题.txt"}]
+				vals: [
+					{"type": "plain-txt", "file": "其他/第三学期/2021年12月-五官科护理复习题.txt"}
+				]
 			},
 			{
 				name: "第三学期-精神科护理-练习题",
-				vals: [{"type": "plain-txt", "file": "其他/第三学期/2021年12月-精神科护理练习题.txt"}]
+				vals: [
+					{"type": "plain-txt", "file": "其他/第三学期/2021年12月-精神科护理练习题.txt"}
+				]
 			},
 			{
 				name: "第三学期-精神科护理-复习题",
-				vals: [{"type": "plain-txt", "file": "其他/第三学期/2021年12月-精神科护理复习题.txt"}]
+				vals: [
+					{"type": "plain-txt", "file": "其他/第三学期/2021年12月-精神科护理复习题.txt"}
+				]
 			},
 			{
 				name: "第三学期-妇产疾病防治补充练习题",
-				vals: [{"type": "plain-txt", "file": "其他/第三学期/2021年12月-妇产疾病防治补充练习题.txt"}]
+				vals: [
+					{"type": "plain-txt", "file": "其他/第三学期/2021年12月-妇产疾病防治补充练习题.txt"}
+				]
 			},
 			{
 				name: "第三学期-妇产科护理-复习题",
@@ -608,8 +644,66 @@ self.catalog = [
 		optname: "云课堂智慧职教",
 		options: [
 			{
-				name: "第四学期-冯博--外科护理学",
-				prop: {disabled: true}, vals: [
+				name: "第四学期-⑧施秋桃--内科护理学",
+				vals: [
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/01.内护 第三章 第一节 常见症状体征的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/02.内护：第三章第二节 慢性心力衰竭.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/03.内护 第三章第二节 急性心力衰竭.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/04.内护 第三章第三节 心律失常（1）.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/05.内护 第三章第三节心律失常（2）.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/06.内护 第三章第四节 高血压.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/07.内护 第三章第五节冠心病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/08.内护 第三章第五节心肌梗死.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/09.内护 第三章第六节心脏瓣膜病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/10.内护 第三章第七节感染性心内膜炎.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/11.内护 第三章第九节心包疾病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/12.内护 第三章第八节心肌疾病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/13.内护 第四章第一节常见症状体征的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/14.内护 第四章第二节胃炎.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/15.内护 第四章第三节消化性溃疡.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/16.内护 第四章第五节炎症性肠病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/17.内护 第四章第六节肝硬化.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/18.内护 第四章第四节胃癌.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/19.内护 第四章第七节肝癌.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/20.内护 第四章第八节肝性脑病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/21.内护 第四章第九节急性胰腺炎.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/22.内护 第四章第十节上消化道大出血.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/23.内护 第五章第一节常见症状体征的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/24.内护 第五章第二节肾小球疾病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/25.内护 第五章第三节尿路感染.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/26.内护 第五章第四节肾衰竭.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/27.内护 第六章第一节常见症状体征的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/28.内护 第六章第二节贫血性疾病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/29.内护 第六章第三节出血性疾病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/30.内护 第六章第四节白血病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/31.内护 第七章第一第二节.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/32.内护 第七章第三节甲亢.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/33.内护 第七章第四节库欣综合征.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/34.内护 第七章第五节 糖尿病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/35.内护 第七章第六节痛风.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/36.内护 第八章第一节常见症状护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/37.内护 第八章第二节SLE.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/38.内护 第八章第三节类风湿关节炎.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/39.内护 第九章第一节常见症状体征.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/40.内护 第九章第二节格林巴利.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/41.内护 第九章第三节脑血管疾病1.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/42.内护 第九章第三节脑血管疾病2.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/43.内护 第九章第五节癫痫.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/作业/44.内护 第九章第四节帕金森.json"},
+					
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧施秋桃--内科护理学/考试/01.内护 第三章 循环系统疾病病人的护理.json"}
+				]
+			},
+			{
+				name: "第三学期-⑧杨敏兰--内科护理学",
+				vals: [
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/⑧杨敏兰--内科护理学/考试/01.呼吸系统考试.json"}
+				]
+			},
+			{
+				prop: {disabled: true, style: "display: none;"},
+				name: "第三/四学期-冯博--外科护理学",
+				vals: [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/01.泌尿系统损伤病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/02.尿石症病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/冯博--外科护理学/作业/03.第二十九章 良性前列腺增生病人的护理.json"},
@@ -951,10 +1045,11 @@ self.catalog = [
 		]
 	},
 	{
+		prop: {disabled: true, style: "display: none;"},
 		optname: "《基础护理学实训与学习指导》",
 		options: [
 			{
-				name: "第二/三/四学期-基础护理学-全章习题",
+				name: "第二/三学期-基础护理学-全章习题",
 				vals: [
 					{"type": "plain-txt", "file": "基础护理学实训与学习指导/第一章 医院和住院环境.txt"},
 					{"type": "plain-txt", "file": "基础护理学实训与学习指导/第二章 入院和出院护理.txt"},
@@ -977,8 +1072,9 @@ self.catalog = [
 		]
 	},
 	{
+		prop: {disabled: true, style: "display: none;"},
 		optname: "《健康评估实训与学习指导》",
-		prop: {disabled: true}, options: [
+		options: [
 			{
 				name: "第三学期-健康评估-全章习题",
 				vals: [
@@ -996,8 +1092,9 @@ self.catalog = [
 		]
 	},
 	{
+		prop: {disabled: true, style: "display: none;"},
 		optname: "《护理管理学（第二版）》",
-		prop: {disabled: true}, options: [
+		options: [
 			{
 				name: "第三学期-护理管理学-全章习题",
 				vals: [
@@ -1029,6 +1126,7 @@ self.catalog = [
 		]
 	}/**,
 	{
+		prop: {disabled: true, style: "display: none;"},
 		optname: "",
 		// attributes HTMLDOM 属性
 		attr: {},
@@ -1036,6 +1134,7 @@ self.catalog = [
 		prop: {},
 		options: [
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "",
 				// attributes HTMLDOM 属性
 				attr: {},
