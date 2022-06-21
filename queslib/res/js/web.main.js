@@ -3159,13 +3159,14 @@ parser.api.get = (function(_el, _data)
 		if(Array.isArray(_data))
 		{
 			// 全部满足指定条件即反转数组顺序，从后往前处理
-			if(_data.every(function($$val, $$i, $$arrs)
+			/**if(_data.every(function($$val, $$i, $$arrs)
 			{
 				return $$val.type === "icveappzjy2-json";
 			}))
 			{
-				_data = _data.slice().reverse();
-			}
+				// 目前已经不需要反转了，作业和考试顺序使用默认
+				// _data = _data.slice().reverse();
+			}*/
 			var obj = {};
 			obj.name = _el.item(_el.selectedIndex).innerText || _el.item(_el.selectedIndex).label || _el.item(_el.selectedIndex).text;
 			obj.data = [];
