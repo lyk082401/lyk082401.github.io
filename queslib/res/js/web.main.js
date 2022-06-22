@@ -3180,6 +3180,7 @@ parser.api.get = (function(_el, _data)
 		tpl.innerHTML = parser.api.tohtml(parser.api.adjust(_el.item(_el.selectedIndex).cachedata), _el.item(_el.selectedIndex));
 		fragment.appendChild(tpl.content);
 		$(document).find("[name='queslib'] main").html(fragment);
+		window.vueElPopoverTips && window.vueElPopoverTips();
 	}
 	else
 	{
