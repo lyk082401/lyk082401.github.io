@@ -5,6 +5,7 @@
 				window.addEventListener("error", window.onerror = function($e)
 				{
 					console.warn($e);
+					(Array.isArray(window.webCatchGlobalErrors) ? window.webCatchGlobalErrors : (window.webCatchGlobalErrors = [])).push($e);
 					if($e)
 					{
 						let target = $e.target || $e.srcElement || $e.currentTarget;

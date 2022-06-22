@@ -775,7 +775,8 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷"
 					},
 					{
 						name: "社区护理学",
@@ -788,7 +789,8 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷"
 					},
 					{
 						name: "护理伦理与法律法规",
@@ -801,7 +803,8 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷"
 					},
 					{
 						name: "中医护理学",
@@ -814,7 +817,9 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷",
+						scope: "选择题	病例分析×1"
 					},
 					{
 						name: "传染病护理学",
@@ -827,7 +832,9 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷",
+						scope: "选择题＾A1/A2/A3/A4"
 					},
 					{
 						name: "老年护理学",
@@ -840,7 +847,9 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷",
+						scope: "选择题	判断题	简答题×2	病例分析×1"
 					},
 					{
 						name: "内科护理学",
@@ -853,7 +862,8 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷"
 					},
 					{
 						name: "儿科护理学",
@@ -866,7 +876,8 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷"
 					},
 					{
 						name: "急危重症护理学",
@@ -879,7 +890,8 @@ parser.api.init = (function()
 						{
 							single: "『单』三期2号楼301",
 							double: "『双』三期2号楼202"
-						}
+						},
+						type: "闭卷"
 					}
 				];
 				$el.timer_func = (function()
@@ -894,6 +906,7 @@ parser.api.init = (function()
 								<b style="color: blue;">${$val.date.day}（${whichWeek($val.date.day)}）<br />
 									<b style="color: #bec936;">${[$val.date.hour, $val.date.until].join("～")}</b>
 									${$val.type ? ('<br /><b style="color: #9eccab;">' + $val.type + "</b>") : ""}
+									${$val.scope ? ('<br /><b style="color: #8076a3;">' + $val.scope.split("\t").join('</b><b style="color: #fffef9;">｜</b><b style="color: #8076a3;">') + "</b>") : ""}
 								</b>
 							</h3>
 							<h6>
@@ -1172,53 +1185,58 @@ parser.api.init = (function()
 				})
 			});
 		}, 0);
-		if(savedIndex() && !isNaN(savedIndex()) && (savedIndex() >= 0))
-		{
-			initIndex = savedIndex();
-		}
-		else if(urlIndex && !isNaN(urlIndex) && (urlIndex >= 0))
+		if(urlIndex && !isNaN(urlIndex) && (urlIndex >= 0))
 		{
 			initIndex = urlIndex;
 		}
-		// 健康评估
-		else if(Date.now() <= (new Date("2021-12-16 16:10:00")).getTime())
+		// 外科护理学
+		else if(Date.now() <= (new Date("2022-06-06 20:30:00")).getTime())
 		{
-			initIndex = 11;
+			initIndex = 0;
 		}
-		// 心理护理
-		else if(Date.now() <= (new Date("2021-12-23 16:10:00")).getTime())
+		// 社区护理学
+		else if(Date.now() <= (new Date("2022-06-15 20:00:00")).getTime())
 		{
-			initIndex = 10;
+			initIndex = 1;
 		}
-		// 五官科护理
-		else if(Date.now() <= (new Date("2021-12-30 16:10:00")).getTime())
+		// 护理伦理与法律法规
+		else if(Date.now() <= (new Date("2022-06-16 20:00:00")).getTime())
 		{
-			initIndex = 19;
+			initIndex = 2;
 		}
-		// 精神科护理
-		else if(Date.now() <= (new Date("2021-12-31 16:10:00")).getTime())
+		// 中医护理学
+		else if(Date.now() <= (new Date("2022-06-23 20:00:00")).getTime())
 		{
-			initIndex = 12;
+			initIndex = 3;
 		}
-		// 护理学基础
-		else if(Date.now() <= (new Date("2022-01-02 14:30:00")).getTime())
+		// 传染病护理学
+		else if(Date.now() <= (new Date("2022-06-27 20:00:00")).getTime())
+		{
+			initIndex = 4;
+		}
+		// 老年护理学
+		else if(Date.now() <= (new Date("2022-06-30 20:00:00")).getTime())
+		{
+			initIndex = 5;
+		}
+		// 内科护理学
+		else if(Date.now() <= (new Date("2022-07-04 10:00:00")).getTime())
+		{
+			initIndex = 6;
+		}
+		// 儿科护理学
+		else if(Date.now() <= (new Date("2022-07-05 10:00:00")).getTime())
+		{
+			initIndex = 7;
+		}
+		// 急危重症护理学
+		else if(Date.now() <= (new Date("2022-07-05 16:30:00")).getTime())
 		{
 			initIndex = 8;
 		}
-		// 内科护理学
-		else if(Date.now() <= (new Date("2022-01-03 14:30:00")).getTime())
+		else if(savedIndex() && !isNaN(savedIndex()) && (savedIndex() >= 0))
 		{
-			initIndex = 14;
-		}
-		// 妇产科护理
-		else if(Date.now() <= (new Date("2022-01-04 08:10:00")).getTime())
-		{
-			initIndex = 9;
-		}
-		// 外科护理学
-		else if(Date.now() <= (new Date("2022-01-05 08:10:00")).getTime())
-		{
-			initIndex = 17;
+			initIndex = savedIndex();
 		}
 		select.selectedIndex = cloneSelect.selectedIndex = initIndex;
 		$([select, cloneSelect]).each(function($index, $val)
@@ -2656,6 +2674,7 @@ parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
 				});
 			});
 			parser.api.cnzzPush(["_trackEvent", "题库", _startstr, (new Date(_el.starttime)).toString(), 0, "queslib"]);
+			window.vueElPopoverTips && window.vueElPopoverTips.hide && window.vueElPopoverTips.hide(_el.closest("[name='chapter']"));
 		}
 		else
 		{
@@ -2786,6 +2805,7 @@ parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
 				center_buttons: true
 			});
 			parser.api.cnzzPush(["_trackEvent", "题库", _endstr, (new Date(_el.endedtime)).toString(), 0, "queslib"]);
+			window.vueElPopoverTips && window.vueElPopoverTips.show && window.vueElPopoverTips.show(_el.closest("[name='chapter']"));
 		}
 	}
 	else
@@ -2928,14 +2948,23 @@ parser.api.tohtml = (function(_data, _cacheObj)
 		html += `\n${"\t".repeat(6)}</aside>`;
 		html += `\n${"\t".repeat(6)}<aside name="questions">`;
 		htmls.push(html);
+		let getTipsForAnalysisHtml = function($analysis, $title)
+		{
+			if($analysis && $analysis.trim && ($analysis.trim() !== ""))
+			{
+				return `&nbsp;<div name="vue-tips-el-popover" style="display: inline;" data-analysis="${$analysis}"><el-popover placement="top" trigger="click" width="300" title="${$title || "参考解析"}" content="暂无解析。"><i slot="reference" class="el-icon-question" style="color: #2c68ff;"></i><template slot-scope="scope"><div slot="content">{{ analysis }}</div></template></el-popover></div>`;
+			}
+			return "";
+		};
 		for(let i = 0; i < __data.questions.length; i++)
 		{
 			let child = __data.questions[i], uuid = parser.api.uuid();
+			// 单选题
 			if(parser.type.choices.alone.includes(child.type))
 			{
 				html = `${"\t".repeat(7)}<section name="question">`;
 				html += `\n${"\t".repeat(8)}<dl name="child">`;
-				html += `\n${"\t".repeat(9)}<dt name="desc"><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></dt>`;
+				html += `\n${"\t".repeat(9)}<dt name="desc"><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span>${getTipsForAnalysisHtml(child.analysis)}</dt>`;
 				for(let k = 0; k < child.options.length; k++)
 				{
 					html += `\n${"\t".repeat(9)}<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="${child.type.includes('多') ? 'checkbox' : 'radio'}" name="${uuid}" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="${child.options[k].right ? 'true' : 'false'}"${child.options[k].right ? " checked" : ""} disabled />${child.options[k].name}.${child.options[k].title}</span></dd>`;
@@ -2945,6 +2974,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 				htmls.push(html);
 				choice_quesnames[choice_quesnames.length - 1].push({name: uuid, type: child.type});
 			}
+			// 共用题干单选题
 			if(parser.type.choices.share.title.includes(child.type))
 			{
 				html = `${"\t".repeat(7)}<section name="question">`;
@@ -2954,7 +2984,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 				for(let k = 0; k < child.children.length; k++)
 				{
 					html += `\n${"\t".repeat(8)}<dl name="child">`;
-					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></dt>`;
+					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span>${getTipsForAnalysisHtml(child.children[k].analysis)}</dt>`;
 					for(let j = 0; j < child.children[k].options.length; j++)
 					{
 						html += `\n${"\t".repeat(9)}<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="${uuid}" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="${child.children[k].options[j].right ? 'true' : 'false'}"${child.children[k].options[j].right ? " checked" : ""} disabled />${child.children[k].options[j].name}.${child.children[k].options[j].title}</span></dd>`;
@@ -2966,6 +2996,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 				html += `\n${"\t".repeat(7)}</section>`;
 				htmls.push(html);
 			}
+			// 共用答案单选题
 			if(parser.type.choices.share.answer.includes(child.type))
 			{
 				html = `${"\t".repeat(7)}<section name="question">`;
@@ -2979,7 +3010,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 				for(let k = 0; k < child.children.length; k++)
 				{
 					html += `\n${"\t".repeat(8)}<dl name="child">`;
-					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span></dt>`;
+					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span>${getTipsForAnalysisHtml(child.children[k].analysis)}</dt>`;
 					html += `\n${"\t".repeat(9)}<ul>`;
 					for(let j = 0; j < child.options.length; j++)
 					{
@@ -2993,6 +3024,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 				html += `\n${"\t".repeat(7)}</section>`;
 				htmls.push(html);
 			}
+			// 文字填空题
 			if(parser.type.answers.fill.includes(child.type))
 			{
 				// if(Array.isArray(child.answers) && child.answers.length)
@@ -3008,6 +3040,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 					htmls.push(html);
 				}
 			}
+			// 文字作答题
 			if(parser.type.answers.word.includes(child.type))
 			{
 				// if((typeof(child.answer) === "string") && child.answer.length)
@@ -3218,7 +3251,10 @@ parser.api.get = (function(_el, _data)
 				tpl.innerHTML = parser.api.tohtml(parser.api.adjust(obj), _el.item(_el.selectedIndex));
 				fragment.appendChild(tpl.content);
 				$(document).find("[name='queslib'] main").html(fragment);
-			}, console.warn);
+			}, console.warn).finally(function()
+			{
+				window.vueElPopoverTips && window.vueElPopoverTips();
+			});
 		}
 	}
 	$.LoadingOverlay("hide");
