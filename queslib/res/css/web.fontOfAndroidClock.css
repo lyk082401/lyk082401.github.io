@@ -1,0 +1,10 @@
+		@font-face
+		{
+			font-family: "AndroidClock";
+			src: local("AndroidClock"), url("res/fonts/AndroidClock.ttf") format("opentype");
+			font-display: swap;
+		}
+		*:not(input[type="text"]):not(input[type="password"]):not(textarea)
+		{
+			font-family: "AndroidClock", sans-serif;
+		}

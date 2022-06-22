@@ -2995,7 +2995,8 @@ parser.api.tohtml = (function(_data, _cacheObj)
 			}
 			if(parser.type.answers.fill.includes(child.type))
 			{
-				if(child.answers && child.answers.length)
+				// if(Array.isArray(child.answers) && child.answers.length)
+				if(Array.isArray(child.answers))
 				{
 					html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span></p>`;
 					for(var k = 0; k < child.answers.length; k++)
@@ -3009,7 +3010,8 @@ parser.api.tohtml = (function(_data, _cacheObj)
 			}
 			if(parser.type.answers.word.includes(child.type))
 			{
-				if(child.answer && (child.answer.trim() != ""))
+				// if((typeof(child.answer) === "string") && child.answer.length)
+				if((typeof(child.answer) === "string") || (child.answer === null) || (child.answer === undefined))
 				{
 					html = `<p><span>{{quesnum}}.<small>〔${child.type}〕</small><big style="word-break: normal; word-wrap: normal; white-space: pre-wrap;">${child.title}</big></span></p>`;
 					html += `<span onclick="javascript: this.querySelector('textarea').click();" style="display: block; float: center; margin: 0 auto; vertical-align: middle; text-align: center;"><textarea name="${uuid}" wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="width: 90%; opacity: 0.8; border: 0; background-color: #33B5E5; color: #ffffff;" readonly>${child.answer ? child.answer.replace(/\<([\/]{0,})([A-Za-z]{1,})([0-9]{0,})([ \/]{0,})\>/g, "") : ""}</textarea><input type="text" value="" style="display: none; text-align: center; width: 90%; opacity: 0.8; border: 0; background-color: #337ab7; color: #ffffff;" readonly /><textarea wrap="hard" rows="1" onclick="javascript: this.oninput();" oninput="javascript: this.style.height = 'auto'; this.style.height = this.scrollHeight + 'px';" style="display: none; width: 90%; opacity: 0.8; border: 0; background-color: #5cb85c; color: #ffffff;" readonly></textarea></span>`;
