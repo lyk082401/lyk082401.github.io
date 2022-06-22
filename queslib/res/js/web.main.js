@@ -2948,13 +2948,18 @@ parser.api.tohtml = (function(_data, _cacheObj)
 		html += `\n${"\t".repeat(6)}</aside>`;
 		html += `\n${"\t".repeat(6)}<aside name="questions">`;
 		htmls.push(html);
-		let getTipsForAnalysisHtml = function($analysis, $title)
+		let getTipsForAnalysisHtml = function($analysis)
 		{
-			if($analysis && $analysis.trim && ($analysis.trim() !== ""))
+			let width = 200;
+			try
 			{
-				return `&nbsp;<div name="vue-tips-el-popover" style="display: inline;" data-analysis="${$analysis}"><el-popover placement="top" trigger="click" width="300" title="${$title || "参考解析"}" content="暂无解析。"><i slot="reference" class="el-icon-question" style="color: #2c68ff;"></i><template slot-scope="scope"><div slot="content">{{ analysis }}</div></template></el-popover></div>`;
+				width = parseInt(Math.max(400, screen.width, screen.availWidth, document.documentElement.clientWidth, document.documentElement.scrollWidth, document.body.clientWidth, document.body.scrollWidth) * ( 1 / 2 ));
 			}
-			return "";
+			catch(e)
+			{
+				console.warn(e);
+			}
+			return ((typeof($analysis) === "string") && ($analysis.trim() !== "")) ? `<div name="vue-tips-el-popover" style="display: inline;" data-analysis="${$analysis}">&nbsp;<el-popover placement="top" trigger="click" width="${width}" title="参考解析" content="暂无解析。"><big slot="reference"><i class="el-icon-question" style="color: #2c68ff;"></i></big><template slot-scope="scope"><div slot="content">{{ analysis }}</div></template></el-popover></div>` : "";
 		};
 		for(let i = 0; i < __data.questions.length; i++)
 		{

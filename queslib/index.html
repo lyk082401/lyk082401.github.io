@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="referrer" content="always" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, minimum-scale=0.8, user-scalable=yes" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>梧职院 | 20级护理 | 复习题库</title>
 		<script type="text/javascript" charset="UTF-8" src="res/js/web.fixUrlPathName.js"></script>
@@ -131,27 +131,30 @@
 								};
 								window.vueElPopoverTips = function()
 								{
-									tips().each(function($i, $el)
+									new Promise(function($done, $fail)
 									{
-										let analysis = jQ($el).data('analysis');
-										if(analysis)
+										$done(tips().each(function($i, $el)
 										{
-											jQ($el).show();
-											window.Vue && new Vue(
+											let analysis = jQ($el).data('analysis');
+											if(analysis)
 											{
-												el: $el,
-												data: function()
+												jQ($el).show();
+												window.Vue && new Vue(
 												{
-													return {analysis: analysis};
-												}
-											});
-										}
-										else
-										{
-											jQ($el).hide();
-											jQ($el).remove();
-										}
-									});
+													el: $el,
+													data: function()
+													{
+														return {analysis: analysis};
+													}
+												});
+											}
+											else
+											{
+												jQ($el).hide();
+												jQ($el).remove();
+											}
+										}));
+									}).catch(console.warn);
 								};
 								window.vueElPopoverTips.show = function($el)
 								{
