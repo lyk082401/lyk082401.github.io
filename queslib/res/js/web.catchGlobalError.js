@@ -16,7 +16,18 @@
 					if(err)
 					{
 						let target = err.target || err.srcElement || err.currentTarget;
-						let forJson = {};
+						let forJson = {
+							args: {
+								size: arguments.length,
+								type: (function($args)
+								{
+									return $args.map(function($v, $i, $all)
+									{
+										return typeof($v);
+		   						});
+								})(Array.prototype.slice.apply(arguments))
+							}
+						};
 						// 转为普通数组
 						Array.from(
 							// 去重
