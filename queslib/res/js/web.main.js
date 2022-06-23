@@ -2962,7 +2962,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 			{
 				console.warn(e);
 			}
-			return ((typeof($analysis) === "string") && ($analysis.trim() !== "")) ? `<div name="vue-tips-el-popover" style="display: inline;" data-analysis="${$analysis}">&nbsp;<el-popover placement="top" trigger="click" width="${width}" title="参考解析" content="暂无解析。"><big slot="reference"><i class="el-icon-question" style="color: #2c68ff;"></i></big><template slot-scope="scope"><div slot="content">{{ analysis }}</div></template></el-popover></div>` : "";
+			return ((typeof($analysis) === "string") && ($analysis.trim() !== "")) ? `<div name="vue-tips-el-popover" style="display: inline;" data-analysis="${$analysis}">&nbsp;<el-popover placement="top" trigger="click" width="${width}" title="参考解析" content="暂无解析。"><i slot="reference" class="el-icon-question" style="color: #2c68ff;"></i><template slot-scope="scope"><div slot="content">{{ analysis }}</div></template></el-popover></div>` : "";
 		};
 		for(let i = 0; i < __data.questions.length; i++)
 		{
@@ -2972,7 +2972,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 			{
 				html = `${"\t".repeat(7)}<section name="question">`;
 				html += `\n${"\t".repeat(8)}<dl name="child">`;
-				html += `\n${"\t".repeat(9)}<dt name="desc"><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span>${getTipsForAnalysisHtml(child.analysis)}</dt>`;
+				html += `\n${"\t".repeat(9)}<dt name="desc"><span>{{quesnum}}.<small>〔${child.type}〕</small><big>${child.title}</big></span><span><big>${getTipsForAnalysisHtml(child.analysis)}</big></span></dt>`;
 				for(let k = 0; k < child.options.length; k++)
 				{
 					html += `\n${"\t".repeat(9)}<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="${child.type.includes('多') ? 'checkbox' : 'radio'}" name="${uuid}" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="${child.options[k].right ? 'true' : 'false'}"${child.options[k].right ? " checked" : ""} disabled />${child.options[k].name}.${child.options[k].title}</span></dd>`;
@@ -2992,7 +2992,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 				for(let k = 0; k < child.children.length; k++)
 				{
 					html += `\n${"\t".repeat(8)}<dl name="child">`;
-					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span>${getTipsForAnalysisHtml(child.children[k].analysis)}</dt>`;
+					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span><span><big>${getTipsForAnalysisHtml(child.children[k].analysis)}</big></span></dt>`;
 					for(let j = 0; j < child.children[k].options.length; j++)
 					{
 						html += `\n${"\t".repeat(9)}<dd name="option" onclick="javascript: this.querySelector('input').onclick();"><span class="option"><input type="radio" name="${uuid}" onclick="javascript: this.disabled || (this.checked = !this.checked);" value="${child.children[k].options[j].right ? 'true' : 'false'}"${child.children[k].options[j].right ? " checked" : ""} disabled />${child.children[k].options[j].name}.${child.children[k].options[j].title}</span></dd>`;
@@ -3018,7 +3018,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 				for(let k = 0; k < child.children.length; k++)
 				{
 					html += `\n${"\t".repeat(8)}<dl name="child">`;
-					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span>${getTipsForAnalysisHtml(child.children[k].analysis)}</dt>`;
+					html += `\n${"\t".repeat(9)}<dt name="desc"><span><small>（${parser.const.quesnumCNs[k]}）</small><big>${child.children[k].title}</big></span><span><big>${getTipsForAnalysisHtml(child.children[k].analysis)}</big></span></dt>`;
 					html += `\n${"\t".repeat(9)}<ul>`;
 					for(let j = 0; j < child.options.length; j++)
 					{
