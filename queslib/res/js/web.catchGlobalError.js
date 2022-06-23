@@ -2,47 +2,54 @@
 		{
 			try
 			{
-				window.addEventListener("error", window.onerror = function($e)
+				window.addEventListener("error", window.onerror = function($message, $filename, $lineno, $colno, $error)
 				{
-					console.warn($e);
-					(Array.isArray(window.webCatchGlobalErrors) ? window.webCatchGlobalErrors : (window.webCatchGlobalErrors = [])).push($e);
-					if($e)
+					let err = $error ? {
+						message: $message,
+						filename: $filename,
+						lineno: $lineno,
+						colno: $colno,
+						error: $error
+					} : $message;
+					console.warn(err);
+					(Array.isArray(window.webCatchGlobalErrors) ? window.webCatchGlobalErrors : (window.webCatchGlobalErrors = [])).push(err);
+					if(err)
 					{
-						let target = $e.target || $e.srcElement || $e.currentTarget;
+						let target = err.target || err.srcElement || err.currentTarget;
 						let forJson = {};
 						// 转为普通数组
 						Array.from(
 							// 去重
 							new Set(
-								Object.getOwnPropertyNames(Object.getPrototypeOf($e))
+								Object.getOwnPropertyNames(Object.getPrototypeOf(err))
 								// 合并
-								.concat(Object.getOwnPropertyNames($e))
+								.concat(Object.getOwnPropertyNames(err))
 							)
 						).forEach(function($k, $i, $all)
 						{
 							try
 							{
-								JSON.stringify($e[$k]);
-								forJson[$k] = $e[$k];
+								JSON.stringify(err[$k]);
+								forJson[$k] = err[$k];
 							}
 							catch(e)
 							{
 								// console.warn(e);
 							}
 						});
-						if($e.error)
+						if(err.error)
 						{
 							forJson.error = {
-								message: $e.error.message,
-								stack: $e.error.stack
+								message: err.error.message,
+								stack: err.error.stack
 							};
 						}
-						if($e.originalEvent)
+						if(err.originalEvent)
 						{
 							forJson.originalEvent = {
-								message: $e.originalEvent.message,
-								lineno: $e.originalEvent.lineno,
-								colno: $e.originalEvent.colno,
+								message: err.originalEvent.message,
+								lineno: err.originalEvent.lineno,
+								colno: err.originalEvent.colno,
 								error: (function($err)
 								{
 									if($err)
@@ -53,7 +60,7 @@
 										};
 									}
 									return $err;
-								})($e.originalEvent.error)
+								})(err.originalEvent.error)
 							};
 						}
 						if(target && (target.href || target.src))
@@ -61,6 +68,10 @@
 							forJson.url = target.href || target.src;
 						}
 						alert(JSON.stringify(forJson, null, "\t"));
+					}
+					else
+					{
+						console.warn("未知传递参数", err, arguments);
 					}
 				}, true);
 				window.addEventListener("unhandledrejection", function($e)

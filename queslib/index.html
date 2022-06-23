@@ -164,13 +164,6 @@
 								{
 									$el && tips($el).hide();
 								};
-								/**
-								jQ.tmpLoadingOverlay = jQ.LoadingOverlay;
-								jQ.LoadingOverlay = function($status)
-								{
-									jQ.tmpLoadingOverlay.apply(this, arguments);
-								};
-								*/
 							}
 						}
 						catch(e)
@@ -209,51 +202,6 @@
 		<script type="text/javascript" charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.9/locale/zh-CN.min.js" crossorigin="anonymous" defer></script>
 	</head>
 	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 12px; opacity: 0.50;">
-		<!--
-		<fieldset name="queslib">
-		<main>
-		<div name="vue-tips-el-popover" data-analysis="解析0">
-			<el-popover
-				placement="top"
-				trigger="click"
-				width="300"
-				title="参考解析"
-				content="暂无解析。">
-				<i slot="reference" class="el-icon-question" style="color: #2c68ff;"></i>
-				<template slot-scope="scope">
-					<div slot="content">{{ analysis }}</div>
-				</template>
-			</el-popover>
-		</div>
-		<div name="vue-tips-el-popover" data-analysis="解析1">
-			<el-popover
-				placement="top"
-				trigger="click"
-				width="300"
-				title="参考解析"
-				content="暂无解析。">
-				<i slot="reference" class="el-icon-question" style="color: #2c68ff;"></i>
-				<template slot-scope="scope">
-					<div slot="content">{{ analysis }}</div>
-				</template>
-			</el-popover>
-		</div>
-		<div name="vue-tips-el-popover" data-analysis="解析2">
-			<el-popover
-				placement="top"
-				trigger="click"
-				width="300"
-				title="参考解析"
-				content="暂无解析。">
-				<i slot="reference" class="el-icon-question" style="color: #2c68ff;"></i>
-				<template slot-scope="scope">
-					<div slot="content">{{ analysis }}</div>
-				</template>
-			</el-popover>
-		</div>
-		</main>
-		</fieldset>
-		-->
 		<fieldset name="queslib">
 			<legend>
 				<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; height: 20px;"
@@ -357,7 +305,11 @@
 							{
 								try
 								{
-									window.LingQue && LingQue.Monitor && (new LingQue.Monitor()).init({id: 'JjGh8U6zCI9pvk1s', sendSuspicious: true, ignoreVendor: false, sendSpaPv: true});
+									window.navigator && navigator.sendBeacon && navigator.sendBeacon('', null);
+									if(window.LingQue && LingQue.Monitor)
+									{
+										(new LingQue.Monitor()).init({id: 'JjGh8U6zCI9pvk1s', sendSuspicious: true, ignoreVendor: false, sendSpaPv: true});
+									}
 								}
 								catch(e)
 								{

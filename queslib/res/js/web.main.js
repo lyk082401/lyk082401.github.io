@@ -1416,7 +1416,8 @@ parser.api.init = (function()
 		}
 		try
 		{
-			if(window.LA && window.LA.config)
+			// 网页统计
+			if((location.protocol !== "file:") && window.LA && window.LA.config)
 			{
 				$.get(("https://v6-widget.51.la/v6/JeaQ7widyBhiJfwS/quote.js?_=" + Date.now() + "&theme=#1690FF,#333333,#1690FF,#1690FF,#FFFFFF,#1690FF,10&f=10&display=0,1,1,1,1,1,1,1").replace(/\#/g, "%23")/**.replace(/\&/g, "%26").replace(/\=/g, "%3D")*/, null, null, "text")
 				.done(function($data)
@@ -1531,6 +1532,7 @@ parser.api.init = (function()
 		}
 		try
 		{
+			// 热更新、热修复
 			let s = document.createElement("script");
 			s.type = "text/javascript";
 			s.src = "res/js/web.patcher.js?_=" + Date.now();
@@ -1546,6 +1548,7 @@ parser.api.init = (function()
 		}
 		try
 		{
+			// 清理控制台日志
 			if(window.eruda && eruda.get)
 			{
 				// 定量清理控制台日志，防止卡顿
