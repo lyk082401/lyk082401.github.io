@@ -201,7 +201,7 @@
 		<script type="text/javascript" charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.9/index.min.js" crossorigin="anonymous"></script>
 		<script type="text/javascript" charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.9/locale/zh-CN.min.js" crossorigin="anonymous" defer></script>
 	</head>
-	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 12px; opacity: 0.50;">
+	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 14px; opacity: 0.50;">
 		<fieldset name="queslib">
 			<legend>
 				<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; height: 20px;"
@@ -259,8 +259,14 @@
 			<hr />
 			<div style="text-align: center; margin: 0 auto; font-size: 10px;">
 				<style type="text/css">
+				[name="la-widget"] *
+				{
+					color: rgb(22, 144, 255);
+				}
 				[name="la-widget"] a
 				{
+					outline: none;
+					background: none;
 					text-decoration: none;
 				}
 				</style>
@@ -271,6 +277,10 @@
 							{
 								try
 								{
+									if(location.protocol === 'file:')
+									{
+										return;
+									}
 									window.LA && LA.init(
 									{
 										id: 'JeaQ7widyBhiJfwS', ck: 'JeaQ7widyBhiJfwS', autoTrack: true, hashMode: true
@@ -289,8 +299,8 @@
 							{
 								try
 								{
-									_.la = _.parentElement.querySelector('.la-widget.la-data-widget__container');
-									_.la.outerHTML = `<a name='la-widget-text' href='https://v6.51.la/s/49r3cCTTzEv9Gdy' target='_blank'>` + _.la.outerHTML + '</a>';
+									_.la = _.parentElement && _.parentElement.querySelector('.la-widget.la-data-widget__container');
+									_.la && (_.la.outerHTML = `<a name='la-widget-text' href='https://v6.51.la/s/49r3cCTTzEv9Gdy' target='_blank'>` + _.la.outerHTML + '</a>');
 								}
 								catch(e)
 								{
@@ -305,7 +315,11 @@
 							{
 								try
 								{
-									window.navigator && navigator.sendBeacon && navigator.sendBeacon('', null);
+									if(location.protocol === 'file:')
+									{
+										return;
+									}
+									// window.navigator && navigator.sendBeacon && navigator.sendBeacon('', null);
 									if(window.LingQue && LingQue.Monitor)
 									{
 										(new LingQue.Monitor()).init({id: 'JjGh8U6zCI9pvk1s', sendSuspicious: true, ignoreVendor: false, sendSpaPv: true});
@@ -320,7 +334,7 @@
 					</div>
 					<div name="la-v5-widget-show">
 						<script type="text/javascript" charset="UTF-8" src="https://js.users.51.la/21357049.js" crossorigin="anonymous" defer></script>
-						<a href="https://www.51.la/?21357049" target="_blank">网站统计</a>
+						<a style="vertical-align: middle; text-decoration: none; line-height: 1.71428em !important;" target="_blank" href="https://www.51.la/?21357049"><img alt="网站统计" style="vertical-align: middle; border: none;" src="https://sdk.51.la/icon/2-1.png" crossorigin="anonymous" /></a>
 					</div>
 				</div>
 			</div>

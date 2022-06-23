@@ -4,13 +4,13 @@
 			{
 				window.addEventListener("error", window.onerror = function($message, $filename, $lineno, $colno, $error)
 				{
-					let err = $error ? {
+					let err = (arguments.length == 1) ? $message : {
 						message: $message,
 						filename: $filename,
 						lineno: $lineno,
 						colno: $colno,
 						error: $error
-					} : $message;
+					};
 					console.warn(err);
 					(Array.isArray(window.webCatchGlobalErrors) ? window.webCatchGlobalErrors : (window.webCatchGlobalErrors = [])).push(err);
 					if(err)
@@ -19,13 +19,13 @@
 						let forJson = {
 							args: {
 								size: arguments.length,
-								type: (function($args)
+								type: Object.fromEntries((function($args)
 								{
 									return $args.map(function($v, $i, $all)
 									{
-										return typeof($v);
+										return [($i + 1) + ":" + typeof($v) + ":" + Object.prototype.toString.call($v), String($v)];
 		   						});
-								})(Array.prototype.slice.apply(arguments))
+								})(Array.prototype.slice.apply(arguments)))
 							}
 						};
 						// 转为普通数组

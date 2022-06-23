@@ -178,13 +178,13 @@
 	content: "✔︎";
 	display: block;
 	position: relative;
-	top: -2px;
+	top: -1.5px;
 	left: 3px;
 	width: 6px;
 	height: 6px;
 	color: #fff;
 	font-weight: 400;
-	z-index: 1;
+	z-index: 100;
 }
 /** 单选框 --- */
 /** 改变选中之后的背景颜色
@@ -201,6 +201,7 @@
 [name="queslib"] input[type=checkbox]:checked::after, [name="queslib"] input[type=radio]:checked::after
 {
 	background-color: #5cb85c;
+	padding-bottom: 3px;
 }
 [name="queslib"] .option-right input[type=radio]::after, [name="queslib"] .option-right input[type=checkbox]::after
 {
@@ -216,6 +217,15 @@
 {
 	content: "﹅";
 	background-color: #fca104;
+}
+[name="queslib"] .option-right input[type=radio]::after, [name="queslib"] .option-right input[type=checkbox]::after,
+[name="queslib"] .option-error input[type=radio]::after, [name="queslib"] .option-error input[type=checkbox]::after,
+[name="queslib"] .option-notdo input[type=radio]::after, [name="queslib"] .option-notdo input[type=checkbox]::after
+{
+	/** 暂时修复选中时或显示"✔︎"、"✘"、"﹅"时选中圆点框向上错位的问题 */
+	vertical-align: middle;
+	padding-bottom: 3px;
+	margin-top: -3px;
 }
 /** </style>
 <style type="text/css"> */

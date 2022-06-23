@@ -632,7 +632,7 @@ parser.api.init = (function()
 				// 设置网页背景色
 				(function()
 				{
-					let light = "background-color: #cccccc; color: black; font-size: 12px; opacity: 0.75;", dark = "background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 12px; opacity: 0.50;";
+					let light = "background-color: #cccccc; color: black; font-size: 14px; opacity: 0.75;", dark = "background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 14px; opacity: 0.50;";
 					if(localStorage.getItem("queslib-background-theme") === "日间模式")
 					{
 						document.body.style = light;
