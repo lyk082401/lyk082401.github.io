@@ -195,6 +195,29 @@
 		<!--<script type="text/javascript" charset="UTF-8" src="res/js/web.plugins.js"><\/script>-->
 		<script type="text/javascript" charset="UTF-8" src="res/js/web.patcher.js" defer></script>
 		<script type="text/javascript" charset="UTF-8" src="res/app/app.ver.check.js" defer></script>
+		<!-- localForage -->
+		<script type="text/javascript" charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/localforage/1.9.0/localforage.min.js"
+			onload="javascript: (function(_)
+			{
+				try
+				{
+					window.localforage && localforage.config && localforage.config(
+					{
+						name: 'Queslib',
+						size: 104857600,
+						driver: [localforage.INDEXEDDB, localforage.WEBSQL, localforage.LOCALSTORAGE],
+						version: 1.0,
+						storeName: 'keyvaluepairs',
+						description: '题库'
+					});
+				}
+				catch(e)
+				{
+					console.warn(e);
+					throw e;
+				}
+			})(this);" crossorigin="anonymous"></script>
+		<!--<script type="text/javascript" charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/localforage/1.9.0/localforage.nopromises.min.js" crossorigin="anonymous"><\/script>-->
 		<!-- Vue / Element-UI -->
 		<script type="text/javascript" charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.min.js" crossorigin="anonymous"></script>
 		<link rel="stylesheet" charset="UTF-8" href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.9/theme-chalk/index.min.css" crossorigin="anonymous" defer />
@@ -205,6 +228,18 @@
 		<fieldset name="queslib">
 			<legend>
 				<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; height: 20px;"
+					onclick="javascript: (function(_)
+					{
+						try
+						{
+							this.blur && this.blur();
+						}
+						catch(e)
+						{
+							console.warn(e);
+							throw e;
+						}
+					})(this);"
 					onchange="javascript: (function(_)
 					{
 						try

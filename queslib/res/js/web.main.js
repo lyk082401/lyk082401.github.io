@@ -245,6 +245,58 @@ self.parser = {
 		}
 		return null;
 	},
+	storage: {
+		set: function($key, $val)
+		{
+			return parser.setStorageItem($key, $val);
+		},
+		get: function($key)
+		{
+			return parser.getStorageItem($key);
+		},
+		big: {
+			set: function($key, $val)
+			{
+				try
+				{
+					return localforage.setItem($key, $val).then(function($data)
+					{
+						return $data;
+					})
+					.catch(function($error)
+					{
+						console.warn($error);
+						throw $error;
+					});
+				}
+				catch(e)
+				{
+					console.warn(e);
+					return Promise.reject(e);
+				}
+			},
+			get: function($key)
+			{
+				try
+				{
+					return localforage.getItem($key).then(function($data)
+					{
+						return $data;
+					})
+					.catch(function($error)
+					{
+						console.warn($error);
+						throw $error;
+					});
+				}
+				catch(e)
+				{
+					console.warn(e);
+					return Promise.reject(e);
+				}
+			}
+		}
+	},
 	api: {}, txt: {}, xml: {}, json: {},
 	type: {
 		// 单选题 isSCQ
@@ -438,14 +490,21 @@ parser.api.init = (function()
 		return parseInt(localStorage.getItem("queslib-selected-index"), 10);
 	}),
 	urlIndex = parseInt(parser.api.getUrlParam("i"), 10),
-	queslibCompressRes = (function($d)
+	queslibCompressRes = window.localforage ? function($d)
+	{
+		if(arguments.length > 0)
+		{
+			parser.storage.big.set("queslib-compress-res", $d);
+		}
+		return parser.storage.big.get("queslib-compress-res");
+	} : function($d)
 	{
 		if(arguments.length > 0)
 		{
 			parser.setStorageItem("queslib-compress-res", $d);
 		}
 		return parser.getStorageItem("queslib-compress-res");
-	});
+	};
 	$.LoadingOverlay("show");
 	try
 	{
@@ -986,9 +1045,21 @@ parser.api.init = (function()
 					console.log(arguments);
 					if(confirm("确定要" + button2.name + "？"))
 					{
-						sessionStorage.clear();
-						localStorage.clear();
-						location.reload(true);
+						if(window.localforage)
+						{
+							localforage.clear().then(function()
+							{
+								sessionStorage.clear();
+								localStorage.clear();
+								location.reload(true);
+							});
+						}
+						else
+						{
+							sessionStorage.clear();
+							localStorage.clear();
+							location.reload(true);
+						}
 					}
 				}
 			};
@@ -1257,7 +1328,14 @@ parser.api.init = (function()
 			"https://web.omeo.eu.org/" + dataFileLocal,
 			"https://omeo.vercel.app/" + dataFileLocal
 		],
-		url = urls[1],
+		repo = {
+			cdn: "https://hn-1252239881.file.myqcloud.com/" + dataFileCdn,
+			cos: "https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/" + dataFileCos,
+			"cos.global": "https://hn-1252239881.cos.accelerate.myqcloud.com/" + dataFileCos,
+			"cos.static": "https://hn-1252239881.cos-website.ap-guangzhou.myqcloud.com/" + dataFileCos,
+			local: ((location.protocol !== "file:") ? location.origin : "https://omeo.vercel.app") + "/" + dataFileLocal
+		},
+		url = (parser.api.getUrlParam("repo") && repo[parser.api.getUrlParam("repo")]) ? repo[parser.api.getUrlParam("repo")] : urls[1],
 		initdata = (function($obj)
 		{
 			console.log("本地题库数据信息", $obj.date);
@@ -1319,42 +1397,100 @@ parser.api.init = (function()
 			}),
 			success: (function($data, $status, $xhr)
 			{
-				let old = queslibCompressRes() ? JSON.parse(queslibCompressRes()) : {},
-				refresh = (function()
+				if(window.localforage)
 				{
-					let obj = {
-						date: {
-							source: config($xhr).date,
-							string: new Date(config($xhr).date).toString(),
-							format: parser.api.parseTimeToDateStr($xhr.getResponseHeader("Last-Modified"), $xhr.getResponseHeader("Expires") ? false : true)
-						},
-						etag: config($xhr).etag,
-						size: config($xhr).size,
-						data: parser.api.arrayBufferToBase64($data)
-					};
-					queslibCompressRes(JSON.stringify(obj));
-					parser.api.tipmsg("题库数据已被更新", "log", function()
+					queslibCompressRes().then(function($res)
 					{
-						console.log("题库数据已被更新", obj.date.format);
+						let old = $res ? JSON.parse($res) : {},
+						refresh = (function()
+						{
+							let obj = {
+								date: {
+									source: config($xhr).date,
+									string: new Date(config($xhr).date).toString(),
+									format: parser.api.parseTimeToDateStr($xhr.getResponseHeader("Last-Modified"), $xhr.getResponseHeader("Expires") ? false : true)
+								},
+								etag: config($xhr).etag,
+								size: config($xhr).size,
+								data: parser.api.arrayBufferToBase64($data)
+							};
+							queslibCompressRes(JSON.stringify(obj)).then(function($res2)
+							{
+								parser.api.tipmsg("题库数据已被更新", "log", function()
+								{
+									console.log("题库数据已被更新", obj.date.format);
+								});
+							});
+							return old = obj;
+						});
+						if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+						{
+							old = refresh();
+						}
+						initdata(old);
 					});
-					return old = obj;
-				});
-				if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag))
-				{
-					old = refresh();
 				}
-				initdata(old);
+				else
+				{
+					let old = queslibCompressRes() ? JSON.parse(queslibCompressRes()) : {},
+					refresh = (function()
+					{
+						let obj = {
+							date: {
+								source: config($xhr).date,
+								string: new Date(config($xhr).date).toString(),
+								format: parser.api.parseTimeToDateStr($xhr.getResponseHeader("Last-Modified"), $xhr.getResponseHeader("Expires") ? false : true)
+							},
+							etag: config($xhr).etag,
+							size: config($xhr).size,
+							data: parser.api.arrayBufferToBase64($data)
+						};
+						queslibCompressRes(JSON.stringify(obj));
+						parser.api.tipmsg("题库数据已被更新", "log", function()
+						{
+							console.log("题库数据已被更新", obj.date.format);
+						});
+						return old = obj;
+					});
+					if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+					{
+						old = refresh();
+					}
+					initdata(old);
+				}
 			}),
 			error: (function($xhr, $status, $e)
 			{
 				console.warn("题库数据更新失败", arguments);
-				queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+				if(window.localforage)
+				{
+					queslibCompressRes().then(function($res)
+					{
+						initdata(JSON.parse($res));
+					});
+				}
+				else
+				{
+					queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+				}
 				/**
 				self.parser && confirm("库数据更新失败！是否进行缓存？") && (location.assign(url), setTimeout(function()
 				{
-					localStorage.clear();
-					sessionStorage.clear();
-					location.reload(true);
+					if(window.localforage)
+					{
+						localforage.clear().then(function()
+						{
+							sessionStorage.clear();
+							localStorage.clear();
+							location.reload(true);
+						});
+					}
+					else
+					{
+						sessionStorage.clear();
+						localStorage.clear();
+						location.reload(true);
+					}
 				}, 100));*/
 				confirm("库数据更新失败！是否进行刷新？") && location.reload(true);
 			}),
@@ -1368,20 +1504,48 @@ parser.api.init = (function()
 			cache: false,
 			success: function($data, $status, $xhr)
 			{
-				let old = queslibCompressRes() ? JSON.parse(queslibCompressRes()) : {};
-				if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag))
+				if(window.localforage)
 				{
-					$.ajax(update);
+					queslibCompressRes().then(function($res)
+					{
+						let old = $res ? JSON.parse($res) : {};
+						if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+						{
+							$.ajax(update);
+						}
+						else
+						{
+							initdata(old);
+						}
+					});
 				}
 				else
 				{
-					initdata(old);
+					let old = queslibCompressRes() ? JSON.parse(queslibCompressRes()) : {};
+					if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+					{
+						$.ajax(update);
+					}
+					else
+					{
+						initdata(old);
+					}
 				}
 			},
 			error: function($xhr, $status, $e)
 			{
 				console.warn("无法获取题库数据更新信息", arguments);
-				queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+				if(window.localforage)
+				{
+					queslibCompressRes().then(function($res)
+					{
+						initdata(JSON.parse($res));
+					});
+				}
+				else
+				{
+					queslibCompressRes() && initdata(JSON.parse(queslibCompressRes()));
+				}
 			}
 		});
 		/**
