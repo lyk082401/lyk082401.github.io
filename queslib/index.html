@@ -91,7 +91,15 @@
 					{
 						jQ.ajaxSetup(
 						{
-							timeout: 30000, error: console.warn
+							timeout: 30000, error: console.warn, headers: {
+								Accept: '*/*',
+								Origin: location.origin,
+								'X-Requested-With': 'XMLHttpRequest'
+							}
+						});
+						jQ(document).ajaxError(function($event, $jqXHR, $ajaxSettings, $thrownError)
+						{
+							console.warn('ajaxError', arguments);
 						});
 						jQ('body').on('click', function($e)
 						{

@@ -1596,11 +1596,6 @@ parser.api.init = (function()
 	// 每隔30秒刷新访问数据的显示
 	setInterval(function()
 	{
-		// 当页面不可见时不执行
-		if(!parser.isVisible)
-		{
-			return;
-		}
 		try
 		{
 			// 清理控制台日志
@@ -1729,8 +1724,8 @@ parser.api.init = (function()
 		{
 			console.warn(e);
 		}
-		// 网络不可用时不执行
-		if(!parser.isOnline)
+		// 网络不可用时不执行，页面不可见时不执行
+		if(!parser.isOnline || !parser.isVisible)
 		{
 			return;
 		}
@@ -1853,14 +1848,28 @@ parser.api.init = (function()
 		try
 		{
 			// 热更新、热修复
-			let s = document.createElement("script");
-			s.type = "text/javascript";
-			s.src = "res/js/web.patcher.js?_=" + Date.now();
-			s.onload = s.onerror = s.onabort = s.ontimeout = (function($$e)
+			if(location.protocol === "file:")
 			{
-				this.remove();
-			});
-			document.body.appendChild(s);
+				let s = document.createElement("script");
+				s.type = "text/javascript";
+				s.charset = "UTF-8";
+				s.src = "res/js/web.patcher.js?_=" + Date.now();
+				s.onload = s.onerror = s.onabort = s.ontimeout = (function($$e)
+				{
+					this.remove();
+				});
+				(location.protocol !== "file:") && (s.crossorigin = "anonymous");
+				document.body.appendChild(s);
+			}
+			else
+			{
+				$.get("res/js/web.patcher.js?_=" + Date.now(), null, null, "text")
+				.done(function($data)
+				{
+					eval($data);
+				})
+				.fail(console.warn);
+			}
 		}
 		catch(e)
 		{
