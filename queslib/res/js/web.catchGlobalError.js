@@ -9,7 +9,7 @@
 						filename: $filename,
 						lineno: $lineno,
 						colno: $colno,
-						error: $error
+						error: $error || new Error($message)
 					};
 					console.warn(err);
 					(Array.isArray(window.webCatchGlobalErrors) ? window.webCatchGlobalErrors : (window.webCatchGlobalErrors = [])).push(err);
