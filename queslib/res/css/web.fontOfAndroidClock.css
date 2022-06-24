@@ -1,7 +1,7 @@
 		@font-face
 		{
 			font-family: "AndroidClock";
-			src: local("AndroidClock"), url("../../res/fonts/AndroidClock.ttf") format("opentype");
+			src: local("AndroidClock"), url("../fonts/AndroidClock.ttf") format("opentype");
 			font-display: swap;
 		}
 		*:not(input[type="text"]):not(input[type="password"]):not(textarea)
