@@ -320,6 +320,17 @@ self.parser = {
 			}
 		}
 	},
+	findArrayIndexAll: function($arr, $target)
+	{
+		return $arr.map(function($elem, $index)
+		{
+			return ($elem === $target) ? $index : -1;
+		})
+		.filter(function($v)
+		{
+			return $v != -1;
+		});
+	},
 	api: {}, txt: {}, xml: {}, json: {},
 	type: {
 		// 单选题 isSCQ
@@ -329,7 +340,7 @@ self.parser = {
 		// 作答题 isWAQ
 		// 默认题型
 		default: "单选题",
-		all: ["单选题", "多选题", "共用题干单选题", "共用答案单选题", "填空题", "名词解释", "名词解析", "简答题", "问答题", "论述题", "病例分析", "案例分析", "写作", "思考题", "常用术语", "笔记指南"],
+		all: ["单选题", "多选题", "共用题干单选题", "共用答案单选题", "填空题", "名词解释", "名词解析", "简答题", "问答题", "思考题", "论述题", "案例分析", "病例分析", "写作", "常用术语", "要点指南"],
 		// 选择题
 		choices: {
 			alone: ["单选题", "多选题"],
@@ -341,7 +352,7 @@ self.parser = {
 		// 文字作答题
 		answers: {
 			fill: ["填空题"],
-			word: ["名词解释", "名词解析", "简答题", "问答题", "论述题", "病例分析", "案例分析", "写作", "思考题", "常用术语", "笔记指南"]
+			word: ["名词解释", "名词解析", "简答题", "问答题", "思考题", "论述题", "案例分析", "病例分析", "写作", "常用术语", "要点指南"]
 		}
 	},
 	re: {
@@ -3330,9 +3341,9 @@ parser.api.adjust = (function(_alldata)
 {
 	if(localStorage.getItem("queslib-display-mode") === "章节")
 	{
-		return _alldata;
+		//return _alldata;
 	}
-	// 以指定个数分割数组，默认以 100 为等分单位
+	// 以指定个数分割数组，默认以 50 为等分单位
 	function chunk_array(arrs, size)
 	{
 		if(!arrs.length || (size < 1))
@@ -3341,7 +3352,7 @@ parser.api.adjust = (function(_alldata)
 		}
 		if(!size)
 		{
-			size = 100;
+			size = 50;
 		}
 		let start = null, end = null, result = [];
 		for(let i = 0; i < Math.ceil(arrs.length / size); i++)
@@ -3352,34 +3363,55 @@ parser.api.adjust = (function(_alldata)
 		}
 		return result;
 	}
+	let quesnum = localStorage.getItem("queslib-question-num") ? parseInt(localStorage.getItem("queslib-question-num"), 10) : 50;
 	let newdata = {
 		name: _alldata.name,
 		data: []
-	}, types = {};
-	Array.from(_alldata.data).forEach(function(_chapter, _index, _chapters)
+	};
+	// 测试模式下，每种问题类型只返回每个子分割数组中的首题，其余题将被忽略
+	let isTest = false;
+	if(localStorage.getItem("queslib-display-mode") === "章节")
 	{
-		Array.from(_chapter.questions).forEach(function(_question, __index, _questions)
+		Array.from(_alldata.data)
+		.forEach(function($chapter, $i, $all)
 		{
-			if(!types[_question.type])
+			Array.from(chunk_array($chapter.questions, quesnum))
+			.forEach(function($split, $i2, $all2)
 			{
-				types[_question.type] = [];
-			}
-			types[_question.type].push(_question);
+				isTest ? (($i2 == 0) && newdata.data.push({name: $chapter.name, questions: [$split[0]]})) : newdata.data.push({name: $chapter.name + (($all2.length > 1) ? ("（" + parser.const.quesnumCNs[$i2] + "）") : ""), questions: $split});
+			});
 		});
-	});
-	let quesnum = localStorage.getItem("queslib-question-num") ? parseInt(localStorage.getItem("queslib-question-num"), 10) : 50;
-	Array.from(Object.keys(types).sort(function(a, b)
+	}
+	else
 	{
-		// 按题名称排序，短的在前，长的在后，相等则根据字母表排序
-		return [a.length, b.length].includes("undefined") ? (a - b) : ((a.length == b.length) ? (a - b) : (a.length - b.length));
-	})).forEach(function(_type, _index, _types)
-	{
-		Array.from(chunk_array(types[_type], quesnum)).forEach(function(_split, __index, _splits)
+		let types = {};
+		Array.from(_alldata.data)
+		.forEach(function(_chapter, _index, _chapters)
 		{
-			let isTest = false;
-			isTest ? ((__index == 0) && newdata.data.push({name: _type, questions: [_split[__index]]})) : newdata.data.push({name: _type + ((_splits.length > 1) ? ("（" + parser.const.quesnumCNs[__index] + "）") : ""), questions: _split});
+			Array.from(_chapter.questions)
+			.forEach(function(_question, __index, _questions)
+			{
+				if(!types[_question.type])
+				{
+					types[_question.type] = [];
+				}
+				types[_question.type].push(_question);
+			});
 		});
-	});
+		Array.from(Object.keys(types).sort(function(a, b)
+		{
+			// 按题名称排序，短的在前，长的在后，相等则根据字母表排序
+			return [a.length, b.length].includes("undefined") ? (a - b) : ((a.length == b.length) ? (a - b) : (a.length - b.length));
+		}))
+		.forEach(function(_type, _index, _types)
+		{
+			Array.from(chunk_array(types[_type], quesnum))
+			.forEach(function(_split, __index, _splits)
+			{
+				isTest ? ((__index == 0) && newdata.data.push({name: _type, questions: [_split[__index]]})) : newdata.data.push({name: _type + ((_splits.length > 1) ? ("（" + parser.const.quesnumCNs[__index] + "）") : ""), questions: _split});
+			});
+		});
+	}
 	return newdata;
 });
 parser.api.get = (function(_el, _data)
