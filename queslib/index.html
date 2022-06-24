@@ -6,11 +6,52 @@
 		<meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, minimum-scale=0.8, user-scalable=yes" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>梧职院 | 20级护理 | 复习题库</title>
-		<script type="text/javascript" charset="UTF-8" src="./res/js/web.hookConsoleLogs.js"></script>
-		<script type="text/javascript" charset="UTF-8" src="./res/js/web.catchGlobalError.js"></script>
-		<script type="text/javascript" charset="UTF-8" src="./res/js/web.fixUrlPathName.js"></script>
-		<script type="text/javascript" charset="UTF-8" src="./res/js/web.checkUnsupportBrowser.js"></script>
-		<link rel="stylesheet" charset="UTF-8" href="./res/css/web.fontOfAndroidClock.css" />
+		<script type="text/javascript" charset="UTF-8" src="res/js/web.hookConsoleLogs.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="res/js/web.catchGlobalError.js"></script>
+		<script type="text/javascript" #charset="UTF-8" #src="res/js/web.fixUrlPathName.js">
+		(function webFixUrlPathName()
+		{
+			// 修复若网页绝对链接为'https://xxx.xx/a/b/index.html'，之后用户在浏览器输入的链接为'https://xxx.xx/a/b'（此时链接没有以'/'结尾，也不是'/index.html'结尾），如果服务器没有进行处理的话，会导致网页中的相对资源的链接请求失败（即假如网页里的某个资源链接为'lib/main.js'，此时真正请求的为'https://xxx.xx/a/lib/main.js'，而不是'https://xxx.xx/a/b/lib/main.js'）
+			try
+			{
+				// 可以使用'location.pathname.split("/")'，但得到的结果会不一样
+				let u = location.pathname && location.pathname.match(/([^/]{0,})/igm);
+				if(u != null)
+				{
+					let uu = u.slice().reverse();
+					if((uu[0] != null) && (uu[1] != null))
+					{
+						// 这里的'uu[0]'将始终为零长度空字符串
+						if(uu[0].length == 0)
+						{
+							// 若不满足文件名包含'.'时，如'/res/index.html'变为'/res'。（注意这里并没有判断服务器能忽略拓展名的情况，也没有判断是不是一个有效的首页文件，即路径名也包含'.'的情况）
+							if(!(/\./).test(uu[1]))
+							{
+								// 若不是以'/'结尾时，如'/res/'变为'/res'
+								if(!(uu[1].length == 0))
+								{
+									// '/res'
+									let pathname = (location.pathname && (location.pathname.length > 0)) ? location.pathname : "/";
+									let search = (location.search && (location.search.length > 0)) ? location.search : "";
+									let hash = (location.hash && (location.hash.length > 0)) ? location.hash : "";
+									// 此时在末尾添加'/'来修复此问题
+									let path = location.protocol + "//" + location.host + pathname + "/";
+									// document.write('		<base href="' + path + '" target="_self" />\n');
+									location.replace(path + search + hash);
+								}
+							}
+						}
+					}
+				}
+			}
+			catch(e)
+			{
+				console.warn(e);
+			}
+		})();
+		</script>
+		<script type="text/javascript" charset="UTF-8" src="res/js/web.checkUnsupportBrowser.js"></script>
+		<link rel="stylesheet" charset="UTF-8" href="res/css/web.fontOfAndroidClock.css" />
 		<!-- JSON Minify -->
 		<script type="text/javascript" charset="UTF-8" src="res/web.omeo.top/JSON.minify/minify.json.js"></script>
 		<!-- Eruda Console -->
@@ -198,12 +239,12 @@
 		<!-- jQuery Loading Overlay -->
 		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
 		<!-- Web Main Reference -->
-		<link rel="stylesheet" charset="UTF-8" href="./res/css/web.main.css" />
-		<script type="text/javascript" charset="UTF-8" src="./res/js/web.main.js"></script>
-		<!--<script type="text/javascript" charset="UTF-8" src="./res/js/web.tools.js"><\/script>-->
-		<!--<script type="text/javascript" charset="UTF-8" src="./res/js/web.plugins.js" defer><\/script>-->
-		<script type="text/javascript" charset="UTF-8" src="./res/js/web.patcher.js" defer></script>
-		<script type="text/javascript" charset="UTF-8" src="./res/app/app.ver.check.js" defer></script>
+		<link rel="stylesheet" charset="UTF-8" href="res/css/web.main.css" />
+		<script type="text/javascript" charset="UTF-8" src="res/js/web.main.js"></script>
+		<!--<script type="text/javascript" charset="UTF-8" src="res/js/web.tools.js"><\/script>-->
+		<!--<script type="text/javascript" charset="UTF-8" src="res/js/web.plugins.js" defer><\/script>-->
+		<script type="text/javascript" charset="UTF-8" src="res/js/web.patcher.js" defer></script>
+		<script type="text/javascript" charset="UTF-8" src="res/app/app.ver.check.js" defer></script>
 		<!-- localForage -->
 		<script type="text/javascript" charset="UTF-8" src="https://cdn.bootcdn.net/ajax/libs/localforage/1.9.0/localforage.min.js"
 			onload="javascript: (function(_)
@@ -263,7 +304,7 @@
 						}
 					})(this);" oncopy="javascript: return false;">
 				</select>
-				<script type="text/javascript" charset="UTF-8" src="./res/js/web.catalog.js"
+				<script type="text/javascript" charset="UTF-8" src="res/js/web.catalog.js"
 					onload="javascript: (function(_)
 					{
 						try
