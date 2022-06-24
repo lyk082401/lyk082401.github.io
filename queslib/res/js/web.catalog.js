@@ -29,6 +29,7 @@ self.catalog = [
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "06/23 中医护理学-复习题-第八、十章和第十一章有关推拿法部分已删",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/绪论.xml"},
@@ -45,9 +46,10 @@ self.catalog = [
 				]
 			},
 			{
-				prop: {disabled: true},
-				name: "06/27 传染病护理学-复习题〈更新中〉",
+				name: "06/27 传染病护理学-复习题",
 				vals: [
+					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-传染病护理学复习题/2022年06月-传染病护理学复习题.txt"},
+					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-传染病护理学复习题/2022年06月-传染病护理学复习题-笔记指南.txt"}
 				]
 			},
 			{
