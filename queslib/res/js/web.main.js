@@ -98,6 +98,29 @@ Safari safari.png https://support.apple.com/zh-cn/guide/safari/sfri40598/mac
 360安全浏览器 360.png https://browser.360.cn/
 */
 self.parser = {
+	isOnline: (function($initStatus)
+	{
+		window.addEventListener && addEventListener("offline", function($event)
+		{
+			console.log("网络已断开", $event);
+			parser.isOnline = false;
+		});
+		window.addEventListener && addEventListener("online", function($event)
+		{
+			console.log("网络已连接", $event);
+			parser.isOnline = true;
+		});
+		return $initStatus;
+	})((window.navigator && (typeof(navigator.onLine) === "boolean")) ? navigator.onLine : true),
+	isVisible: (function($initStatus)
+	{
+		window.addEventListener && addEventListener("visibilitychange", function($event)
+		{
+			console.log("页面可视状态改变", ["hidden", document.hidden, "visibilityState", document.visibilityState], $event);
+			parser.isVisible = !document.hidden;
+		});
+		return $initStatus;
+	})(!document.hidden),
 	cssForDisableSelect: "-webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; -o-user-select: none; user-select: none;",
 	tryKeepScreenAlive: function($minutes)
 	{
@@ -1574,14 +1597,147 @@ parser.api.init = (function()
 	setInterval(function()
 	{
 		// 当页面不可见时不执行
-		if(document.visibilityState !== "visible")
+		if(!parser.isVisible)
 		{
 			return;
 		}
 		try
 		{
-			// 网页统计
-			if((location.protocol !== "file:") && window.LA && window.LA.config)
+			// 清理控制台日志
+			if(window.eruda && eruda.get)
+			{
+				// 定量清理控制台日志，防止卡顿
+				if(eruda.get("console") && eruda.get("console")._logger && eruda.get("console")._logger._logs)
+				{
+					if(eruda.get("console")._logger._logs.length > 100)
+					{
+						eruda.get("console").clear && eruda.get("console").clear();
+						console.log("eruda", "console records", "was cleaned.");
+					}
+				}
+				// 定量清理网络请求日志，防止卡顿
+				if(eruda.get("network") && eruda.get("network").requests)
+				{
+					if(eruda.get("network").requests().length > 100)
+					{
+						eruda.get("network").clear && eruda.get("network").clear();
+						console.log("eruda", "network records", "was cleaned.");
+					}
+				}
+				if(eruda.get("console") && eruda.get("console").config && eruda.get("console").config.set && !eruda["console.config.set.ok"])
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#console
+					eruda.get("console").config.set("asyncRender", true);
+					eruda.get("console").config.set("jsExecution", true);
+					eruda.get("console").config.set("catchGlobalErr", true);
+					eruda.get("console").config.set("overrideConsole", true);
+					eruda.get("console").config.set("displayIfErr", false);
+					eruda.get("console").config.set("displayExtraInfo", false);
+					eruda.get("console").config.set("displayUnenumerable", true);
+					eruda.get("console").config.set("displayGetterVal", true);
+					eruda.get("console").config.set("lazyEvaluation", true);
+					eruda.get("console").config.set("maxLogNum", "125");
+					eruda["console.config.set.ok"] = true;
+					console.log("eruda", "console config", "was updated.");
+				}
+				if(eruda.get("resources") && eruda.get("resources").config && eruda.get("resources").config.set && !eruda["resources.config.set.ok"])
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#resources
+					eruda.get("resources").config.set("hideErudaSetting", true);
+					eruda.get("resources").config.set("observeElement", true);
+					eruda["resources.config.set.ok"] = true;
+					console.log("eruda", "resources config", "was updated.");
+				}
+				if(eruda.get("elements") && eruda.get("elements").config && eruda.get("elements").config.set && !eruda["elements.config.set.ok"])
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#elements
+					eruda.get("elements").config.set("overrideEventTarget", true);
+					eruda.get("elements").config.set("observeElement", true);
+					eruda["elements.config.set.ok"] = true;
+					console.log("eruda", "elements config", "was updated.");
+				}
+				if(eruda.get("sources") && eruda.get("sources").config && eruda.get("sources").config.set && !eruda["sources.config.set.ok"])
+				{
+					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#sources
+					eruda.get("sources").config.set("showLineNum", true);
+					eruda.get("sources").config.set("formatCode", true);
+					eruda.get("sources").config.set("indentSize", "3");
+					eruda["sources.config.set.ok"] = true;
+					console.log("eruda", "sources config", "was updated.");
+				}
+			}
+			if(window.vConsole)
+			{
+				if(vConsole.log && vConsole.log.clear)
+				{
+					if(vConsole.pluginList && vConsole.pluginList.default && vConsole.pluginList.default.compInstance && vConsole.pluginList.default.compInstance.$$ && vConsole.pluginList.default.compInstance.$$.ctx && vConsole.pluginList.default.compInstance.$$.ctx[5] && vConsole.pluginList.default.compInstance.$$.ctx[5].logList)
+					{
+						if(vConsole.pluginList.default.compInstance.$$.ctx[5].logList.length > 100)
+						{
+							vConsole.log.clear();
+							console.log("vConsole", "log records", "was cleaned.");
+						}
+					}
+					else
+					{
+						vConsole.log.clear();
+						console.log("vConsole", "else", "log records", "was cleaned.");
+					}
+				}
+				if(vConsole.system && vConsole.system.clear)
+				{
+					if(vConsole.pluginList && vConsole.pluginList.system && vConsole.pluginList.system.compInstance && vConsole.pluginList.system.compInstance.$$ && vConsole.pluginList.system.compInstance.$$.ctx && vConsole.pluginList.system.compInstance.$$.ctx[5] && vConsole.pluginList.system.compInstance.$$.ctx[5].logList)
+					{
+						if(vConsole.pluginList.system.compInstance.$$.ctx[5].logList.length > 100)
+						{
+							vConsole.system.clear();
+							console.log("vConsole", "system records", "was cleaned.");
+						}
+					}
+					else
+					{
+						vConsole.system.clear();
+						console.log("vConsole", "else", "system records", "was cleaned.");
+					}
+				}
+				if(vConsole.network && vConsole.network.clear)
+				{
+					if(vConsole.pluginList && vConsole.pluginList.network && vConsole.pluginList.network.compInstance && vConsole.pluginList.network.compInstance.$$ && vConsole.pluginList.network.compInstance.$$.ctx && vConsole.pluginList.network.compInstance.$$.ctx[1])
+					{
+						if(Object.keys(vConsole.pluginList.network.compInstance.$$.ctx[1]).length > 100)
+						{
+							vConsole.network.clear();
+							console.log("vConsole", "network records", "was cleaned.");
+						}
+					}
+					else
+					{
+						vConsole.network.clear();
+						console.log("vConsole", "else", "network records", "was cleaned.");
+					}
+				}
+				if(!vConsole["option.set.ok"])
+				{
+					vConsole.setOption("log.maxLogNumber", 125);
+					vConsole.setOption("log.maxNetworkNumber", 125);
+					vConsole["option.set.ok"] = true;
+					console.log("vConsole", "option", "was updated.");
+				}
+			}
+		}
+		catch(e)
+		{
+			console.warn(e);
+		}
+		// 网络不可用时不执行
+		if(!parser.isOnline)
+		{
+			return;
+		}
+		try
+		{
+			// 网页统计，本地下不执行以免造成假数据
+			if((location.protocol !== "file:") && window.LA && LA.config)
 			{
 				$.get(("https://v6-widget.51.la/v6/JeaQ7widyBhiJfwS/quote.js?_=" + Date.now() + "&theme=#1690FF,#333333,#1690FF,#1690FF,#FFFFFF,#1690FF,10&f=10&display=0,1,1,1,1,1,1,1").replace(/\#/g, "%23")/**.replace(/\&/g, "%26").replace(/\=/g, "%3D")*/, null, null, "text")
 				.done(function($data)
@@ -1710,134 +1866,6 @@ parser.api.init = (function()
 		{
 			console.warn(e);
 		}
-		try
-		{
-			// 清理控制台日志
-			if(window.eruda && eruda.get)
-			{
-				// 定量清理控制台日志，防止卡顿
-				if(eruda.get("console") && eruda.get("console")._logger && eruda.get("console")._logger._logs)
-				{
-					if(eruda.get("console")._logger._logs.length > 100)
-					{
-						eruda.get("console").clear();
-						console.log("eruda", "console records", "was cleaned.");
-					}
-				}
-				// 定量清理网络请求日志，防止卡顿
-				if(eruda.get("network") && eruda.get("network").requests)
-				{
-					if(eruda.get("network").requests().length > 100)
-					{
-						eruda.get("network").clear();
-						console.log("eruda", "network records", "was cleaned.");
-					}
-				}
-				if(eruda.get("console") && eruda.get("console").config && eruda.get("console").config.set && !eruda.get("console").config.set.ok)
-				{
-					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#console
-					eruda.get("console").config.set("asyncRender", true);
-					eruda.get("console").config.set("jsExecution", true);
-					eruda.get("console").config.set("catchGlobalErr", true);
-					eruda.get("console").config.set("overrideConsole", true);
-					eruda.get("console").config.set("displayIfErr", false);
-					eruda.get("console").config.set("displayExtraInfo", false);
-					eruda.get("console").config.set("displayUnenumerable", true);
-					eruda.get("console").config.set("displayGetterVal", true);
-					eruda.get("console").config.set("lazyEvaluation", true);
-					eruda.get("console").config.set("maxLogNum", "125");
-					eruda.get("console").config.set.ok = true;
-					console.log("eruda", "console config", "was updated.");
-				}
-				if(eruda.get("resources") && eruda.get("resources").config && eruda.get("resources").config.set && !eruda.get("resources").config.set.ok)
-				{
-					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#resources
-					eruda.get("resources").config.set("hideErudaSetting", true);
-					eruda.get("resources").config.set("observeElement", true);
-					eruda.get("resources").config.set.ok = true;
-					console.log("eruda", "resources config", "was updated.");
-				}
-				if(eruda.get("elements") && eruda.get("elements").config && eruda.get("elements").config.set && !eruda.get("elements").config.set.ok)
-				{
-					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#elements
-					eruda.get("elements").config.set("overrideEventTarget", true);
-					eruda.get("elements").config.set("observeElement", true);
-					eruda.get("elements").config.set.ok = true;
-					console.log("eruda", "elements config", "was updated.");
-				}
-				if(eruda.get("sources") && eruda.get("sources").config && eruda.get("sources").config.set && !eruda.get("sources").config.set.ok)
-				{
-					// https://github.com/liriliri/eruda/blob/master/doc/TOOL_API.md#sources
-					eruda.get("sources").config.set("showLineNum", true);
-					eruda.get("sources").config.set("formatCode", true);
-					eruda.get("sources").config.set("indentSize", "3");
-					eruda.get("sources").config.set.ok = true;
-					console.log("eruda", "sources config", "was updated.");
-				}
-			}
-			if(window.vConsole)
-			{
-				if(vConsole.log && vConsole.log.clear)
-				{
-					if(vConsole.pluginList && vConsole.pluginList.default && vConsole.pluginList.default.compInstance && vConsole.pluginList.default.compInstance.$$ && vConsole.pluginList.default.compInstance.$$.ctx && vConsole.pluginList.default.compInstance.$$.ctx[5] && vConsole.pluginList.default.compInstance.$$.ctx[5].logList)
-					{
-						if(vConsole.pluginList.default.compInstance.$$.ctx[5].logList.length > 100)
-						{
-							vConsole.log.clear();
-							console.log("vConsole", "log records", "was cleaned.");
-						}
-					}
-					else
-					{
-						vConsole.log.clear();
-						console.log("vConsole", "log records", "was cleaned.");
-					}
-				}
-				if(vConsole.system && vConsole.system.clear)
-				{
-					if(vConsole.pluginList && vConsole.pluginList.system && vConsole.pluginList.system.compInstance && vConsole.pluginList.system.compInstance.$$ && vConsole.pluginList.system.compInstance.$$.ctx && vConsole.pluginList.system.compInstance.$$.ctx[5] && vConsole.pluginList.system.compInstance.$$.ctx[5].logList)
-					{
-						if(vConsole.pluginList.system.compInstance.$$.ctx[5].logList.length > 100)
-						{
-							vConsole.system.clear();
-							console.log("vConsole", "system records", "was cleaned.");
-						}
-					}
-					else
-					{
-						vConsole.system.clear();
-						console.log("vConsole", "system records", "was cleaned.");
-					}
-				}
-				if(vConsole.network && vConsole.network.clear)
-				{
-					if(vConsole.pluginList && vConsole.pluginList.network && vConsole.pluginList.network.compInstance && vConsole.pluginList.network.compInstance.$$ && vConsole.pluginList.network.compInstance.$$.ctx && vConsole.pluginList.network.compInstance.$$.ctx[1])
-					{
-						if(Object.keys(vConsole.pluginList.network.compInstance.$$.ctx[1]).length > 100)
-						{
-							vConsole.network.clear();
-							console.log("vConsole", "network records", "was cleaned.");
-						}
-					}
-					else
-					{
-						vConsole.network.clear();
-						console.log("vConsole", "network records", "was cleaned.");
-					}
-				}
-				if(!vConsole.setOption.ok)
-				{
-					vConsole.setOption("log.maxLogNumber", 125);
-					vConsole.setOption("log.maxNetworkNumber", 125);
-					vConsole.setOption.ok = true;
-					console.log("vConsole", "option", "was updated.");
-				}
-			}
-		}
-		catch(e)
-		{
-			console.warn(e);
-		}
 	}, 30000);
 });
 parser.api.cnzzPush = (function($arrs)
@@ -1886,7 +1914,7 @@ parser.api.dump = (function($obj)
 });
 parser.api.download = (function($data, $name, $type, $target)
 {
-	let objURL = window.URL || window.webkitURL || window.mozURL || window.msURL || window.oURL;
+	let objURL = window.URL || window.webkitURL || window.mozURL || window.msURL || window.oURL || window.OURL;
 	if(!objURL)
 	{
 		return null;
@@ -2841,7 +2869,7 @@ parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
 				});
 			});
 			parser.api.cnzzPush(["_trackEvent", "题库", _startstr, (new Date(_el.starttime)).toString(), 0, "queslib"]);
-			window.vueElPopoverTips && window.vueElPopoverTips.hide && window.vueElPopoverTips.hide(_el.closest("[name='chapter']"));
+			window.vueElPopoverTips && vueElPopoverTips.hide && vueElPopoverTips.hide(_el.closest("[name='chapter']"));
 		}
 		else
 		{
@@ -2972,7 +3000,7 @@ parser.api.doOrSubmit = (function(_el, _ischoice, _isdo, _startstr, _endstr)
 				center_buttons: true
 			});
 			parser.api.cnzzPush(["_trackEvent", "题库", _endstr, (new Date(_el.endedtime)).toString(), 0, "queslib"]);
-			window.vueElPopoverTips && window.vueElPopoverTips.show && window.vueElPopoverTips.show(_el.closest("[name='chapter']"));
+			window.vueElPopoverTips && vueElPopoverTips.show && vueElPopoverTips.show(_el.closest("[name='chapter']"));
 		}
 	}
 	else
@@ -3356,7 +3384,7 @@ parser.api.get = (function(_el, _data)
 		tpl.innerHTML = parser.api.tohtml(parser.api.adjust(_el.item(_el.selectedIndex).cachedata), _el.item(_el.selectedIndex));
 		fragment.appendChild(tpl.content);
 		$(document).find("[name='queslib'] main").html(fragment);
-		window.vueElPopoverTips && window.vueElPopoverTips();
+		window.vueElPopoverTips && vueElPopoverTips();
 	}
 	else
 	{
@@ -3430,7 +3458,7 @@ parser.api.get = (function(_el, _data)
 				$(document).find("[name='queslib'] main").html(fragment);
 			}, console.warn).finally(function()
 			{
-				window.vueElPopoverTips && window.vueElPopoverTips();
+				window.vueElPopoverTips && vueElPopoverTips();
 			});
 		}
 	}
