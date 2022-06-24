@@ -260,24 +260,6 @@ $.async || ($.async = function(fn, time)
 	return d.promise();
 });
 
-self.console && Object.entries({
-	log: console.log,
-	info: console.info,
-	warn: console.warn,
-	error: console.error,
-	debug: console.debug
-}).forEach(function(entries, i, allentries)
-{
-	console[entries[0]] = function()
-	{
-		console.moments = function times(time = +new Date())
-		{
-			let date = new Date(time - new Date().getTimezoneOffset() * 60 * 1000);
-			return date.toJSON().slice(0, 19).replace("T", " ").concat(" ").concat(String(time).slice(-3));
-		};
-		entries[1].apply(console, ["[" + entries[0].toUpperCase() + "][" + console.moments().split(/-\d+\s+/)[1] + "][" + String(arguments.length) + "]"].concat(Array.prototype.slice.call(arguments)));
-	};
-});
 /**
 $.jQueryDeferredOld = $.Deferred.prototype.constructor;
 

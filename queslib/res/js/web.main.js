@@ -1607,6 +1607,7 @@ parser.api.init = (function()
 					if(eruda.get("console")._logger._logs.length > 100)
 					{
 						eruda.get("console").clear && eruda.get("console").clear();
+						window.console && console.clear && console.clear();
 						console.log("eruda", "console records", "was cleaned.");
 					}
 				}
@@ -1670,6 +1671,7 @@ parser.api.init = (function()
 						if(vConsole.pluginList.default.compInstance.$$.ctx[5].logList.length > 100)
 						{
 							vConsole.log.clear();
+							window.console && console.clear && console.clear();
 							console.log("vConsole", "log records", "was cleaned.");
 						}
 					}
