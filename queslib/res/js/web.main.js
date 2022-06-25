@@ -1291,7 +1291,7 @@ parser.api.init = (function()
 		{
 			let button1 = {
 				name: "刷新网页",
-				global: false,
+				global: !false,
 				data: {},
 				onClick: function($event, $data)
 				{
@@ -1304,7 +1304,7 @@ parser.api.init = (function()
 			};
 			let button2 = {
 				name: "强制刷新",
-				global: false,
+				global: !false,
 				data: {},
 				onClick: function($event, $data)
 				{
