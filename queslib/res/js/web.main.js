@@ -129,7 +129,8 @@ self.parser = {
 			console.warn("浏览器不支持唤醒锁");
 			return;
 		}
-		(!navigator.wakeLock.currentKeepScreenIsAlive && ((document.visibilityState === "visible") ? navigator.wakeLock.request("screen").then(function($lock)
+		(!navigator.wakeLock.currentKeepScreenIsAlive && ((document.visibilityState === "visible") ? navigator.wakeLock.request("screen")
+		.then(function($lock)
 		{
 			console.log($lock, "唤醒锁已打开", (new Date()).toTimeString());
 			(navigator.wakeLock.savekeepScreenWakeLocks || (navigator.wakeLock.savekeepScreenWakeLocks = [])).push({lock: $lock, alive: $lock.released});
@@ -182,9 +183,10 @@ self.parser = {
 			// 默认20分钟后自动关闭
 			setTimeout(function()
 			{
-				$lock.released || $lock.release("screen").then(console.log, console.warn);
+				$lock.released || $lock.release("screen").then(console.log).catch(console.warn);
 			}, (($minutes != null) ? $minutes : 20) * 60 * 1000);
-		}, console.warn) : (function()
+		})
+		.catch(console.warn) : (function()
 		{
 			let visibilitychange = function($e)
 			{
@@ -230,59 +232,90 @@ self.parser = {
 			return false;
 		}
 	},
-	/** 适配苹果，苹果 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."），sessionStorage 无限制；安卓 localStorage 和 sessionStorage 最大都是5M
-	*/
-	setStorageItem: function($key, $val)
+	removeArrayAt: function($arr, $index)
 	{
-		try
+		/** 删除数组元素 */
+		if(!Array.isArray($arr) || (typeof($index) !== "number") || isNaN($index) || ($index < 0))
 		{
-			return localStorage.setItem($key, $val);
+			return $arr;
 		}
-		catch(e)
+		else
 		{
-			console.warn(e);
+			let arr = [];
+			$arr.forEach(function($v, $i, $all)
+			{
+				if($i !== $index)
+				{
+					// 不重置原有引索
+					arr[$i] = $v;
+				}
+			});
+			return arr;
 		}
-		try
-		{
-			return sessionStorage.setItem($key, $val);
-		}
-		catch(e)
-		{
-			console.warn(e);
-		}
-		return parser["$storageItem$" + $key] = $val;
 	},
-	getStorageItem: function($key)
+	resetArrayIndex: function($arr)
 	{
-		if(sessionStorage.getItem($key))
+		/** 重置数组引索 */
+		if(!Array.isArray($arr))
 		{
-			return sessionStorage.getItem($key);
+			return $arr;
 		}
-		else if(localStorage.getItem($key))
+		else
 		{
-			return localStorage.getItem($key);
+			let arr = [];
+			$arr.forEach(function($v, $i, $all)
+			{
+				// 重置原有引索
+				arr.push($v);
+			});
+			return arr;
 		}
-		else if(parser["$storagetmp$" + $key])
-		{
-			return parser["$storagetmp$" + $key];
-		}
-		return null;
 	},
 	storage: {
 		set: function($key, $val)
 		{
-			return parser.setStorageItem($key, $val);
+			/** 适配苹果设备。苹果设备 localStorage 最大2.5M（超过会抛 "QuotaExceededError: The quota has been exceeded."异常），sessionStorage 无限制；安卓设备 localStorage 和 sessionStorage 最大都是不超过5M。
+			*/
+			let result = this.local.set($key, $val);
+			if(result == null)
+			{
+				result = this.session.set($key, $val);
+				if(result == null)
+				{
+					result = this.ctx.set($key, $val);
+					if(result == null)
+					{
+						result = null;
+					}
+				}
+			}
+			return result;
 		},
 		get: function($key)
 		{
-			return parser.getStorageItem($key);
+			let result = this.session.get($key);
+			if(result == null)
+			{
+				result = this.local.get($key);
+				if(result == null)
+				{
+					result = this.ctx.get($key);
+					if(result == null)
+					{
+						result = null;
+					}
+				}
+			}
+			return result;
 		},
+		// 持久化本地数据库超大文件存储
 		big: {
 			set: function($key, $val)
 			{
 				try
 				{
-					return localforage.setItem($key, $val).then(function($data)
+					return localforage.setItem($key, $val)
+					.then(function($data)
 					{
 						return $data;
 					})
@@ -302,7 +335,8 @@ self.parser = {
 			{
 				try
 				{
-					return localforage.getItem($key).then(function($data)
+					return localforage.getItem($key)
+					.then(function($data)
 					{
 						return $data;
 					})
@@ -318,9 +352,173 @@ self.parser = {
 					return Promise.reject(e);
 				}
 			}
-		}
+		},
+		// 持久本地存储
+		local: (function()
+		{
+			class local extends Object
+			{
+				constructor()
+				{
+					super();
+				}
+				set($key, $val)
+				{
+					try
+					{
+						localStorage.setItem($key, $val);
+						if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+						{
+							this[$key] = $val;
+						}
+						return this ? this.get($key) : String($val);
+					}
+					catch(e)
+					{
+						console.warn(e);
+					}
+					return null;
+				}
+				get($key)
+				{
+					return localStorage.getItem($key);
+				}
+				key($index = 0)
+				{
+					return localStorage.key($index);
+				}
+				size()
+				{
+					return localStorage.length;
+				}
+				clear()
+				{
+					localStorage.clear();
+					return this;
+				}
+				remove($key)
+				{
+					localStorage.removeItem($key);
+					return this;
+				}
+				set length($val){}
+				get length()
+				{
+					return localStorage.length;
+				}
+			}
+			return new local();
+		})(),
+		// 当前会话存储
+		session: (function()
+		{
+			class session extends Object
+			{
+				constructor()
+				{
+					super();
+				}
+				set($key, $val)
+				{
+					try
+					{
+						sessionStorage.setItem($key, $val);
+						if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+						{
+							this[$key] = $val;
+						}
+						return this ? this.get($key) : String($val);
+					}
+					catch(e)
+					{
+						console.warn(e);
+					}
+					return null;
+				}
+				get($key)
+				{
+					return sessionStorage.getItem($key);
+				}
+				key($index = 0)
+				{
+					return sessionStorage.key($index);
+				}
+				size()
+				{
+					return sessionStorage.length;
+				}
+				clear()
+				{
+					sessionStorage.clear();
+					return this;
+				}
+				remove($key)
+				{
+					sessionStorage.removeItem($key);
+					return this;
+				}
+				set length($val){}
+				get length()
+				{
+					return sessionStorage.length;
+				}
+			}
+			return new session();
+		})(),
+		// 当前上下文存储
+		ctx: (function()
+		{
+			let item = {};
+			class ctx extends Object
+			{
+				constructor()
+				{
+					super();
+				}
+				set($key, $val)
+				{
+					if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+					{
+						this[$key] = $val;
+					}
+					return item[$key] = $val;
+				}
+				get($key)
+				{
+					return item[$key];
+				}
+				key($index = 0)
+				{
+					return Object.keys(item)[$index];
+				}
+				size()
+				{
+					return Object.keys(item).length;
+				}
+				clear()
+				{
+					item = {};
+					return this;
+				}
+				remove($key)
+				{
+					Reflect.deleteProperty(item, $key);
+					if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+					{
+						Reflect.deleteProperty(this, $key);
+					}
+					return this;
+				}
+				set length($val){}
+				get length()
+				{
+					return Object.keys(item).length;
+				}
+			}
+			return new ctx();
+		})()
 	},
-	findArrayIndexAll: function($arr, $target)
+	findArrValIndexs: function($arr, $target)
 	{
 		return $arr.map(function($elem, $index)
 		{
@@ -330,6 +528,11 @@ self.parser = {
 		{
 			return $v != -1;
 		});
+	},
+	findArrValIndex: function($arr, $target)
+	{
+		let index = findArrValIndexs($arr, $target);
+		return index.length ? index[0] : -1;
 	},
 	api: {}, txt: {}, xml: {}, json: {},
 	type: {
@@ -492,6 +695,7 @@ parser.api.toChineseBig = (function(num)
 })();
 parser.api.init = (function()
 {
+	document.title = "梧职院 | 20级护理 | 复习题库";
 	/**
 	if(prompt("请输入密码：", "") !== localStorage.getItem("queslib-access-pwd"))
 	{
@@ -526,20 +730,48 @@ parser.api.init = (function()
 	urlIndex = parseInt(parser.api.getUrlParam("i"), 10),
 	queslibCompressRes = window.localforage ? function($d)
 	{
+		let storeName = "queslib-compress-res";
 		if(arguments.length > 0)
 		{
-			parser.storage.big.set("queslib-compress-res", $d);
+			return parser.storage.big.set(storeName, $d)
+			.then(function($data)
+			{
+				return parser.storage.big.get(storeName);
+			})
+			.finally(function()
+			{
+				try
+				{
+					if(!parser.storage.local.set(storeName, $d))
+					{
+						let data = JSON.parse($d);
+						Reflect.deleteProperty(data, "data");
+						parser.storage.set(storeName, JSON.stringify(data));
+					}
+				}
+				catch(e)
+				{
+					console.warn(e);
+				}
+			});
 		}
-		return parser.storage.big.get("queslib-compress-res");
+		return parser.storage.big.get(storeName);
 	} : function($d)
 	{
+		let storeName = "queslib-compress-res";
 		if(arguments.length > 0)
 		{
-			parser.setStorageItem("queslib-compress-res", $d);
+			parser.storage.set(storeName, $d);
+			if(!parser.storage.local.set(storeName, $d))
+			{
+				let data = JSON.parse($d);
+				Reflect.deleteProperty(data, "data");
+				parser.storage.set(storeName, JSON.stringify(data));
+			}
 		}
-		return parser.getStorageItem("queslib-compress-res");
+		return parser.storage.get(storeName);
 	};
-	$.LoadingOverlay("show");
+	$.LoadingOverlay && $.LoadingOverlay("show");
 	try
 	{
 		let pwd = parser.api.getUrlParam("pwd");
@@ -1081,12 +1313,14 @@ parser.api.init = (function()
 					{
 						if(window.localforage)
 						{
-							localforage.clear().then(function()
+							localforage.clear()
+							.then(function()
 							{
 								sessionStorage.clear();
 								localStorage.clear();
 								location.reload(true);
-							});
+							})
+							.catch(console.warn);
 						}
 						else
 						{
@@ -1177,14 +1411,14 @@ parser.api.init = (function()
 				// check for conditions and support for blob / arraybuffer response type
 				if((typeof(FormData) !== "undefined") && (($options.dataType && ($options.dataType === "binary")) || ($options.data && (((typeof(ArrayBuffer) !== "undefined") && ($options.data instanceof ArrayBuffer)) || ((typeof(Blob) !== "undefined") && ($options.data instanceof Blob))))))
 				{
-					let xhr = jQuery.ajaxSettings.xhr() || ((typeof(XMLHttpRequest) !== "undefined") ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"));
+					let xhr = ($originalOptions.xhr && $originalOptions.xhr()) || ($options.xhr && $options.xhr()) || $.ajaxSettings.xhr() || ((typeof(XMLHttpRequest) !== "undefined") ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"));
 					return {
 						// create new XMLHttpRequest
 						send: (function(headers, callback)
 						{
 							// setup all variables
 							let url = $options.url;
-							let type = $options.type.toUpperCase();
+							let type = $options.type && $options.type.toUpperCase();
 							let async = (typeof($options.async) === "boolean") ? $options.async : true;
 							// blob or arraybuffer. Default is blob
 							let dataType = $options.responseType || "blob";
@@ -1199,13 +1433,42 @@ parser.api.init = (function()
 									responses[$options.dataType] = $options.response = $jqXHR.response = xhr.response;
 									// make callback and send data
 									callback(xhr.status, xhr.statusText, responses, xhr.getAllResponseHeaders());
-								});
+								}, false);
 							});
+							console.log(window.m=[$options, $originalOptions, $jqXHR])
 							xhr.addEventListener("readystatechange", function($e)
 							{
 								(location.protocol === "file:") && console.log($e.type, {event: $e, options: $options, originalOptions: $originalOptions, jqXHR: $jqXHR}, url);
-							});
-							xhr.open(type, url, async, username, password);
+								if(typeof($originalOptions.onreadystatechange) === "function")
+								{
+									return $originalOptions.onreadystatechange.apply(xhr, [$e, $jqXHR]);
+								}
+							}, false);
+							xhr.addEventListener("progress", function($progress)
+							{
+								if($progress.lengthComputable)
+								{
+									let percentComplete = ($progress.loaded / $progress.total) * 100;
+									(location.protocol === "file:") && console.log("xhr", "progress", percentComplete, $progress);
+								}
+								if(typeof($originalOptions.onprogress) === "function")
+								{
+									return $originalOptions.onprogress.apply(xhr, [$progress, $jqXHR]);
+								}
+							}, false);
+							xhr.upload && xhr.upload.addEventListener("progress", function($progress)
+							{
+								if($progress.lengthComputable)
+								{
+									let percentComplete = ($progress.loaded / $progress.total) * 100;
+									(location.protocol === "file:") && console.log("xhr", "upload", "progress", percentComplete, $progress);
+								}
+								if(typeof($originalOptions.onprogress) === "function")
+								{
+									return $originalOptions.onprogress.apply(xhr, [$progress, $jqXHR]);
+								}
+							}, false);
+							xhr.open(type || "GET", url, async, username, password);
 							// setup custom headers
 							for(let i in headers)
 							{
@@ -1215,11 +1478,11 @@ parser.api.init = (function()
 							{
 								xhr.timeout = $options.timeout;
 							}
-							if($options.xhrFields.withCredentials)
+							if($options.xhrFields && $options.xhrFields.withCredentials)
 							{
 								xhr.withCredentials = true;
 							}
-							if(typeof($options.xhrFields.overrideMimeType) === "string")
+							if($options.xhrFields && (typeof($options.xhrFields.overrideMimeType) === "string"))
 							{
 								xhr.overrideMimeType($options.xhrFields.overrideMimeType);
 							}
@@ -1241,7 +1504,7 @@ parser.api.init = (function()
 		})(jQuery);
 		$(window).one("error", function()
 		{
-			console.warn("加载出错了", arguments);
+			console.warn("加载出错了", Array.prototype.slice.apply(arguments));
 			parser.api.tipmsg("加载出错了，即将刷新页面…", "error", function()
 			{
 				confirm("是否刷新页面？") && location.reload(false);
@@ -1367,13 +1630,23 @@ parser.api.init = (function()
 			cos: "https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/" + dataFileCos,
 			"cos.global": "https://hn-1252239881.cos.accelerate.myqcloud.com/" + dataFileCos,
 			"cos.static": "https://hn-1252239881.cos-website.ap-guangzhou.myqcloud.com/" + dataFileCos,
-			local: ((location.protocol !== "file:") ? location.origin : "https://omeo.vercel.app") + "/" + dataFileLocal
+			local: ((location.protocol !== "file:") ? location.origin : "https://omeo.vercel.app") + "/" + dataFileLocal,
+			"local.now": "https://omeo.vercel.app/" + dataFileLocal,
+			"local.git": "https://web.omeo.top/" + dataFileLocal
 		},
-		url = (parser.api.getUrlParam("repo") && repo[parser.api.getUrlParam("repo")]) ? repo[parser.api.getUrlParam("repo")] : urls[1],
+		url = (parser.api.getUrlParam("repo") && parser.api.getUrlParam("repo").length && repo[parser.api.getUrlParam("repo")]) ? repo[parser.api.getUrlParam("repo")] : repo.cos,
 		initdata = (function($obj)
 		{
-			console.log("本地题库数据信息", $obj.date);
-			JSZip.loadAsync(new Blob([parser.api.base64ToUint8Array($obj.data)], {type: "application/octet-stream"})).then(function($zip)
+			if(!$obj.data)
+			{
+				alert("题库数据缺失，加载失败！请尝试刷新一下网页！");
+				console.log("本地题库数据信息", $obj);
+				$.LoadingOverlay && $.LoadingOverlay("hide");
+				return;
+			}
+			console.log("本地题库数据更新日期", $obj.date);
+			JSZip.loadAsync(new Blob([parser.api.base64ToUint8Array($obj.data)], {type: "application/octet-stream"}))
+			.then(function($zip)
 			{
 				parser.queslib = $zip;
 				$([select, cloneSelect]).each(function($index, $val)
@@ -1382,8 +1655,17 @@ parser.api.init = (function()
 					$($val).removeAttr("disabled").prop("disabled", false);
 				});
 				select.onchange();
-				$.LoadingOverlay("hide");
-			}, console.warn);
+				$.LoadingOverlay && $.LoadingOverlay("hide");
+			})
+			.catch(function($e)
+			{
+				alert("题库数据加载失败！请尝试刷新一下网页！");
+				console.warn([$obj], $e);
+			})
+			.finally(function()
+			{
+				$.LoadingOverlay && $.LoadingOverlay("hide");
+			});
 		}),
 		config = (function($xhr)
 		{
@@ -1424,7 +1706,19 @@ parser.api.init = (function()
 			},
 			dataType: "binary",
 			responseType: "arraybuffer",
-			beforeSend: (function($xhr, $options){}),
+			onprogress: function($e)
+			{
+				if($e.lengthComputable)
+				{
+					let percentComplete = ($e.loaded / $e.total) * 100;
+					// 更新一下显示时间，延迟一下网页无响应提示时间，需要预先hook原加载框函数逻辑，否则会导致无法关闭
+					$.LoadingOverlay && $.LoadingOverlay("show");
+				}
+			},
+			beforeSend: (function($jqXHR, $options)
+			{
+				let xhr = ($options && $options.xhr && $options.xhr()) || {};
+			}),
 			dataFilter: (function($data, $type)
 			{
 				return $data;
@@ -1433,7 +1727,8 @@ parser.api.init = (function()
 			{
 				if(window.localforage)
 				{
-					queslibCompressRes().then(function($res)
+					queslibCompressRes()
+					.then(function($res)
 					{
 						let old = $res ? JSON.parse($res) : {},
 						refresh = (function()
@@ -1448,21 +1743,24 @@ parser.api.init = (function()
 								size: config($xhr).size,
 								data: parser.api.arrayBufferToBase64($data)
 							};
-							queslibCompressRes(JSON.stringify(obj)).then(function($res2)
+							queslibCompressRes(JSON.stringify(obj))
+							.then(function($res2)
 							{
 								parser.api.tipmsg("题库数据已被更新", "log", function()
 								{
 									console.log("题库数据已被更新", obj.date.format);
 								});
-							});
+							})
+							.catch(console.warn);
 							return old = obj;
 						});
-						if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+						if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string") || !old.data)
 						{
 							old = refresh();
 						}
 						initdata(old);
-					});
+					})
+					.catch(console.warn);
 				}
 				else
 				{
@@ -1486,7 +1784,7 @@ parser.api.init = (function()
 						});
 						return old = obj;
 					});
-					if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+					if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string") || !old.data)
 					{
 						old = refresh();
 					}
@@ -1498,10 +1796,12 @@ parser.api.init = (function()
 				console.warn("题库数据更新失败", arguments);
 				if(window.localforage)
 				{
-					queslibCompressRes().then(function($res)
+					queslibCompressRes()
+					.then(function($res)
 					{
 						initdata(JSON.parse($res));
-					});
+					})
+					.catch(console.warn);
 				}
 				else
 				{
@@ -1512,12 +1812,14 @@ parser.api.init = (function()
 				{
 					if(window.localforage)
 					{
-						localforage.clear().then(function()
+						localforage.clear()
+						.then(function()
 						{
 							sessionStorage.clear();
 							localStorage.clear();
 							location.reload(true);
-						});
+						})
+						.catch(console.warn);
 					}
 					else
 					{
@@ -1529,7 +1831,11 @@ parser.api.init = (function()
 				confirm("库数据更新失败！是否进行刷新？") && location.reload(true);
 			}),
 			complete: (function($xhr, $status){})
-		});
+		}),
+		doUpdate = function()
+		{
+			return $.ajax(update);
+		};
 		$.ajax(
 		{
 			url: url,
@@ -1540,25 +1846,27 @@ parser.api.init = (function()
 			{
 				if(window.localforage)
 				{
-					queslibCompressRes().then(function($res)
+					queslibCompressRes()
+					.then(function($res)
 					{
 						let old = $res ? JSON.parse($res) : {};
-						if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+						if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string") || !old.data)
 						{
-							$.ajax(update);
+							doUpdate();
 						}
 						else
 						{
 							initdata(old);
 						}
-					});
+					})
+					.catch(console.warn);
 				}
 				else
 				{
 					let old = queslibCompressRes() ? JSON.parse(queslibCompressRes()) : {};
-					if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string"))
+					if((Object.keys(old).length == 0) || (typeof(old) !== "object") || (old.etag !== config($xhr).etag) || (typeof(old.etag) !== "string") || !old.data)
 					{
-						$.ajax(update);
+						doUpdate();
 					}
 					else
 					{
@@ -1571,10 +1879,12 @@ parser.api.init = (function()
 				console.warn("无法获取题库数据更新信息", arguments);
 				if(window.localforage)
 				{
-					queslibCompressRes().then(function($res)
+					queslibCompressRes()
+					.then(function($res)
 					{
 						initdata(JSON.parse($res));
-					});
+					})
+					.catch(console.warn);
 				}
 				else
 				{
@@ -1593,10 +1903,12 @@ parser.api.init = (function()
 			{
 				return alert("JSZip 未加载");
 			}
-			$err ? console.warn("题库数据获取失败", $err) : JSZip.loadAsync($data).then(function($zip)
+			$err ? console.warn("题库数据获取失败", $err) : JSZip.loadAsync($data)
+			.then(function($zip)
 			{
-				$zip.file("index.html").async("string", console.log).then(console.log, console.warn);
-			}, console.warn);
+				$zip.file("index.html").async("string", console.log).then(console.log).catch(console.warn);
+			})
+			.catch(console.warn);
 		}));
 		*/
 	}
@@ -2078,8 +2390,14 @@ parser.api.sleep = (function(_time)
 });
 parser.api.delay = (function(_delay)
 {
-	return new Promise((_resolve, _reject) => {
+	return (new Promise(function(_resolve, _reject)
+	{
 		setTimeout(_resolve, _delay);
+	}))
+	.catch(function($e)
+	{
+		console.warn($e);
+		throw $e;
 	});
 });
 parser.api.translateToBinaryString = (function(_text)
@@ -3154,10 +3472,10 @@ parser.api.tohtml = (function(_data, _cacheObj)
 		html += `\n${"\t".repeat(9)}</thead>`;
 		html += `\n${"\t".repeat(9)}<tfoot>`;
 		html += `\n${"\t".repeat(10)}<tr>`;
-		html += `\n${"\t".repeat(11)}<th><button name="btn-choices" type="button" value="{{chapter_choice_data}}" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">选择题练习</button></th>`;
+		html += `\n${"\t".repeat(11)}<th><button name="btn-choices" type="button" value="{{chapter_choice_data}}" onclick="javascript: $.LoadingOverlay && $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, true, (this.isdo = (!this.isdo)), '选择题练习', '提交选择题'); this.disabled = false; $.LoadingOverlay && $.LoadingOverlay('hide');" oncopy="javascript: return false;">选择题练习</button></th>`;
 		html += `\n${"\t".repeat(11)}<th><button name="btn-backfirst" title="返回首题" type="button" onclick="javascript: this.closest('article').scrollIntoView(true);" oncopy="javascript: return false;">⇧</button></th>`;
 		html += `\n${"\t".repeat(11)}<th><button name="btn-backlast" title="返回尾题" type="button" onclick="javascript: this.closest('article').scrollIntoView(false);" oncopy="javascript: return false;">⇩</button></th>`;
-		html += `\n${"\t".repeat(11)}<th><button name="btn-answers" type="button" value="{{chapter_answer_data}}" onclick="javascript: $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题作答', '提交文字题'); this.disabled = false; $.LoadingOverlay('hide');" oncopy="javascript: return false;">文字题作答</button></th>`;
+		html += `\n${"\t".repeat(11)}<th><button name="btn-answers" type="button" value="{{chapter_answer_data}}" onclick="javascript: $.LoadingOverlay && $.LoadingOverlay('show'); this.disabled = true; parser.api.doOrSubmit(this, false, (this.isdo = (!this.isdo)), '文字题作答', '提交文字题'); this.disabled = false; $.LoadingOverlay && $.LoadingOverlay('hide');" oncopy="javascript: return false;">文字题作答</button></th>`;
 		html += `\n${"\t".repeat(10)}</tr>`;
 		html += `\n${"\t".repeat(9)}</tfoot>`;
 		html += `\n${"\t".repeat(8)}</table>`;
@@ -3416,7 +3734,7 @@ parser.api.adjust = (function(_alldata)
 });
 parser.api.get = (function(_el, _data)
 {
-	$.LoadingOverlay("show");
+	$.LoadingOverlay && $.LoadingOverlay("show");
 	localStorage.setItem("queslib-selected-index", _el.selectedIndex);
 	let fragment = document.createDocumentFragment();
 	let tpl = document.createElement("template");
@@ -3457,15 +3775,18 @@ parser.api.get = (function(_el, _data)
 			{
 				return new Promise(function(_resolve, _reject)
 				{
-					parser.queslib.file(_val.file) ? parser.queslib.file(_val.file).async("string").then(function(_str)
+					parser.queslib.file(_val.file) ? parser.queslib.file(_val.file).async("string")
+					.then(function(_str)
 					{
 						// 截取文件名作为章节名称
 						var filename = _val.file.substring(_val.file.lastIndexOf("/") + 1);
 						filename = filename.substring(0, filename.lastIndexOf("."));
 						_resolve({index: _index, type: _val.type, name: filename, data: _str});
-					}, _reject) : _reject([_index, "文件不存在", _val]);
+					})
+					.catch(_reject) : _reject([_index, "文件不存在", _val]);
 				});
-			})).then(function(_results)
+			}))
+			.then(function(_results)
 			{
 				Array.from(_results).forEach(function(_val, _index, _vals)
 				{
@@ -3499,13 +3820,15 @@ parser.api.get = (function(_el, _data)
 				tpl.innerHTML = parser.api.tohtml(parser.api.adjust(obj), _el.item(_el.selectedIndex));
 				fragment.appendChild(tpl.content);
 				$(document).find("[name='queslib'] main").html(fragment);
-			}, console.warn).finally(function()
+			})
+			.catch(console.warn)
+			.finally(function()
 			{
 				window.vueElPopoverTips && vueElPopoverTips();
 			});
 		}
 	}
-	$.LoadingOverlay("hide");
+	$.LoadingOverlay && $.LoadingOverlay("hide");
 	parser.api.cnzzPush(["_trackEvent", "题库", "试题切换", _el.selectedOptions.item(0).parentElement.label + "@" + (_el.selectedOptions.item(0).text || _el.selectedOptions.item(0).label), _el.selectedIndex, "queslib"]);
 });
 parser.api.test = (function($data)

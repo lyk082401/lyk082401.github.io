@@ -5,7 +5,7 @@
 		<meta name="referrer" content="always" />
 		<meta name="viewport" content="width=device-width, initial-scale=0.8, maximum-scale=1.0, minimum-scale=0.8, user-scalable=yes" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<title>梧职院 | 20级护理 | 复习题库</title>
+		<title></title>
 		<script type="text/javascript" charset="UTF-8" src="res/js/web.hookConsoleLogs.js"></script>
 		<script type="text/javascript" charset="UTF-8" src="res/js/web.catchGlobalError.js"></script>
 		<script type="text/javascript" #charset="UTF-8" #src="res/js/web.fixUrlPathName.js">
@@ -134,9 +134,10 @@
 						jQ.ajaxSetup(
 						{
 							timeout: 30000, error: console.warn, headers: {
-								Accept: '*/*',
-								Origin: location.origin,
-								'X-Requested-With': 'XMLHttpRequest'
+								// Accept: '*/*',
+								// Origin: location.origin,
+								// 跨域下添加此请求头时，若服务端没有在响应头`Access-Control-Allow-Headers`里声明`X-Requested-With`，将会导致请求失败
+								// 'X-Requested-With': 'XMLHttpRequest'
 							}
 						});
 						jQ(document).ajaxError(function($event, $jqXHR, $ajaxSettings, $thrownError)
@@ -204,7 +205,8 @@
 												jQ($el).remove();
 											}
 										}));
-									}).catch(console.warn);
+									})
+									.catch(console.warn);
 								};
 								vueElPopoverTips.show = function($el)
 								{
@@ -237,7 +239,90 @@
 		<link rel="stylesheet" charset="UTF-8" href="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/css/classic/zebra_dialog.min.css" />
 		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/zebra_dialog/3.0.5/zebra_dialog.src.min.js"></script>
 		<!-- jQuery Loading Overlay -->
-		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
+		<script type="text/javascript" charset="UTF-8" src="res/cdnjs.cat.net/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"
+			onload="javascript: (function(_)
+			{
+				let jQ = window.jQuery || window.$ || {};
+				let tmpLoadingOverlay = jQ.LoadingOverlay;
+				let showTime = new Date();
+				let hideTime = new Date();
+				// 多久无反应
+				let time = 10 * 1000;
+				// 当前计时器
+				let timer = null;
+				// 持续提示次数
+				let times = 0;
+				let longTimeTips = function()
+				{
+					times = times + 1;
+					if(timer != null)
+					{
+						clearInterval(timer);
+						timer = null;
+					}
+					if(times >= 6)
+					{
+						confirm('检测到当前网页长时间无响应，是否需要强制刷新一下网页？（点击`确定`强制刷新）') && location.reload(true);
+					}
+					else if(times >= 3)
+					{
+						confirm('检测到当前网页长时间无响应，是否需要刷新一下网页？（点击`确定`刷新）') && location.reload(false);
+					}
+					else
+					{
+						alert('检测到当前网页长时间无响应，请检查设备网络是否可用！也可以尝试刷新一下网页！');
+					}
+					timer = setInterval(longTimeTips, time);
+				};
+				try
+				{
+					if(tmpLoadingOverlay)
+					{
+						// 由于每次调用`show`，原方法都会在原来的基础上叠加一层加载框，此时就需要调用对应次数的`hide`才能全部关闭，所以这里做一个标记判断一下，防止无法关闭加载框
+						let isShowing = false;
+						jQ.LoadingOverlay = function()
+						{
+							let args = Array.prototype.slice.apply(arguments);
+							let func = tmpLoadingOverlay || {};
+							if(args && (typeof(args[0]) === 'string'))
+							{
+								if(args[0].toLowerCase() === 'show')
+								{
+									showTime = new Date();
+									if(timer != null)
+									{
+										clearInterval(timer);
+										timer = null;
+									}
+									timer = setInterval(longTimeTips, time);
+									if(isShowing)
+									{
+										return;
+									}
+									isShowing = true;
+								}
+								if(args[0].toLowerCase() === 'hide')
+								{
+									isShowing = false;
+									hideTime = new Date();
+									if(timer != null)
+									{
+										clearInterval(timer);
+										timer = null;
+									}
+									times = 0;
+								}
+							}
+							return func.apply && func.apply(jQ.LoadingOverlay, args);
+						};
+					}
+				}
+				catch(e)
+				{
+					console.warn(e);
+					throw e;
+				}
+			})(this);"></script>
 		<!-- Web Main Reference -->
 		<link rel="stylesheet" charset="UTF-8" href="res/css/web.main.css" />
 		<script type="text/javascript" charset="UTF-8" src="res/js/web.main.js"></script>

@@ -30,7 +30,16 @@
 									let param2 = Array.prototype.slice.call(arguments);
 									let params = param1.concat(["\n\t"]).concat(param2);
 									// console.table(webHookConsoleLogs);
-									(window.webHookConsoleLogs || (window.webHookConsoleLogs = [])).push(params);
+									if(!window.webHookConsoleLogs)
+									{
+										window.webHookConsoleLogs = [];
+									}
+									webHookConsoleLogs.push(params);
+									if(!Array.isArray(webHookConsoleLogs[$kv[0]]))
+									{
+										webHookConsoleLogs[$kv[0]] = [];
+									}
+									webHookConsoleLogs[$kv[0]].push(params);
 									if(window.eruda && eruda.get && eruda.get("console") && eruda.get("console")[$kv[0]])
 									{
 										if(eruda.get("console")[$kv[0]] != $console[$kv[0]])
