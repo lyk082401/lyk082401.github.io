@@ -3468,7 +3468,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 		html = `${"\t".repeat(4)}<article name="chapter">`;
 		html += `\n${"\t".repeat(5)}<details ontoggle="javascript: parser.onToggleDetails(this);"${_isOpen ? " open" : ""}>`;
 		html += `\n${"\t".repeat(6)}<summary name="name" oncopy="javascript: return true;">${__data.name}{{chapter_total_quesnum}}</summary>`;
-		html += `\n${"\t".repeat(6)}<aside name="todo">`;
+		html += `\n${"\t".repeat(6)}<aside name="doques">`;
 		html += `\n${"\t".repeat(7)}<center>`;
 		html += `\n${"\t".repeat(8)}<table>`;
 		html += `\n${"\t".repeat(9)}<thead>`;

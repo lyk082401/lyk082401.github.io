@@ -184,7 +184,7 @@
 	height: 6px;
 	color: #fff;
 	/**font-weight: 400;*/
-	z-index: 100;
+	z-index: 9999;
 }
 /** 单选框 --- */
 /** 改变选中之后的背景颜色
@@ -318,7 +318,7 @@
 	-o-text-stroke: 0.8px rgba(255, 0, 0, 1);
 	text-stroke: 0.8px rgba(255, 0, 0, 1);
 }
-[name="queslib"] aside[name="todo"]
+[name="queslib"] aside[name="doques"]
 {
 	display: block;
 	position: -webkit-sticky;
@@ -338,12 +338,12 @@
 	top: 0;
 	outline: none；
 }
-[name="queslib"] aside[name="todo"] table
+[name="queslib"] aside[name="doques"] table
 {
 	border: 0 solid black;
 	border-spacing: 10px 0;
 }
-[name="queslib"] aside[name="todo"] b, /**[name="queslib"] summary, */[name="queslib"] select, .vc-switch
+[name="queslib"] aside[name="doques"] b, /**[name="queslib"] summary, */[name="queslib"] select, .vc-switch
 {
 	/** 禁止页面文字长按选择 */
 	-webkit-user-select: none;
@@ -352,7 +352,7 @@
 	-o-user-select: none;
 	user-select: none;
 }
-[name="queslib"] aside[name="todo"] button
+[name="queslib"] aside[name="doques"] button
 {
 	background-color: transparent;
 	color: #337ab7;
@@ -462,3 +462,27 @@
 	cursor: pointer;
 }
 /** </style> */
+		*
+		{
+			font-weight: lighter !important;
+		}
+		[name="doques"] button, [name="doques"] input[type="doques"]
+		{
+			z-index: 9999;
+		}
+		fieldset
+		{
+			border: 1px solid transparent !important;
+			border-top-color: #000000 !important;
+			margin: 10px 0 !important;
+			padding: auto !important;
+		}
+		legend
+		{
+			margin: auto !important;
+			padding: 0 10px !important;
+		}
+		select
+		{
+			height: 28px !important;
+		}
