@@ -3777,6 +3777,7 @@ parser.api.get = (function(_el, _data)
 			var obj = {};
 			obj.name = _el.item(_el.selectedIndex).innerText || _el.item(_el.selectedIndex).label || _el.item(_el.selectedIndex).text;
 			obj.data = [];
+			let icveappzjy2Datas = [];
 			(_data.length != 0) && Promise.allSettled(_data.map(function(_val, _index, _arr)
 			{
 				return new Promise(function(_resolve, _reject)
@@ -3798,6 +3799,7 @@ parser.api.get = (function(_el, _data)
 				{
 					if(_val.status === "fulfilled")
 					{
+						(location.protocol === "file:") && console.log("››get", Array.prototype.slice.apply(arguments));
 						let func = null;
 						if(_val.value.type === "plain-txt")
 						{
@@ -3810,6 +3812,8 @@ parser.api.get = (function(_el, _data)
 						else if(_val.value.type === "icveappzjy2-json")
 						{
 							func = parser.json.icveappzjy2;
+							/** icveappzjy2Datas.push(func(_val.value.name, _val.value.data));
+							return;*/
 						}
 						else
 						{
@@ -3823,6 +3827,40 @@ parser.api.get = (function(_el, _data)
 						console.warn("allSettled", _index, _val);
 					}
 				});
+				/**
+				// 去除重复题目
+				function removeRepeat(_params)
+				{
+					let newresult = null, uniqueId = {}, unique = [], repeat = [];
+					for(let i = 0; i < _params.length; i++)
+					{
+						if(i === 0)
+						{
+							// 使用JSON解析转化防止对象引用问题
+							newresult = JSON.parse(JSON.stringify(_params[i]));
+							newresult.data.questions = [];
+						}
+						for(let questions = _params[i].data.questions, k = 0; k < questions.length; k++)
+						{
+							if(!uniqueId[questions[k].questionId])
+							{
+								uniqueId[questions[k].questionId] = questions[k];
+								unique.push(questions[k]);
+							}
+							else
+							{
+								repeat.push(questions[k]);
+							}
+						}
+					}
+					Array.from(Object.values(uniqueId)).forEach(function(_value, _index, _values)
+					{
+						newresult.data.questions.push(_value);
+					});
+					// dumpJSON({result: newresult, unique: unique, repeat: repeat});
+					return {result: newresult, unique: unique, repeat: repeat};
+				}*/
+				// (location.protocol === "file:") && console.log("››get icveappzjy2Datas", icveappzjy2Datas/**, removeRepeat(icveappzjy2Datas)*/);
 				tpl.innerHTML = parser.api.tohtml(parser.api.adjust(obj), _el.item(_el.selectedIndex));
 				fragment.appendChild(tpl.content);
 				$(document).find("[name='queslib'] main").html(fragment);

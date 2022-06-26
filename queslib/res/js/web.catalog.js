@@ -652,7 +652,7 @@ self.catalog = [
 		]
 	},
 	{
-		optname: "云课堂智慧职教",
+		optname: "云课堂智慧职教（作业）",
 		options: [
 			{
 				name: "冯博--急危重症护理学",
