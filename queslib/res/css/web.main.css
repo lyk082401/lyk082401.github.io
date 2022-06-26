@@ -124,7 +124,7 @@
 {
 	margin-right: 5px;
 	cursor: pointer;
-	font-size: 14px;
+	/**font-size: 14px;*/
 	width: 15px;
 	height: 12px;
 	position: relative;
@@ -146,7 +146,7 @@
 [name="queslib"] .option input[type=checkbox]:checked::after
 {
 	content: "✔︎";
-	font-size: 12px;
+	/**font-size: 12px;*/
 }
 /** 复选框 --- */
 /** --- 单选框 */
@@ -154,7 +154,7 @@
 {
 	margin-right: 5px;
 	cursor: pointer;
-	font-size: 14px;
+	/**font-size: 14px;*/
 	width: 15px;
 	height: 12px;
 	position: relative;
@@ -183,7 +183,7 @@
 	width: 6px;
 	height: 6px;
 	color: #fff;
-	font-weight: 400;
+	/**font-weight: 400;*/
 	z-index: 100;
 }
 /** 单选框 --- */
@@ -264,7 +264,7 @@
 	background: #383838;
 	border-radius: 2px;
 	padding: 3px 10px;
-	font-size: 12px;
+	/**font-size: 12px;*/
 	white-space: nowrap;
 	transition: all .3s;
 	opacity: 0;
