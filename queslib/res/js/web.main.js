@@ -97,7 +97,13 @@ Firefox firefox.png https://www.firefox.com.cn/download/
 Safari safari.png https://support.apple.com/zh-cn/guide/safari/sfri40598/mac
 360安全浏览器 360.png https://browser.360.cn/
 */
-self.parser = {
+window.parser = {
+	set visualViewport($val){},
+	get visualViewport()
+	{
+		// window.innerWidth window.devicePixelRatio document.documentElement.clientWidth
+		return window.visualViewport || {};
+	},
 	isOnline: (function($initStatus)
 	{
 		window.addEventListener && addEventListener("offline", function($event)
