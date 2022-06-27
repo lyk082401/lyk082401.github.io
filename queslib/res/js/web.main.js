@@ -299,13 +299,13 @@ window.parser = {
 		},
 		get: function($key)
 		{
-			let result = this.session.get($key);
+			let result = this.ctx.get($key);
 			if(result == null)
 			{
-				result = this.local.get($key);
+				result = this.session.get($key);
 				if(result == null)
 				{
-					result = this.ctx.get($key);
+					result = this.local.get($key);
 					if(result == null)
 					{
 						result = null;
