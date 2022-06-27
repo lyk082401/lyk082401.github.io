@@ -934,6 +934,7 @@ parser.api.init = (function()
 						Reflect.deleteProperty(data, "data");
 						parser.storage.set(storeName, JSON.stringify(data));
 					}
+					parser.storage.ctx.set(storeName, $d);
 				}
 				catch(e)
 				{
