@@ -1920,7 +1920,7 @@ parser.api.init = (function()
 		try
 		{
 			// 清理控制台日志
-			if(window.eruda && eruda.get)
+			if(window.eruda && eruda.get && (location.protocol !== "file:"))
 			{
 				// 定量清理控制台日志，防止卡顿
 				if(eruda.get("console") && eruda.get("console")._logger && eruda.get("console")._logger._logs)
@@ -1983,7 +1983,7 @@ parser.api.init = (function()
 					console.log("eruda", "sources config", "was updated.");
 				}
 			}
-			if(window.vConsole)
+			if(window.vConsole && (location.protocol !== "file:"))
 			{
 				if(vConsole.log && vConsole.log.clear)
 				{
