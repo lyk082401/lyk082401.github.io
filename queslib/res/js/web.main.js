@@ -362,166 +362,346 @@ window.parser = {
 		// 持久本地存储
 		local: (function()
 		{
-			class local extends Object
-			{
-				constructor()
-				{
-					super();
-				}
-				set($key, $val)
-				{
-					try
+			let local = null;
+			let methods = {
+				set: {
+					value: function($key, $val)
 					{
-						localStorage.setItem($key, $val);
-						if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+						try
 						{
-							this[$key] = $val;
+							localStorage.setItem($key, $val);
+							if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+							{
+								this[$key] = $val;
+							}
+							return this ? this.get($key) : String($val);
 						}
-						return this ? this.get($key) : String($val);
+						catch(e)
+						{
+							console.warn(e);
+						}
+						return null;
 					}
-					catch(e)
+				},
+				get: {
+					value: function($key)
 					{
-						console.warn(e);
+						return localStorage.getItem($key);
 					}
-					return null;
+				},
+				key: {
+					value: function($index)
+					{
+						return localStorage.key(($index != null) ? $index : 0);
+					}
+				},
+				size: {
+					value: function()
+					{
+						return localStorage.length;
+					}
+				},
+				clear: {
+					value: function()
+					{
+						localStorage.clear();
+						return this;
+					}
+				},
+				remove: {
+					value: function($key)
+					{
+						localStorage.removeItem($key);
+						return this;
+					}
+				},
+				length: {
+					set: function($val){},
+					get: function()
+					{
+						return localStorage.length;
+					}
 				}
-				get($key)
-				{
-					return localStorage.getItem($key);
-				}
-				key($index = 0)
-				{
-					return localStorage.key($index);
-				}
-				size()
-				{
-					return localStorage.length;
-				}
-				clear()
-				{
-					localStorage.clear();
-					return this;
-				}
-				remove($key)
-				{
-					localStorage.removeItem($key);
-					return this;
-				}
-				set length($val){}
-				get length()
-				{
-					return localStorage.length;
-				}
+			};
+			try
+			{
+				local = eval(
+				"class local extends Object" +
+				"{" +
+				"	constructor()" +
+				"	{" +
+				"		super();" +
+				"	}" +
+				"	set($key, $val)" +
+				"	{" +
+				"		return methods.set.value.apply(this, arguments);" +
+				"	}" +
+				"	get($key)" +
+				"	{" +
+				"		return methods.get.value.apply(this, arguments);" +
+				"	}" +
+				"	key($index)" +
+				"	{" +
+				"		return methods.key.value.apply(this, arguments);" +
+				"	}" +
+				"	size()" +
+				"	{" +
+				"		return methods.size.value.apply(this, arguments);" +
+				"	}" +
+				"	clear()" +
+				"	{" +
+				"		return methods.clear.value.apply(this, arguments);" +
+				"	}" +
+				"	remove($key)" +
+				"	{" +
+				"		return methods.remove.value.apply(this, arguments);" +
+				"	}" +
+				"	set length($val)" +
+				"	{" +
+				"		return methods.length.set.apply(this, arguments);" +
+				"	}" +
+				"	get length()" +
+				"	{" +
+				"		return methods.length.get.apply(this, arguments);" +
+				"	}" +
+				"}" +
+				"local");
+				local = new local();
 			}
-			return new local();
+			catch(e)
+			{
+				console.warn(e);
+				local = Object.defineProperties(new Object(), methods);
+			}
+			return local;
 		})(),
 		// 当前会话存储
 		session: (function()
 		{
-			class session extends Object
-			{
-				constructor()
-				{
-					super();
-				}
-				set($key, $val)
-				{
-					try
+			let session = null;
+			let methods = {
+				set: {
+					value: function($key, $val)
 					{
-						sessionStorage.setItem($key, $val);
-						if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+						try
 						{
-							this[$key] = $val;
+							sessionStorage.setItem($key, $val);
+							if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+							{
+								this[$key] = $val;
+							}
+							return this ? this.get($key) : String($val);
 						}
-						return this ? this.get($key) : String($val);
+						catch(e)
+						{
+							console.warn(e);
+						}
+						return null;
 					}
-					catch(e)
+				},
+				get: {
+					value: function($key)
 					{
-						console.warn(e);
+						return sessionStorage.getItem($key);
 					}
-					return null;
+				},
+				key: {
+					value: function($index)
+					{
+						return sessionStorage.key(($index != null) ? $index : 0);
+					}
+				},
+				size: {
+					value: function()
+					{
+						return sessionStorage.length;
+					}
+				},
+				clear: {
+					value: function()
+					{
+						sessionStorage.clear();
+						return this;
+					}
+				},
+				remove: {
+					value: function($key)
+					{
+						sessionStorage.removeItem($key);
+						return this;
+					}
+				},
+				length: {
+					set: function($val){},
+					get: function()
+					{
+						return sessionStorage.length;
+					}
 				}
-				get($key)
-				{
-					return sessionStorage.getItem($key);
-				}
-				key($index = 0)
-				{
-					return sessionStorage.key($index);
-				}
-				size()
-				{
-					return sessionStorage.length;
-				}
-				clear()
-				{
-					sessionStorage.clear();
-					return this;
-				}
-				remove($key)
-				{
-					sessionStorage.removeItem($key);
-					return this;
-				}
-				set length($val){}
-				get length()
-				{
-					return sessionStorage.length;
-				}
+			};
+			try
+			{
+				session = eval(
+				"class session extends Object" +
+				"{" +
+				"	constructor()" +
+				"	{" +
+				"		super();" +
+				"	}" +
+				"	set($key, $val)" +
+				"	{" +
+				"		return methods.set.value.apply(this, arguments);" +
+				"	}" +
+				"	get($key)" +
+				"	{" +
+				"		return methods.get.value.apply(this, arguments);" +
+				"	}" +
+				"	key($index)" +
+				"	{" +
+				"		return methods.key.value.apply(this, arguments);" +
+				"	}" +
+				"	size()" +
+				"	{" +
+				"		return methods.size.value.apply(this, arguments);" +
+				"	}" +
+				"	clear()" +
+				"	{" +
+				"		return methods.clear.value.apply(this, arguments);" +
+				"	}" +
+				"	remove($key)" +
+				"	{" +
+				"		return methods.remove.value.apply(this, arguments);" +
+				"	}" +
+				"	set length($val)" +
+				"	{" +
+				"		return methods.length.set.apply(this, arguments);" +
+				"	}" +
+				"	get length()" +
+				"	{" +
+				"		return methods.length.get.apply(this, arguments);" +
+				"	}" +
+				"}" +
+				"session");
+				session = new session();
 			}
-			return new session();
+			catch(e)
+			{
+				console.warn(e);
+				session = Object.defineProperties(new Object(), methods);
+			}
+			return session;
 		})(),
 		// 当前上下文存储
 		ctx: (function()
 		{
+			let ctx = null;
 			let item = {};
-			class ctx extends Object
+			let methods = {
+				set: {
+					value: function($key, $val)
+					{
+						if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+						{
+							this[$key] = $val;
+						}
+						return item[$key] = $val;
+					}
+				},
+				get: {
+					value: function($key)
+					{
+						return item[$key];
+					}
+				},
+				key: {
+					value: function($index)
+					{
+						return Object.keys(item)[($index != null) ? $index : 0];
+					}
+				},
+				size: {
+					value: function()
+					{
+						return Object.keys(item).length;
+					}
+				},
+				clear: {
+					value: function()
+					{
+						item = {};
+						return this;
+					}
+				},
+				remove: {
+					value: function($key)
+					{
+						Reflect.deleteProperty(item, $key);
+						if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
+						{
+							Reflect.deleteProperty(this, $key);
+						}
+						return this;
+					}
+				},
+				length: {
+					set: function($val){},
+					get: function()
+					{
+						return Object.keys(item).length;
+					}
+				}
+			};
+			try
 			{
-				constructor()
-				{
-					super();
-				}
-				set($key, $val)
-				{
-					if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
-					{
-						this[$key] = $val;
-					}
-					return item[$key] = $val;
-				}
-				get($key)
-				{
-					return item[$key];
-				}
-				key($index = 0)
-				{
-					return Object.keys(item)[$index];
-				}
-				size()
-				{
-					return Object.keys(item).length;
-				}
-				clear()
-				{
-					item = {};
-					return this;
-				}
-				remove($key)
-				{
-					Reflect.deleteProperty(item, $key);
-					if(this && (!this.__proto__ || (this.__proto__[$key] === undefined)))
-					{
-						Reflect.deleteProperty(this, $key);
-					}
-					return this;
-				}
-				set length($val){}
-				get length()
-				{
-					return Object.keys(item).length;
-				}
+				ctx = eval(
+				"class ctx extends Object" +
+				"{" +
+				"	constructor()" +
+				"	{" +
+				"		super();" +
+				"	}" +
+				"	set($key, $val)" +
+				"	{" +
+				"		return methods.set.value.apply(this, arguments);" +
+				"	}" +
+				"	get($key)" +
+				"	{" +
+				"		return methods.get.value.apply(this, arguments);" +
+				"	}" +
+				"	key($index)" +
+				"	{" +
+				"		return methods.key.value.apply(this, arguments);" +
+				"	}" +
+				"	size()" +
+				"	{" +
+				"		return methods.size.value.apply(this, arguments);" +
+				"	}" +
+				"	clear()" +
+				"	{" +
+				"		return methods.clear.value.apply(this, arguments);" +
+				"	}" +
+				"	remove($key)" +
+				"	{" +
+				"		return methods.remove.value.apply(this, arguments);" +
+				"	}" +
+				"	set length($val)" +
+				"	{" +
+				"		return methods.length.set.apply(this, arguments);" +
+				"	}" +
+				"	get length()" +
+				"	{" +
+				"		return methods.length.get.apply(this, arguments);" +
+				"	}" +
+				"}" +
+				"ctx");
+				ctx = new ctx();
 			}
-			return new ctx();
+			catch(e)
+			{
+				console.warn(e);
+				ctx = Object.defineProperties(new Object(), methods);
+			}
+			return ctx;
 		})()
 	},
 	findArrValIndexs: function($arr, $target)

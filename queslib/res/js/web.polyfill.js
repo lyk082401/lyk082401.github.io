@@ -1,122 +1,81 @@
 (function()
 {
-	/**
-		* https://tc39.es/
-		* https://github.com/tc39
-	*/
+	// fetch
 	
-	const reduce = Function.bind.call(Function.call, Array.prototype.reduce);
-	const isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
-	const concat = Function.bind.call(Function.call, Array.prototype.concat);
-	const keys = Reflect.ownKeys;
-	
-	if(!Object.values)
+	// Object.defineProperties
+	(typeof(Object.defineProperties) !== "function") && (Object.defineProperties = function(obj, properties)
 	{
-		Object.values = function values(O)
+		function convertToDescriptor(desc)
 		{
-			return reduce(keys(O), function(v, k)
+			function hasProperty(obj, prop)
 			{
-				return concat(v, typeof(k === "string") && isEnumerable(O, k) ? [O[k]] : []);
-			}, []);
-		};
-	}
-	
-	if(!Object.entries)
-	{
-		Object.entries = function entries(O)
-		{
-			return reduce(keys(O), function(e, k)
+				return Object.prototype.hasOwnProperty.call(obj, prop);
+			}
+			function isCallable(v)
 			{
-				concat(e, typeof(k === "string") && isEnumerable(O, k) ? [[k, O[k]]] : []);
-			}, []);
-		};
-	}
-	
-	if(!Object.fromEntries)
-	{
-		Object.fromEntries = function fromEntries(iter)
-		{
-			const obj = {};
-			for(const pair of iter)
+				// NB: modify as necessary if other values than functions are callable.
+				return (typeof(v) === "function");
+			}
+			if((typeof(desc) !== "object") || (desc === null))
 			{
-				if(Object(pair) !== pair)
+				throw new TypeError("bad desc");
+			}
+			let d = {};
+			if(hasProperty(desc, "enumerable"))
+			{
+				d.enumerable = !! desc.enumerable;
+			}
+			if(hasProperty(desc, "configurable"))
+			{
+				d.configurable = !! desc.configurable;
+			}
+			if(hasProperty(desc, "value"))
+			{
+				d.value = desc.value;
+			}
+			if(hasProperty(desc, "writable"))
+			{
+				d.writable = !! desc.writable;
+			}
+			if(hasProperty(desc, "get"))
+			{
+				let g = desc.get;
+				if(!isCallable(g) && (typeof(g) !== "undefined"))
 				{
-					throw new TypeError("iterable for fromEntries should yield objects");
+					throw new TypeError("bad get");
 				}
-				// Consistency with Map: contract is that entry has "0" and "1" keys, not that it is an array or iterable.
-				const {"0": key, "1": val} = pair;
-				Object.defineProperty(obj, key, {
-					configurable: true,
-					enumerable: true,
-					writable: true,
-					value: val
-				});
+				d.get = g;
 			}
-			return obj;
-		};
-	}
-	
-	if (typeof Promise !== 'function') {
-	throw new TypeError('A global Promise is required');
-}
-
-if (typeof Promise.try !== 'function') {
-	Promise.try = {
-		try(func) {
-			if (typeof this !== 'function') {
-				throw new TypeError('Receiver must be a constructor');
+			if(hasProperty(desc, "set"))
+			{
+				let s = desc.set;
+				if(!isCallable(s) && (typeof(s) !== "undefined"))
+				{
+					 throw new TypeError("bad set");
+				}
+				d.set = s;
 			}
-			return new this(function (resolve) {
-				resolve(func());
-			});
-		}
-	}.try;
-}
-	
-	if (typeof Promise !== 'function') {
-	throw new TypeError('A global Promise is required');
-}
-
-if (typeof Promise.prototype.finally !== 'function') {
-	var speciesConstructor = function (O, defaultConstructor) {
-		if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
-			throw new TypeError('Assertion failed: Type(O) is not Object');
-		}
-		var C = O.constructor;
-		if (typeof C === 'undefined') {
-			return defaultConstructor;
-		}
-		if (!C || (typeof C !== 'object' && typeof C !== 'function')) {
-			throw new TypeError('O.constructor is not an Object');
-		}
-		var S = typeof Symbol === 'function' && typeof Symbol.species === 'symbol' ? C[Symbol.species] : undefined;
-		if (S == null) {
-			return defaultConstructor;
-		}
-		if (typeof S === 'function' && S.prototype) {
-			return S;
-		}
-		throw new TypeError('no constructor found');
-	};
-
-	var shim = {
-		finally(onFinally) {
-			var promise = this;
-			if (typeof promise !== 'object' || promise === null) {
-				throw new TypeError('"this" value is not an Object');
+			if((("get" in d) || ("set" in d)) && (("value" in d) || ("writable" in d)))
+			{
+				throw new TypeError("identity-confused descriptor");
 			}
-			var C = speciesConstructor(promise, Promise); // throws if SpeciesConstructor throws
-			if (typeof onFinally !== 'function') {
-				return Promise.prototype.then.call(promise, onFinally, onFinally);
-			}
-			return Promise.prototype.then.call(
-				promise,
-				x => new C(resolve => resolve(onFinally())).then(() => x),
-				e => new C(resolve => resolve(onFinally())).then(() => { throw e; })
-			);
+			return d;
 		}
-	};
-	Object.defineProperty(Promise.prototype, 'finally', { configurable: true, writable: true, value: shim.finally });
-}
-	
+		if((typeof(obj) !== "object") || (obj === null))
+		{
+			throw new TypeError("bad obj");
+		}
+		properties = Object(properties);
+		let keys = Object.keys(properties);
+		let descs = [];
+		for(let i = 0; i < keys.length; i++)
+		{
+			descs.push([keys[i], convertToDescriptor(properties[keys[i]])]);
+		}
+		for(let i = 0; i < descs.length; i++)
+		{
+			Object.defineProperty(obj, descs[i][0], descs[i][1]);
+		}
+		return obj;
+	});
 })();
