@@ -1625,14 +1625,14 @@ parser.api.init = (function()
 		let repo = {
 			cdn: "https://hn-1252239881.file.myqcloud.com/" + dataFileCdn,
 			cos: "https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/" + dataFileCos,
-			"cos.global": "https://hn-1252239881.cos.accelerate.myqcloud.com/" + dataFileCos,
-			"cos.static": "https://hn-1252239881.cos-website.ap-guangzhou.myqcloud.com/" + dataFileCos,
+			"cos$global": "https://hn-1252239881.cos.accelerate.myqcloud.com/" + dataFileCos,
+			"cos$static": "https://hn-1252239881.cos-website.ap-guangzhou.myqcloud.com/" + dataFileCos,
 			local: (location.protocol !== "file:") ? (/**location.origin*/"/" + dataFileLocal) : ("https://hn-1252239881.file.myqcloud.com/" + dataFileCdn),
-			"local.now": "https://omeo.vercel.app/" + dataFileLocal,
-			"local.git": "https://web.omeo.top/" + dataFileLocal,
-			"local.eu": "https://web.omeo.eu.org/" + dataFileLocal
+			"local$nowsh": "https://omeo.vercel.app/" + dataFileLocal,
+			"local$git": "https://web.omeo.top/" + dataFileLocal,
+			"local$eu": "https://web.omeo.eu.org/" + dataFileLocal
 		},
-		url = (parser.api.getUrlParam("repo") && parser.api.getUrlParam("repo").length && repo[parser.api.getUrlParam("repo")]) ? repo[parser.api.getUrlParam("repo")] : repo.cos,
+		url = (parser.api.getUrlParam("repo") && parser.api.getUrlParam("repo").length && repo[parser.api.getUrlParam("repo")]) ? repo[parser.api.getUrlParam("repo")] : (repo.local || repo.cos),
 		initdata = (function($obj)
 		{
 			if(!$obj.data)
