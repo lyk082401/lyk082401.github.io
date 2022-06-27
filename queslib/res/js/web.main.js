@@ -1622,23 +1622,15 @@ parser.api.init = (function()
 		let dataFileLocal = "queslib/res/zip/" + dataBaseName + ".zip";
 		let dataFileCos = "res/nosign/zip/" + dataBaseName + ".zip";
 		let dataFileCdn = "res/zip/" + dataBaseName + ".nosign.zip";
-		let urls = [
-			"https://hn-1252239881.file.myqcloud.com/" + dataFileCdn,
-			"https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/" + dataFileCos, // 需要签名
-			"https://hn-1252239881.cos.accelerate.myqcloud.com/" + dataFileCos, // 需要签名
-			"https://hn-1252239881.cos-website.ap-guangzhou.myqcloud.com/" + dataFileCos, // 需要签名
-			"https://web.omeo.top/" + dataFileLocal, // 移动和电信用户可能访问不稳定
-			"https://web.omeo.eu.org/" + dataFileLocal,
-			"https://omeo.vercel.app/" + dataFileLocal
-		],
-		repo = {
+		let repo = {
 			cdn: "https://hn-1252239881.file.myqcloud.com/" + dataFileCdn,
 			cos: "https://hn-1252239881.cos.ap-guangzhou.myqcloud.com/" + dataFileCos,
 			"cos.global": "https://hn-1252239881.cos.accelerate.myqcloud.com/" + dataFileCos,
 			"cos.static": "https://hn-1252239881.cos-website.ap-guangzhou.myqcloud.com/" + dataFileCos,
-			local: ((location.protocol !== "file:") ? location.origin : "https://omeo.vercel.app") + "/" + dataFileLocal,
+			local: (location.protocol !== "file:") ? (/**location.origin*/"/" + dataFileLocal) : ("https://hn-1252239881.file.myqcloud.com/" + dataFileCdn),
 			"local.now": "https://omeo.vercel.app/" + dataFileLocal,
-			"local.git": "https://web.omeo.top/" + dataFileLocal
+			"local.git": "https://web.omeo.top/" + dataFileLocal,
+			"local.eu": "https://web.omeo.eu.org/" + dataFileLocal
 		},
 		url = (parser.api.getUrlParam("repo") && parser.api.getUrlParam("repo").length && repo[parser.api.getUrlParam("repo")]) ? repo[parser.api.getUrlParam("repo")] : repo.cos,
 		initdata = (function($obj)
