@@ -462,7 +462,7 @@
 	cursor: pointer;
 }
 /** </style> */
-		.main
+		body
 		{
 			width: 100%;
 			height: 100%;
@@ -471,27 +471,27 @@
 			border: 0;
 			overflow: auto;
 		}
-		.main
+		body
 		{
-			font-size: 24px !important;
+			font-size: 16px !important;
 		}
-		[name="doques"] button, [name="doques"] input[type="doques"]
+		body [name="doques"] button, body [name="doques"] input[type="doques"]
 		{
-			z-index: 9999;
+			z-index: 9999 !important;
 		}
-		fieldset
+		body fieldset
 		{
 			border: 1px solid transparent !important;
 			border-top-color: #000000 !important;
 			margin: 10px 0 !important;
 			padding: auto !important;
 		}
-		legend
+		body legend
 		{
 			margin: auto !important;
 			padding: 0 10px !important;
 		}
-		select
+		body select
 		{
 			height: 28px !important;
 		}
