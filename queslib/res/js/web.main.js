@@ -1772,22 +1772,22 @@ parser.api.init = (function()
 		// 老年护理学
 		else if(Date.now() <= (new Date("2022-06-30 20:00:00")).getTime())
 		{
-			initIndex = 5;
+			initIndex = 5 + 1;
 		}
 		// 内科护理学
 		else if(Date.now() <= (new Date("2022-07-04 10:00:00")).getTime())
 		{
-			initIndex = 6;
+			initIndex = 6 + 1;
 		}
 		// 儿科护理学
 		else if(Date.now() <= (new Date("2022-07-05 10:00:00")).getTime())
 		{
-			initIndex = 7;
+			initIndex = 7 + 1;
 		}
 		// 急危重症护理学
 		else if(Date.now() <= (new Date("2022-07-05 16:30:00")).getTime())
 		{
-			initIndex = 8;
+			initIndex = 8 + 1;
 		}
 		else if(savedIndex() && !isNaN(savedIndex()) && (savedIndex() >= 0))
 		{
@@ -3958,9 +3958,11 @@ parser.api.get = (function(_el, _data)
 					parser.queslib.file(_val.file) ? parser.queslib.file(_val.file).async("string")
 					.then(function(_str)
 					{
+						let file = _val.file || "";
 						// 截取文件名作为章节名称
-						var filename = _val.file.substring(_val.file.lastIndexOf("/") + 1);
+						let filename = file.substring(file.lastIndexOf("/") + 1);
 						filename = filename.substring(0, filename.lastIndexOf("."));
+						filename = filename.replace(/^([0-9]+\.)/, "");
 						_resolve({index: _index, type: _val.type, name: filename, data: _str});
 					})
 					.catch(_reject) : _reject([_index, "文件不存在", _val]);
