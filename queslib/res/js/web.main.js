@@ -1870,6 +1870,7 @@ parser.api.init = (function()
 		{
 			url: url,
 			type: "GET",
+			timeout: 3 * 60 * 1000,
 			async: true,
 			cache: false,
 			// 是否自动处理发送的数据
