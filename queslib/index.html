@@ -140,7 +140,7 @@
 				{
 					jQ.ajaxSetup(
 					{
-						timeout: 30000, error: console.warn, headers: {
+						timeout: 3 * 60 * 1000, error: console.warn, headers: {
 							// Accept: "*/*",
 							// Origin: location.origin,
 							// 跨域下添加此请求头时，若服务端没有在响应头“Access-Control-Allow-Headers”里声明“X-Requested-With”，将会导致请求失败
