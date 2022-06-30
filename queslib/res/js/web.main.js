@@ -2839,6 +2839,10 @@ parser.txt.simple = (function($title, $data)
 				// 兼容答案在单独第一行的特殊情况
 				if(parser.re._answer_aline.test(lines[0].trim()))
 				{
+					if((lines[0].trim().split("").length > 1) && !(/多/).test($$type || $$logtype))
+					{
+						console.warn("choicesParser", "题型与答案数不匹配", $$type || $$logtype, lines[0], lines, arguments);
+					}
 					lines.push("参考答案：" + lines[0].trim());
 					lines = lines.slice(1);
 				}
@@ -2939,7 +2943,7 @@ parser.txt.simple = (function($title, $data)
 		}).trim();
 		if(isDefault)
 		{
-			console.warn("未匹配到题型", "使用默认题型", type, data[i]);
+			console.warn("未匹配到题型", "使用默认题型", type, data[i], data, arguments);
 		}
 		if(questr !== "")
 		{
@@ -2985,6 +2989,10 @@ parser.txt.simple = (function($title, $data)
 						// 兼容答案在单独第一行的特殊情况
 						if(parser.re._answer_aline.test(q[0].trim()))
 						{
+							if(q[0].trim().split("").length > 1)
+							{
+								console.warn("共用答案单选题答案数量过多", q[0], q, arguments);
+							}
 							lines.push("参考答案：" + q[0].trim());
 							q = q.slice(1);
 						}
