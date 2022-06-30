@@ -2920,11 +2920,11 @@ parser.txt.simple = (function($title, $data)
 	let data = $data.split("\n\n\n");
 	for(let i = 0; i < data.length; i++)
 	{
-		let type = parser.type.default;
+		let type = parser.type.default, isDefault = true;
 		let questr = data[i].trim().replace(parser.re._type, function($$match, $$type, $$offset, $$str)
 		{
 			// 题型
-			type = $$type;
+			type = $$type, isDefault = false;
 			return "";
 		}).replace(parser.re._chapter, function($$match, $$chapter, $$offset, $$str)
 		{
@@ -2937,6 +2937,10 @@ parser.txt.simple = (function($title, $data)
 			console.log("注释", all["name"], $$note);
 			return "";
 		}).trim();
+		if(isDefault)
+		{
+			console.warn("未匹配到题型", "使用默认题型", type, data[i]);
+		}
 		if(questr !== "")
 		{
 			// 单选题 多选题
