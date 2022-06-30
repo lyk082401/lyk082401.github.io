@@ -3835,9 +3835,15 @@ parser.api.tohtml = (function(_data, _cacheObj)
 	if(window.$ && $("select optgroup option:selected").length)
 	{
 		let regx = /^(〔总([\d]+?)题〕)/;
-		let selectedOpt = $("select optgroup option:selected").get(0);
-		let optText = selectedOpt.text || selectedOpt.label || "";
+		$([$("select optgroup option:selected").get(0), $(window.eruda && eruda.util && eruda.util.$ && eruda.util.$.cloneSelect).find("optgroup option:selected").get(0)]).each(function($i, $v)
+		{
+			if($v)
+			{
+				let selectedOpt = $v;
+				let optText = selectedOpt.text || selectedOpt.label || "";
 		selectedOpt.label && (selectedOpt.label = "〔总" + totalquesnum + "题〕" + (regx.test(optText) ? optText.replace(regx, "") : optText));
+			}
+		});
 	}
 	return allhtml/*.trim().replace(/^\s+/g, "")*/;
 });
