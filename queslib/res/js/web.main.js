@@ -3834,7 +3834,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 	document.title = "〔总" + totalquesnum + "题〕" + document.title;
 	if(window.$ && $("select optgroup option:selected").length)
 	{
-		let regx = /^(〔总[\d]+题〕)/;
+		let regx = /^(〔总([\d]+?)题〕)/;
 		let selectedOpt = $("select optgroup option:selected").get(0);
 		let optText = selectedOpt.text || selectedOpt.label || "";
 		selectedOpt.label && (selectedOpt.label = "〔总" + totalquesnum + "题〕" + (regx.test(optText) ? optText.replace(regx, "") : optText));
