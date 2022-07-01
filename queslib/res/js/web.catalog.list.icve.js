@@ -3,6 +3,14 @@
 		optname: "云课堂智慧职教（作业）",
 		options: [
 			{
+				name: "冯博--急危重症护理学〔答案纠正〕",
+				vals: [
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学〔答案纠正〕/作业/05.总复习3.02.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学〔答案纠正〕/作业/04.总复习2.02.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学〔答案纠正〕/作业/03.总复习1.02.json"}
+				]
+			},
+			{
 				name: "冯博--急危重症护理学",
 				vals: [
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学/作业/05.总复习3.json"},

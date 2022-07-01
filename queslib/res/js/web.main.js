@@ -3127,8 +3127,12 @@ parser.json.forceToObj = (function($json, $default)
 	return obj;
 });
 // 云课堂智慧职教APP-职教云JSON试题解析
-parser.json.icveappzjy2 = (function($title, $json)
+parser.json.icveappzjy2 = (function($title, $json, $useStudentAnswer/** 是否使用学生回答的答案（在系统提供的答案是错误的情况下很有用） */)
 {
+	if($useStudentAnswer)
+	{
+		console.log("职教云APP试题解析", "使用学生回答的答案", arguments);
+	}
 	let all = {};
 	all["name"] = $title && decodeURIComponent($title);
 	all["questions"] = [];
@@ -3156,12 +3160,12 @@ parser.json.icveappzjy2 = (function($title, $json)
 								{
 									name: parser.const.optionNames[$$$opt.SortOrder],
 									title: $$$opt.Content && $$$opt.Content.trim(),
-									right: $$$opt.IsAnswer
+									right: $useStudentAnswer ? (String($$$opt.SortOrder) === String($$que.studentAnswer)) : $$$opt.IsAnswer
 								});
 							});
 							return opts;
 						})(),
-						answer: $$que.answer ? parser.const.optionIndex[$$que.answer] : undefined,
+						answer: $useStudentAnswer ? ($$que.studentAnswer ? parser.const.optionIndex[$$que.studentAnswer] : undefined) : ($$que.answer ? parser.const.optionIndex[$$que.answer] : undefined),
 						coeffic: undefined,
 						analysis: ($$que.resultAnalysis && ($$que.resultAnalysis.trim() !== "")) ? $$que.resultAnalysis.trim() : undefined
 					});
@@ -4013,7 +4017,14 @@ parser.api.get = (function(_el, _data)
 						let filename = file.substring(file.lastIndexOf("/") + 1);
 						filename = filename.substring(0, filename.lastIndexOf("."));
 						filename = filename.replace(/^([0-9]+\.)/, "");
-						_resolve({index: _index, type: _val.type, name: filename, data: _str});
+						_resolve(
+						{
+							index: _index,
+							type: _val.type,
+							name: filename,
+							data: _str,
+							useStudentAnswer: (/〔答案纠正〕/).test(_val.file)
+						});
 					})
 					.catch(_reject) : _reject([_index, "文件不存在", _val]);
 				});
@@ -4045,7 +4056,7 @@ parser.api.get = (function(_el, _data)
 							func = parser.txt.simple;
 						}
 						// 添加章节数据
-						obj.data.push(func(_val.value.name, _val.value.data));
+						obj.data.push(func(_val.value.name, _val.value.data, _val.value.useStudentAnswer));
 					}
 					else
 					{
