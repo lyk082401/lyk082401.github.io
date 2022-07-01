@@ -1816,7 +1816,7 @@ parser.api.init = (function()
 		url = (parser.api.getUrlParam("repo") && parser.api.getUrlParam("repo").length && repo[parser.api.getUrlParam("repo")]) ? repo[parser.api.getUrlParam("repo")] : (repo.local || repo.cos),
 		initdata = (function($obj)
 		{
-			if(!$obj.data)
+			if(!$obj || !$obj.data)
 			{
 				alert("题库数据缺失，加载失败！请尝试刷新一下网页！");
 				console.log("本地题库数据信息", $obj);
