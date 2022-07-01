@@ -3146,6 +3146,10 @@ parser.json.icveappzjy2 = (function($title, $json)
 						analysis: ($$que.resultAnalysis && ($$que.resultAnalysis.trim() !== "")) ? $$que.resultAnalysis.trim() : undefined
 					});
 				}
+				// 多选题
+				// 判断题
+				// 问答题
+				// 填空题(客观)
 				else
 				{
 					console.warn("JSON解析", "未知题型", $$que.queTypeName);
