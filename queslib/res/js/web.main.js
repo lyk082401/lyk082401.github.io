@@ -958,7 +958,7 @@ parser.api.init = (function()
 		}
 		return parser.storage.get(storeName);
 	};
-	$.LoadingOverlay && $.LoadingOverlay("show");
+	//// $.LoadingOverlay && $.LoadingOverlay("show");
 	try
 	{
 		let pwd = parser.api.getUrlParam("pwd");
@@ -1820,7 +1820,7 @@ parser.api.init = (function()
 			{
 				alert("题库数据缺失，加载失败！请尝试刷新一下网页！");
 				console.log("本地题库数据信息", $obj);
-				$.LoadingOverlay && $.LoadingOverlay("hide");
+				//// $.LoadingOverlay && $.LoadingOverlay("hide");
 				return;
 			}
 			console.log("本地题库数据更新日期", $obj.date);
@@ -1834,7 +1834,7 @@ parser.api.init = (function()
 					$($val).removeAttr("disabled").prop("disabled", false);
 				});
 				select.onchange();
-				$.LoadingOverlay && $.LoadingOverlay("hide");
+				//// $.LoadingOverlay && $.LoadingOverlay("hide");
 			})
 			.catch(function($e)
 			{
@@ -1843,7 +1843,7 @@ parser.api.init = (function()
 			})
 			.finally(function()
 			{
-				$.LoadingOverlay && $.LoadingOverlay("hide");
+				//// $.LoadingOverlay && $.LoadingOverlay("hide");
 			});
 		}),
 		config = (function($xhr)
@@ -1868,6 +1868,8 @@ parser.api.init = (function()
 		}),
 		update = (
 		{
+			// https://api.jquery.com/jQuery.ajax/
+			// https://www.jquery123.com/jQuery.ajax/
 			url: url,
 			type: "GET",
 			timeout: 3 * 60 * 1000,
@@ -1892,12 +1894,26 @@ parser.api.init = (function()
 				{
 					let percentComplete = ($e.loaded / $e.total) * 100;
 					// 更新一下显示时间，延迟一下网页无响应提示时间，需要预先hook原加载框函数逻辑，否则会导致无法关闭
-					$.LoadingOverlay && $.LoadingOverlay("show");
+					//// $.LoadingOverlay && $.LoadingOverlay("show");
+					
+					$('[name="queslib"]').LoadingOverlay("text", (percentComplete >= 100) ? "" : percentComplete.toFixed(2) + "%");
+					$('[name="queslib"]').LoadingOverlay("progress", percentComplete.toFixed(2));
+					$('[name="queslib"]').LoadingOverlay("resize");
+				}
+				else
+				{
+					$('[name="queslib"]').LoadingOverlay("hide", true);
 				}
 			},
 			beforeSend: (function($jqXHR, $options)
 			{
 				let xhr = ($options && $options.xhr && $options.xhr()) || {};
+				$('[name="queslib"]').LoadingOverlay("show", {
+					text: "0.00%",
+					textColor: "#666",
+					textResizeFactor: 0.30,
+					// textAnimation: "fadein 1000ms",
+				});
 			}),
 			dataFilter: (function($data, $type)
 			{
@@ -2010,7 +2026,10 @@ parser.api.init = (function()
 				}, 100));*/
 				confirm("库数据更新失败！是否进行刷新？") && location.reload(true);
 			}),
-			complete: (function($xhr, $status){})
+			complete: (function($xhr, $status)
+			{
+				$('[name="queslib"]').LoadingOverlay("hide", true);
+			})
 		}),
 		doUpdate = function()
 		{
@@ -2993,7 +3012,7 @@ parser.txt.simple = (function($title, $data)
 							{
 								console.warn("共用答案单选题答案数量过多", q[0], q, arguments);
 							}
-							lines.push("参考答案：" + q[0].trim());
+							q.push("参考答案：" + q[0].trim());
 							q = q.slice(1);
 						}
 						return q[0].trim().replace(parser.re.quesnum, "").trim();

@@ -399,6 +399,37 @@
 	<body style="background-color: rgba(0, 0, 0, 0.75); color: #ffffff; font-size: 18px; opacity: 0.50;">
 		<fieldset name="queslib">
 			<legend>
+				<div style="display: none;">
+					<!--
+					<div style="width: 100%; background-color: #000/**#e2e2e2*/; border-radius: 20px;">
+						<div name="webProgressBar" style="width: 0; height: 18px; line-height: 18px; opacity: 0.5; padding-left: 3px; background-color: green/**#5FB878*/; text-align: center; color: #fff/**white*/; border-radius: 20px;">0.00%</div>
+					</div>
+					-->
+					<!--
+					<script type="text/javascript">
+					/**
+					let fileBar = document.getElementsByName("webProgressBar")[0];
+					let num = 0;
+					let timer = setInterval(function()
+					{
+						fileBar.style.width = num + "%";
+						fileBar.innerText = num + "%";
+						// $("#fileBar").css("width", num + "%").text(num + '%');  jquery 实现
+						if(num >= 100)
+						{
+							fileBar.innerText = "Finished";
+							clearInterval(timer);
+						}
+						else
+						{
+							num += 10;
+						}
+					}, 1000 / 60 * 60);
+					*/
+					<\/script>
+					-->
+					<hr />
+				</div>
 				<select style="background-color: #000000; color: #337ab7; border: 0; text-align: center; text-align-last: center; width: 100%; z-index: 9999;"
 					onclick="javascript: (function(_)
 					{
