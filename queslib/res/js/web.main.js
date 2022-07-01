@@ -958,7 +958,7 @@ parser.api.init = (function()
 		}
 		return parser.storage.get(storeName);
 	};
-	//// $.LoadingOverlay && $.LoadingOverlay("show");
+	$.LoadingOverlay && $.LoadingOverlay("show");
 	try
 	{
 		let pwd = parser.api.getUrlParam("pwd");
@@ -1820,7 +1820,7 @@ parser.api.init = (function()
 			{
 				alert("题库数据缺失，加载失败！请尝试刷新一下网页！");
 				console.log("本地题库数据信息", $obj);
-				//// $.LoadingOverlay && $.LoadingOverlay("hide");
+				$.LoadingOverlay && $.LoadingOverlay("hide");
 				return;
 			}
 			console.log("本地题库数据更新日期", $obj.date);
@@ -1834,7 +1834,7 @@ parser.api.init = (function()
 					$($val).removeAttr("disabled").prop("disabled", false);
 				});
 				select.onchange();
-				//// $.LoadingOverlay && $.LoadingOverlay("hide");
+				$.LoadingOverlay && $.LoadingOverlay("hide");
 			})
 			.catch(function($e)
 			{
@@ -1843,7 +1843,7 @@ parser.api.init = (function()
 			})
 			.finally(function()
 			{
-				//// $.LoadingOverlay && $.LoadingOverlay("hide");
+				$.LoadingOverlay && $.LoadingOverlay("hide");
 			});
 		}),
 		config = (function($xhr)
@@ -1893,15 +1893,15 @@ parser.api.init = (function()
 				if($e.lengthComputable)
 				{
 					let percentComplete = ($e.loaded / $e.total) * 100;
-					// 更新一下显示时间，延迟一下网页无响应提示时间，需要预先hook原加载框函数逻辑，否则会导致无法关闭
-					//// $.LoadingOverlay && $.LoadingOverlay("show");
-					
+					// 更新一下显示时间，延迟一下网页无响应提示时间，需要预先hook原加载框函数逻辑，否则会导致创建过多无法关闭
+					$.LoadingOverlay && $.LoadingOverlay("show");
 					$('[name="queslib"]').LoadingOverlay("text", (percentComplete >= 100) ? "" : percentComplete.toFixed(2) + "%");
 					$('[name="queslib"]').LoadingOverlay("progress", percentComplete.toFixed(2));
 					$('[name="queslib"]').LoadingOverlay("resize");
 				}
 				else
 				{
+					// 使用 true 强制关闭当前元素绑定的全部加载框
 					$('[name="queslib"]').LoadingOverlay("hide", true);
 				}
 			},
