@@ -1872,7 +1872,8 @@ parser.api.init = (function()
 			// https://www.jquery123.com/jQuery.ajax/
 			url: url,
 			type: "GET",
-			timeout: 3 * 60 * 1000,
+			// 设置 10 分钟超时时间，文件十几兆的话网速再慢也应该能下载下来了😑
+			timeout: 10 * 60 * 1000,
 			async: true,
 			cache: false,
 			// 是否自动处理发送的数据
