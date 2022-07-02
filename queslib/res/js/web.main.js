@@ -3260,6 +3260,7 @@ parser.xml.pmph = (function(_title, _xml)
 		var func = {
 			"单选题": (function()
 			{
+				let answer = handleAnswer(_que.answers, _typedesc, _title, _que);
 				return (
 				{
 					type: "单选题",
@@ -3273,13 +3274,13 @@ parser.xml.pmph = (function(_title, _xml)
 							{
 								name: _opt.id,
 								title: _opt.desc.trim(),
-								right: (_opt.id === handleAnswer(_que.answers))
+								right: (_opt.id === answer)
 							});
 						});
 						(_que.options && _que.options.option) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
 						return opts;
 					})(),
-					answer: handleAnswer(_que.answers, [_que, _typedesc]),
+					answer: answer,
 					analysis: _que.keypoints ? _que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
 				});
 			}),
@@ -3294,6 +3295,7 @@ parser.xml.pmph = (function(_title, _xml)
 						var arrs = [];
 						_que.children && _que.children.question && Array.from(_que.children.question).forEach(function(__que, _index, _ques)
 						{
+							let answer = handleAnswer(__que.answers, _typedesc, _title, _que, __que);
 							arrs.push(
 							{
 								title: __que.desc.trim().replace(/(（[0-9]{1,}）)|(\([0-9]{1,}\))/, "").trim(),
@@ -3306,12 +3308,12 @@ parser.xml.pmph = (function(_title, _xml)
 										{
 											name: _opt.id,
 											title: _opt.desc.trim(),
-											right: (_opt.id === handleAnswer(__que.answers))
+											right: (_opt.id === answer)
 										});
 									});
 									return opts;
 								})(),
-								answer: handleAnswer(__que.answers, _que, _typedesc, Array.prototype.slice.apply(arguments)),
+								answer: answer,
 								analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
 							});
 						});
@@ -3343,10 +3345,11 @@ parser.xml.pmph = (function(_title, _xml)
 						var arrs = [];
 						_que.children && _que.children.question && Array.from(_que.children.question).forEach(function(__que, _index, _ques)
 						{
+							let answer = handleAnswer(__que.answers, _typedesc, _title, _que, __que);
 							arrs.push(
 							{
 								title: __que.desc.trim().replace(/(（[0-9]{1,}）|(\([0-9]{1,}\)))/, "").trim(),
-								answer: handleAnswer(__que.answers.trim(), _que, _typedesc, Array.prototype.slice.apply(arguments)),
+								answer: answer,
 								analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
 							});
 						});
