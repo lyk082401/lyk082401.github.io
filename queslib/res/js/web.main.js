@@ -1923,6 +1923,7 @@ parser.api.init = (function()
 					}
 					document.location.search = s;
 				}
+				let isCosRepo = (/repo=cos/).test(location.search);
 				// https://gasparesganga.com/labs/jquery-loading-overlay/
 				let customElement = $("<div>",
 				{
@@ -1938,7 +1939,7 @@ parser.api.init = (function()
 						"text-align": "center",
 						"text-decoration": "none"
 					},
-					"html": '题库数据有更新，正在进行下载，请稍等片刻…<br />（网络不通畅将导致下载缓慢&nbsp;<a style="text-decoration: none;" href="?repo=cos">可点此解决</a>）'
+					"html": '题库数据有更新，正在进行下载，请稍等片刻…<br />（网络不通畅将导致下载缓慢&nbsp;<a style="text-decoration: none;" href="?repo=' + (isCosRepo ? "cdn" : "cos") + '">可点此' + (isCosRepo ? "加速" : "") + '解决</a>）'
 				});
 				$('[name="queslib"]').LoadingOverlay("show", {
 					image: "",

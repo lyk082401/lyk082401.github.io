@@ -54,12 +54,14 @@
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "06/30 老年护理学-复习题（第一至九章完整选择题）",
 				vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-老年护理学复习题/老年护理学复习题（第一至九章完整选择题）.txt"}
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "06/30 老年护理学-复习题〈部分选择题答案有误，自行斟酌〉",
 				vals: [
 					{"type": "plain-txt", "file": "其他/第四学期/2022年06月-老年护理学复习题/01.第一章 绪论.txt"},
@@ -75,9 +77,51 @@
 				]
 			},
 			{
-				prop: {disabled: true},
-				name: "07/04 内科护理学-复习题〈更新中〉",
+				name: "07/04 内科护理学-职教云作业＋考试试题",
 				vals: [
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/30.内科---神经系统常见症状体征.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/29.内科---系统性红斑狼疮.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/28.内科---风湿性疾病常见症状体征.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/27.内科---糖尿病病人的护理.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/27.内科---糖尿病病人的护理.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/26.内科---库欣综合征.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/26.内科---库欣综合征.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/25.内科---甲亢病人的护理.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/25.内科---甲亢病人的护理.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/24.内科---白血病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/23.内科---出血性疾病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/22.内科---贫血病人.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/21.内科---肾功能衰竭病人的护理.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/20.内科--肾小球肾炎、肾病综合征.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/19.内科---上消化道大出血.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/18.内科---急性胰腺炎.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/17.内科---肝性脑病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/16.内科-溃疡性肠炎作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/15.内科-消化性溃疡作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/14.内科-心肌病作业.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/14.内科-心肌病作业.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/13.内科-急性心衰作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/12.内科-慢性胃炎作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/11.内科-消化性溃疡作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/10.内科-心律失常作业.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/10.内科-心律失常作业.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/09.内科-脑缺血作业.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/09.内科-脑缺血作业.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/08.内科-感染性心内膜炎作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/07.内科-脑出血作业.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/07.内科-脑出血作业.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/06.内科-高血压作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/05.内科-心脏瓣膜病作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/04.内科-肝性脑病作业.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/04.内科-肝性脑病作业.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/03.内科-慢性心衰作业.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/02.内科-癫痫作业.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/02.内科-癫痫作业.00.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/01.内科-冠心病作业.01.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/01.内科-冠心病作业.00.json"},
+					
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/考试/02.泌尿系统-血液系统疾病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/考试/01.循环系统-消化系统疾病.json"}
 				]
 			},
 			{
@@ -88,9 +132,11 @@
 				]
 			},
 			{
-				prop: {disabled: true},
-				name: "07/05 急危重症护理学-复习题〈更新中〉",
+				name: "07/05 急危重症护理学-职教云作业总复习试题",
 				vals: [
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学〔答案纠正〕/作业/05.总复习3.02.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学〔答案纠正〕/作业/04.总复习2.02.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学〔答案纠正〕/作业/03.总复习1.02.json"}
 				]
 			}
 		]
