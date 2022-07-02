@@ -1897,7 +1897,7 @@ parser.api.init = (function()
 					// 更新一下显示时间，延迟一下网页无响应提示时间，需要预先hook原加载框函数逻辑，否则会导致创建过多无法关闭
 					$.LoadingOverlay && $.LoadingOverlay("show");
 					$('[name="queslib"]').LoadingOverlay("text", (percentComplete >= 100) ? "" : percentComplete.toFixed(2) + "%");
-					$('[name="queslib"]').LoadingOverlay("progress", percentComplete.toFixed(2));
+					$('[name="queslib"]').LoadingOverlay("progress", percentComplete.toFixed(0));
 					$('[name="queslib"]').LoadingOverlay("resize");
 				}
 				else
@@ -1909,11 +1909,47 @@ parser.api.init = (function()
 			beforeSend: (function($jqXHR, $options)
 			{
 				let xhr = ($options && $options.xhr && $options.xhr()) || {};
+				function insertParam($key, $value)
+				{
+					$key = encodeURIComponent($key);
+					$value = encodeURIComponent($value);
+					let s = document.location.search;
+					let kvp = $key + "=" + $value;
+					let r = new RegExp("(&|\?)" + $key + "=[^&]*");
+					s = s.replace(r, "$1" + kvp);
+					if(!RegExp.$1)
+					{
+						s += ((s.length > 0) ? "&" : "?") + kvp;
+					}
+					document.location.search = s;
+				}
+				// https://gasparesganga.com/labs/jquery-loading-overlay/
+				let customElement = $("<div>",
+				{
+					"css": {
+						"position": "absolute",
+						"width": "95%",
+						"height": "auto",
+						"border": "0",
+						"margin": "0",
+						"padding": "0",
+						"overflow": "auto",
+						"font-size": "14px",
+						"text-align": "center",
+						"text-decoration": "none"
+					},
+					"html": '题库数据有更新，正在进行下载，请稍等片刻…<br />（网络不通畅将导致下载缓慢&nbsp;<a style="text-decoration: none;" href="?repo=cos">可点此解决</a>）'
+				});
 				$('[name="queslib"]').LoadingOverlay("show", {
+					image: "",
 					text: "0.00%",
 					textColor: "#666",
-					textResizeFactor: 0.30,
+					textResizeFactor: 0.25,
 					// textAnimation: "fadein 1000ms",
+					custom: customElement,
+					progress: true,
+					progressSpeed: 1000 / 60,
+					progressFixedPosition: "top"
 				});
 			}),
 			dataFilter: (function($data, $type)
@@ -3204,6 +3240,21 @@ parser.json.icveappmooc = (function($title, $json)
 // 人卫图书增值XML试题解析
 parser.xml.pmph = (function(_title, _xml)
 {
+	function handleAnswer($answer)
+	{
+		if(!$answer || !$answer.trim)
+		{
+			return undefined;
+		}
+		// 有时人卫抽风，答案里包含了非大写字母的其他字符😑
+		if((/[^A-Z]/).test($answer))
+		{
+			let originAnswer = $answer;
+			$answer = $answer.replace(/[^A-Z]/g, "");
+			console.warn.apply(console, ["XML答案处理存在非答案字符", originAnswer + " => " + $answer].concat(Array.prototype.slice.apply(arguments).slice(1)));
+		}
+		return ($answer.trim() !== "") ? $answer : undefined;
+	}
 	var parseQue = (function(_que, _typedesc)
 	{
 		var func = {
@@ -3222,13 +3273,13 @@ parser.xml.pmph = (function(_title, _xml)
 							{
 								name: _opt.id,
 								title: _opt.desc.trim(),
-								right: (_opt.id == _que.answers)
+								right: (_opt.id === handleAnswer(_que.answers))
 							});
 						});
 						(_que.options && _que.options.option) || console.warn("XML存在处理失败题型", _que, _que.type, _typedesc);
 						return opts;
 					})(),
-					answer: (_que.answers && (_que.answers.trim() !== "")) ? _que.answers.trim() : undefined,
+					answer: handleAnswer(_que.answers, [_que, _typedesc]),
 					analysis: _que.keypoints ? _que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
 				});
 			}),
@@ -3255,12 +3306,12 @@ parser.xml.pmph = (function(_title, _xml)
 										{
 											name: _opt.id,
 											title: _opt.desc.trim(),
-											right: (_opt.id == __que.answers)
+											right: (_opt.id === handleAnswer(__que.answers))
 										});
 									});
 									return opts;
 								})(),
-								answer: (__que.answers && (__que.answers.trim() !== "")) ? __que.answers.trim() : undefined,
+								answer: handleAnswer(__que.answers, _que, _typedesc, Array.prototype.slice.apply(arguments)),
 								analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
 							});
 						});
@@ -3295,7 +3346,7 @@ parser.xml.pmph = (function(_title, _xml)
 							arrs.push(
 							{
 								title: __que.desc.trim().replace(/(（[0-9]{1,}）|(\([0-9]{1,}\)))/, "").trim(),
-								answer: (__que.answers && (__que.answers.trim() !== "")) ? __que.answers.trim() : undefined,
+								answer: handleAnswer(__que.answers.trim(), _que, _typedesc, Array.prototype.slice.apply(arguments)),
 								analysis: __que.keypoints ? __que.keypoints.trim().replace(/(^解析：)/, "").trim() : undefined
 							});
 						});
@@ -3310,7 +3361,8 @@ parser.xml.pmph = (function(_title, _xml)
 			case("1"):
 			case("2"):
 			{
-				return (_typedesc.trim().toUpperCase().startsWith("A3") || _typedesc.trim().toUpperCase().startsWith("A4")) ? func["共用题干单选题"]() : func["单选题"]();
+				let upperType = _typedesc.trim().toUpperCase();
+				return (upperType.startsWith("A3") || upperType.startsWith("A4")) ? func["共用题干单选题"]() : func["单选题"]();
 			}
 			case("3"):
 			{
