@@ -13,9 +13,9 @@
 			{
 				name: "冯博--急危重症护理学",
 				vals: [
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学/作业/05.总复习3.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学/作业/04.总复习2.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学/作业/03.总复习1.json"}
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学/作业/05.总复习3.02.学生答案.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学/作业/04.总复习2.02.学生答案.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/37.冯博--急危重症护理学/作业/03.总复习1.02.学生答案.json"}
 				]
 			},
 			{
@@ -64,9 +64,9 @@
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/26.内科---库欣综合征.01.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/25.内科---甲亢病人的护理.02.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/25.内科---甲亢病人的护理.01.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/24.内科---白血病.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/24.内科---白血病.答案纠正.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/23.内科---出血性疾病.json"},
-					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/22.内科---贫血病人.json"},
+					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/22.内科---贫血病人.答案纠正.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/21.内科---肾功能衰竭病人的护理.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/20.内科--肾小球肾炎、肾病综合征.json"},
 					{"type": "icveappzjy2-json", "file": "云课堂智慧职教/职教云/APP/31.莫一玲--内科护理学/作业/19.内科---上消化道大出血.json"},
