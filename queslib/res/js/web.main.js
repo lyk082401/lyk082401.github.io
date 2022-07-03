@@ -4131,7 +4131,7 @@ parser.api.get = (function(_el, _data)
 							type: _val.type,
 							name: filename,
 							data: _str,
-							useStudentAnswer: (/〔答案纠正〕/).test(_val.file)
+							useStudentAnswer: (/(〔答案纠正〕)|(\.学生答案\.)/).test(_val.file)
 						});
 					})
 					.catch(_reject) : _reject([_index, "文件不存在", _val]);
