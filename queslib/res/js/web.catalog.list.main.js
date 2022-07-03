@@ -649,6 +649,7 @@
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第四学期-传染病护理（第2版）",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/16.传染病护理（第2版）/第一章 总论.xml"},
@@ -669,6 +670,7 @@
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第四学期-老年护理学（第4版）",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/18.老年护理学（第4版）/第一章 绪论.xml"},
@@ -721,6 +723,7 @@
 				]
 			},
 			{
+				prop: {disabled: true, style: "display: none;"},
 				name: "第四学期-中医护理学",
 				vals: [
 					{"type": "pmph-xml", "file": "人卫图书增值/21.中医护理学/绪论.xml"},
@@ -880,7 +883,8 @@
 				name: "第三/四学期-内科护理学-第一至二章",
 				vals: [
 					{"type": "plain-txt", "file": "内科护理学学习与实训指导/第一章 绪论.txt"},
-					{"type": "plain-txt", "file": "内科护理学学习与实训指导/第二章 呼吸系统疾病病人的护理.txt"}
+					{"type": "plain-txt", "file": "内科护理学学习与实训指导/第二章 呼吸系统疾病病人的护理.txt"},
+					{"type": "plain-txt", "file": "内科护理学学习与实训指导/第三章 循环系统疾病病人的护理.txt"}
 				]
 			}
 		]
