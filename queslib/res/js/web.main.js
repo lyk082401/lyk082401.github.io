@@ -4107,7 +4107,7 @@ parser.api.get = (function(_el, _data)
 			obj.name = _el.item(_el.selectedIndex).innerText || _el.item(_el.selectedIndex).label || _el.item(_el.selectedIndex).text;
 			obj.data = [];
 			// 唯一引用，去除重复用，仅在按题型显示下开启去重
-			let uniqueReference = (localStorage.getItem("queslib-display-mode") === "题型") ? (_el.item(_el.selectedIndex).uniquereference = {
+			let uniqueReference = (localStorage.getItem("queslib-display-mode") !== "章节") ? (_el.item(_el.selectedIndex).uniquereference = {
 				origin: [],
 				culled: [],
 				kv: {},
