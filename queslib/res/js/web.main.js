@@ -3236,7 +3236,7 @@ parser.json.icveappzjy2 = (function($title, $json, $uniqueReference, $useStudent
 								opts[$$$opt.SortOrder] = (
 								// opts.push(
 								{
-									name: parser.const.optionNames[$$$opt.SortOrder],
+									name: parser.const.optionNames[$$$opt.SortOrder/**$$$i*/],
 									title: $$$opt.Content && $$$opt.Content.trim(),
 									right: $useStudentAnswer ? (String($$$opt.SortOrder) === String($$que.studentAnswer)) : $$$opt.IsAnswer
 								});
