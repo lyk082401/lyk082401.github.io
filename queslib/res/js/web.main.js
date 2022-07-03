@@ -1935,10 +1935,13 @@ parser.api.init = (function()
 						"margin": "0",
 						"padding": "0",
 						"overflow": "auto",
-						"font-size": "14px",
+						"font-size": "18px",
 						"text-align": "center",
-						"text-decoration": "none"
+						"text-decoration": "none",
+						// "background": "rgb(160, 160, 160)",
+						"color": "rgb(102, 102, 102)"
 					},
+					// parentElement = this.closest("div.loadingoverlay")
 					"html": '题库数据有更新，正在进行下载，请稍等片刻…<br />（网络不通畅将导致下载缓慢&nbsp;<a style="text-decoration: none;" href="?repo=' + (isCosRepo ? "cdn" : "cos") + '">可点此' + (isCosRepo ? "加速" : "") + '解决</a>）'
 				});
 				$('[name="queslib"]').LoadingOverlay("show", {
