@@ -3164,7 +3164,7 @@ parser.json.forceToObj = (function($json, $default)
 	return obj;
 });
 // 云课堂智慧职教APP-职教云JSON试题解析
-parser.json.icveappzjy2 = (function($title, $json, $useStudentAnswer/** 是否使用学生回答的答案（在系统提供的答案是错误的情况下很有用） */)
+parser.json.icveappzjy2 = (function($title, $json, $uniqueReference, $useStudentAnswer/** 是否使用学生回答的答案（在系统提供的答案是错误的情况下很有用） */)
 {
 	if($useStudentAnswer)
 	{
@@ -3181,6 +3181,46 @@ parser.json.icveappzjy2 = (function($title, $json, $useStudentAnswer/** 是否�
 			all["name"] = $json.data.homeworkTitle || $json.data.examTitle;
 			$json.data.questions.forEach(function($$que, $$i, $$ques)
 			{
+				if($uniqueReference && (typeof($$que.questionId) === "string"))
+				{
+					// 去重结果
+					if(!Array.isArray($uniqueReference.k))
+					{
+						$uniqueReference.k = [];
+					}
+					// 原有题数
+					if(!Array.isArray($uniqueReference.origin))
+					{
+						$uniqueReference.origin = [];
+					}
+					// 已去题数
+					if(!Array.isArray($uniqueReference.culled))
+					{
+						$uniqueReference.culled = [];
+					}
+					// 去重结果
+					if(typeof($uniqueReference.kv) !== "object")
+					{
+						$uniqueReference.kv = {};
+					}
+					$uniqueReference.origin.push($$que.questionId);
+					if($uniqueReference.kv[$$que.questionId])
+					{
+						// use console.info
+						console.info("JSON试题解析重复过滤", "当前", $$que, "已有", $uniqueReference.kv[$$que.questionId], $uniqueReference);
+						$uniqueReference.culled.push($$que.questionId);
+						return;
+					}
+					else
+					{
+						$uniqueReference.k.push($$que.questionId);
+						$uniqueReference.kv[$$que.questionId] = $$que;
+					}
+				}
+				else if($uniqueReference)
+				{
+					console.warn("JSON试题解析重复过滤", "受阻", typeof($$que.questionId), $$que.questionId, $$que);
+				}
 				let dataJson = parser.json.forceToObj($$que.dataJson, []);
 				if($$que.queTypeName === "单选题")
 				{
@@ -3204,7 +3244,7 @@ parser.json.icveappzjy2 = (function($title, $json, $useStudentAnswer/** 是否�
 						})(),
 						answer: $useStudentAnswer ? ($$que.studentAnswer ? parser.const.optionIndex[$$que.studentAnswer] : undefined) : ($$que.answer ? parser.const.optionIndex[$$que.answer] : undefined),
 						coeffic: undefined,
-						analysis: ($$que.resultAnalysis && ($$que.resultAnalysis.trim() !== "")) ? $$que.resultAnalysis.trim() : undefined
+						analysis: ($$que.resultAnalysis && ($$que.resultAnalysis.trim() !== "") && ($$que.resultAnalysis.trim() !== "无")) ? $$que.resultAnalysis.trim() : undefined
 					});
 				}
 				// 多选题
@@ -4049,18 +4089,26 @@ parser.api.get = (function(_el, _data)
 		if(Array.isArray(_data))
 		{
 			// 全部满足指定条件即反转数组顺序，从后往前处理
-			/**if(_data.every(function($$val, $$i, $$arrs)
+			/**
+			if(_data.every(function($val, $i, $arrs)
 			{
-				return $$val.type === "icveappzjy2-json";
+				return $val.type === "icveappzjy2-json";
 			}))
 			{
 				// 目前已经不需要反转了，作业和考试顺序使用默认
 				// _data = _data.slice().reverse();
-			}*/
+			}
+			*/
 			var obj = {};
 			obj.name = _el.item(_el.selectedIndex).innerText || _el.item(_el.selectedIndex).label || _el.item(_el.selectedIndex).text;
 			obj.data = [];
-			let icveappzjy2Datas = [];
+			// 唯一引用，去除重复用，仅在按题型显示下开启去重
+			let uniqueReference = (localStorage.getItem("queslib-display-mode") === "题型") ? (_el.item(_el.selectedIndex).uniquereference = {
+				origin: [],
+				culled: [],
+				kv: {},
+				k: []
+			}) : null;
 			(_data.length != 0) && Promise.allSettled(_data.map(function(_val, _index, _arr)
 			{
 				return new Promise(function(_resolve, _reject)
@@ -4104,55 +4152,19 @@ parser.api.get = (function(_el, _data)
 						else if(_val.value.type === "icveappzjy2-json")
 						{
 							func = parser.json.icveappzjy2;
-							/** icveappzjy2Datas.push(func(_val.value.name, _val.value.data));
-							return;*/
 						}
 						else
 						{
 							func = parser.txt.simple;
 						}
 						// 添加章节数据
-						obj.data.push(func(_val.value.name, _val.value.data, _val.value.useStudentAnswer));
+						obj.data.push(func(_val.value.name, _val.value.data, uniqueReference, _val.value.useStudentAnswer));
 					}
 					else
 					{
 						console.warn("allSettled", _index, _val);
 					}
 				});
-				/**
-				// 去除重复题目
-				function removeRepeat(_params)
-				{
-					let newresult = null, uniqueId = {}, unique = [], repeat = [];
-					for(let i = 0; i < _params.length; i++)
-					{
-						if(i === 0)
-						{
-							// 使用JSON解析转化防止对象引用问题
-							newresult = JSON.parse(JSON.stringify(_params[i]));
-							newresult.data.questions = [];
-						}
-						for(let questions = _params[i].data.questions, k = 0; k < questions.length; k++)
-						{
-							if(!uniqueId[questions[k].questionId])
-							{
-								uniqueId[questions[k].questionId] = questions[k];
-								unique.push(questions[k]);
-							}
-							else
-							{
-								repeat.push(questions[k]);
-							}
-						}
-					}
-					Array.from(Object.values(uniqueId)).forEach(function(_value, _index, _values)
-					{
-						newresult.data.questions.push(_value);
-					});
-					// dumpJSON({result: newresult, unique: unique, repeat: repeat});
-					return {result: newresult, unique: unique, repeat: repeat};
-				}*/
-				// (location.protocol === "file:") && console.log("››get icveappzjy2Datas", icveappzjy2Datas/**, removeRepeat(icveappzjy2Datas)*/);
 				tpl.innerHTML = parser.api.tohtml(parser.api.adjust(obj), _el.item(_el.selectedIndex));
 				fragment.appendChild(tpl.content);
 				$(document).find("[name='queslib'] main").html(fragment);
