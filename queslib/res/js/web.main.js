@@ -3233,7 +3233,8 @@ parser.json.icveappzjy2 = (function($title, $json, $uniqueReference, $useStudent
 							let opts = [];
 							dataJson.forEach(function($$$opt, $$$i, $$$opts)
 							{
-								opts.push(
+								opts[$$$opt.SortOrder] = (
+								// opts.push(
 								{
 									name: parser.const.optionNames[$$$opt.SortOrder],
 									title: $$$opt.Content && $$$opt.Content.trim(),
