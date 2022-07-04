@@ -581,7 +581,7 @@ window.redisData.push({
          "orderBy": 3035,
          "questionId": "yzsdawcunptgeyxxbuuumw",
          "Title": "<p>老年患者突然发生寒战、高热、咳嗽、咳痰，痰粘稠，砖红色，胶冻状，引起感染最可能的病原菌是（ ）</p>",
-         "dataJson": "[{\"SortOrder\":0,\"Content\":\"克雷白杆菌\",\"IsAnswer\":null},{\"SortOrder\":1,\"Content\":\"流感嗜血杆菌\",\"IsAnswer\":null},{\"SortOrder\":2,\"Content\":\"嗜肺军团杆菌\",\"IsAnswer\":null},{\"SortOrder\":3,\"Content\":\"葡萄球菌\",\"IsAnswer\":null},{\"SortOrder\":4,\"Content\":\"铜绿假单胞菌\",\"IsAnswer\":true}]",
+         "dataJson": "[{\"SortOrder\":0,\"Content\":\"克雷白杆菌\",\"IsAnswer\":true},{\"SortOrder\":1,\"Content\":\"流感嗜血杆菌\",\"IsAnswer\":null},{\"SortOrder\":2,\"Content\":\"嗜肺军团杆菌\",\"IsAnswer\":null},{\"SortOrder\":3,\"Content\":\"葡萄球菌\",\"IsAnswer\":null},{\"SortOrder\":4,\"Content\":\"铜绿假单胞菌\",\"IsAnswer\":null}]",
          "Answer": "",
          "questionType": 1,
          "resultAnalysis": "",
