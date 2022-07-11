@@ -1,4 +1,16 @@
 	(window.catalog || (window.catalog = [])).push(
+	{
+		optname: "2020年消毒供应室实习生理论考试",
+		options: [
+			{
+				name: "2020年消毒供应室实习生理论考试",
+				vals: [
+					{"type": "plain-txt", "file": "其他/2020年消毒供应室实习生理论考试/2020年消毒供应室实习生理论考试.txt"}
+				]
+			}
+		]
+	});
+	(window.catalog || (window.catalog = [])).push(
 	/**
 	{
 		prop: {disabled: true, style: "display: none;"},

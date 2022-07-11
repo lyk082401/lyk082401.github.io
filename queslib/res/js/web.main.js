@@ -3012,6 +3012,12 @@ parser.txt.simple = (function($title, $data)
 			{
 				choicesParser(type, questr, all["questions"]);
 			}
+			// 判断题
+			else if(type === "判断题")
+			{
+				console.warn(type, questr, all["questions"])
+				choicesParser(type, questr, all["questions"]);
+			}
 			// 共用题干单选题
 			else if(parser.type.choices.share.title.includes(type))
 			{
