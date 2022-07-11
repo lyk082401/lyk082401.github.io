@@ -2974,6 +2974,104 @@ parser.txt.simple = (function($title, $data)
 		}
 		return arrs;
 	}
+	function trueOrFalseParser($$type, $$questr, $$arrs, $$logtype)
+	{
+		let arrs = [];
+		if(!$$questr)
+		{
+			return arrs;
+		}
+		let ques = Array.isArray($$questr) ? $$questr : $$questr.trim().split("\n\n");
+		for(let q = 0; q < ques.length; q++)
+		{
+			let lines = ques[q].trim().split("\n");
+			let title = (function()
+			{
+				// 兼容答案在单独第一行的特殊情况
+				if((/^(正确|错误)$/).test(lines[0].trim()))
+				{
+					lines.push("参考答案：" + ((lines[0].trim() === "正确") ? "A" : "B"));
+					lines = lines.slice(1);
+				}
+				return lines[0].trim().replace(parser.re.quesnum, "").trim();
+			})();
+			lines = lines.slice(1);
+			let opts = [];
+			let que = {
+				type: $$type ? $$type : undefined,
+				title: title,
+				options: [
+					{
+						name: "A",
+						title: "正确",
+						right: false
+					},
+					{
+						name: "B",
+						title: "错误",
+						right: false
+					}
+				],
+				answer: undefined,
+				coeffic: undefined,
+				analysis: undefined
+			};
+			let hasAnswer = false;
+			for(let l = 0; l < lines.length; l++)
+			{
+				// 以字母开头为选项
+				if(parser.re._optname.test(lines[l].trim()))
+				{
+					que.options.push(
+					{
+						name: String(lines[l].trim().match(parser.re._optname)[1]).trim(),
+						title: lines[l].trim().replace(parser.re._optname, "").trim().replace(parser.re._answer_ended, "").trim(),
+						right: parser.re._answer_ended.test(lines[l].trim())
+					});
+					// 其他标注答案方法
+					if(parser.re._answer_ended.test(lines[l].trim()))
+					{
+						hasAnswer = true;
+					}
+				}
+				else
+				{
+					addOtherMatch($$type, lines[l].trim(), que);
+				}
+			}
+			if(que.answer)
+			{
+				for(let o = 0; o < que.options.length; o++)
+				{
+					if(que.answer.split("").includes(que.options[o].name))
+					{
+						que.options[o].right = true;
+					}
+				}
+			}
+			else if(hasAnswer)
+			{
+				for(let o = 0; o < que.options.length; o++)
+				{
+					if(que.options[o].right)
+					{
+						if(!que.answer)
+						{
+							que.answer = "";
+						}
+						que.answer += que.options[o].name;
+					}
+				}
+			}
+			else
+			{
+				console.warn("文本解析", $$type || $$logtype, "答案未知", ques[q].trim());
+			}
+			$$arrs && $$arrs.push(que);
+			arrs.push(que);
+		}
+		return arrs;
+	}
 	let all = {};
 	all["name"] = $title && decodeURIComponent($title);
 	all["questions"] = [];
@@ -3015,8 +3113,9 @@ parser.txt.simple = (function($title, $data)
 			// 判断题
 			else if(type === "判断题")
 			{
-				console.warn(type, questr, all["questions"])
-				choicesParser(type, questr, all["questions"]);
+				//console.warn(type, questr, all["questions"])
+				
+				trueOrFalseParser(type, questr, all["questions"]);
 			}
 			// 共用题干单选题
 			else if(parser.type.choices.share.title.includes(type))
@@ -3935,7 +4034,7 @@ parser.api.tohtml = (function(_data, _cacheObj)
 		{
 			let child = __data.questions[i], uuid = parser.api.uuid();
 			// 单选题
-			if(parser.type.choices.alone.includes(child.type))
+			if(parser.type.choices.alone.includes(child.type) || (child.type === "判断题"))
 			{
 				html = `${"\t".repeat(7)}<section name="question">`;
 				html += `\n${"\t".repeat(8)}<dl name="child">`;
